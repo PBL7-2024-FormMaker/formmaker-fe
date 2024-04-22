@@ -266,7 +266,7 @@ export const FormsTable = () => {
                 <BsFileText
                   size={36}
                   className={
-                    record.disabled ? 'text-gray-400' : 'text-malachite-500'
+                    record.disabled ? 'text-gray-400' : 'text-navy-500'
                   }
                 />
               </UnstyledButton>
@@ -303,7 +303,7 @@ export const FormsTable = () => {
                       ),
                     );
                   }}
-                  className='text-sm font-medium text-gray-500 hover:text-malachite-500 hover:underline'
+                  className='hover:text-navy-500 text-sm font-medium text-gray-500 hover:underline'
                 >
                   {record.totalSubmissions} submissions.
                 </UnstyledButton>
@@ -346,7 +346,7 @@ export const FormsTable = () => {
               }}
             />
           ),
-        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-navy-100 w-30 h-20 p-0',
       },
       {
         accessor: 'more',
@@ -369,7 +369,7 @@ export const FormsTable = () => {
                 />
               </Menu.Target>
 
-              <Menu.Dropdown className='min-w-[200px] !bg-malachite-100'>
+              <Menu.Dropdown className='!bg-navy-100 min-w-[200px]'>
                 {record.disabled
                   ? moreOptions
                       .filter((option) => option.text !== 'Disable')
@@ -377,7 +377,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                          className='hover:bg-navy-400 mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                           onClick={() => option.handleClick(record)}
                         >
                           {option.text}
@@ -389,7 +389,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                          className='hover:bg-navy-400 mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                           onClick={() => option.handleClick(record)}
                         >
                           {option.text}
@@ -409,7 +409,7 @@ export const FormsTable = () => {
               onClick={() => handleRestoreForm(record)}
             />
           ),
-        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-navy-100 w-30 h-20 p-0',
       },
     ],
     [moreOptions],
@@ -513,7 +513,7 @@ export const FormsTable = () => {
         size='lg'
         body={
           <Box className='flex flex-col items-center gap-3 px-10 py-5'>
-            <MdDriveFileMoveRtl size={70} className='text-malachite-500' />
+            <MdDriveFileMoveRtl size={70} className='text-navy-500' />
             <Text size='lg' className='font-bold'>
               Move to My Forms
             </Text>
@@ -528,7 +528,7 @@ export const FormsTable = () => {
         onClickConfirm={() => handleRemoveFromTeam(selectedRecords[0])}
         confirmButtonProps={{
           title: 'Move Now',
-          className: 'bg-malachite-500 hover:bg-malachite-600',
+          className: 'bg-navy-500 hover:bg-navy-600',
         }}
         isLoading={isRemovingFromTeam}
       />

@@ -152,9 +152,9 @@ export const FolderList = ({
                     />
                   </Box>
                 </Menu.Target>
-                <Menu.Dropdown className='min-w-[180px] !bg-malachite-100'>
+                <Menu.Dropdown className='!bg-navy-100 min-w-[180px]'>
                   <Menu.Item
-                    className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    className='hover:bg-navy-400 mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                     leftSection={<RiAddBoxFill />}
                     onClick={() =>
                       navigate(PATH.BUILD_FORM_PAGE, {
@@ -170,13 +170,13 @@ export const FolderList = ({
                       setFolderName(folder.name);
                       setFolderId(folder.id);
                     }}
-                    className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    className='hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                     leftSection={<MdEdit />}
                   >
                     Change name
                   </Menu.Item>
                   <Menu.Item
-                    className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    className='hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                     leftSection={<MdDelete />}
                     onClick={() => {
                       openModal(ModalTypes.DELETE_FOLDER);

@@ -34,12 +34,12 @@ export const SignupPage = () => {
 
   return (
     <div className='h-screen w-screen'>
-      <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
+      <div className='bg-navy-500 h-headerHeight px-4 pt-4'>
         <UnSignedHeader />
       </div>
       <div className='flex h-contentHeight flex-col justify-center gap-7'>
         <div className='flex flex-col justify-between gap-2 text-center'>
-          <Text className='text-xl font-bold text-malachite-400'>
+          <Text className='text-navy-400 text-xl font-bold'>
             EASIEST ONLINE FORM BUILDER
           </Text>
           <Text className='text-5xl font-bold'>

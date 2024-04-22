@@ -71,10 +71,9 @@ export const PublicPage = () => {
       >
         <span
           className={cn(
-            'relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500',
+            'bg-navy-400 hover:bg-navy-500 relative flex h-12 w-12 items-center justify-center rounded-full',
             {
-              'bg-malachite-300 hover:bg-malachite-300':
-                isLoadingCreateFormResponse,
+              'bg-navy-300 hover:bg-navy-300': isLoadingCreateFormResponse,
             },
           )}
         >
@@ -90,9 +89,9 @@ export const PublicPage = () => {
 
   if (formData?.disabled === true || formData?.deletedAt !== null)
     return (
-      <div className='text-sl flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
+      <div className='text-sl bg-navy-50 flex min-h-screen items-start justify-center py-10'>
         {isAuthenticated && renderBackToHomeButton()}
-        <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-malachite-500 bg-white px-6 py-8 shadow-lg'>
+        <div className='border-t-navy-500 flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid bg-white px-6 py-8 shadow-lg'>
           <h2 className='text-[32px]'>{formData?.title}</h2>
           <span className='leading-7'>
             This form is no longer accepting submissions. <br></br> Try
@@ -107,7 +106,7 @@ export const PublicPage = () => {
     );
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-malachite-50 py-10'>
+    <div className='bg-navy-50 flex min-h-screen items-center justify-center py-10'>
       {isAuthenticated && renderBackToHomeButton()}
       {!isSuccess ? (
         <Formik

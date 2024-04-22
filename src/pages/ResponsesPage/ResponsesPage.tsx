@@ -70,7 +70,7 @@ export const ResponsesPage = () => {
     return (
       <Box className='h-screen'>
         <Header />
-        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-malachite-100 pt-10'>
+        <Box className='bg-navy-100 flex h-contentHeight w-full flex-col items-center justify-center gap-3 pt-10'>
           <BsDatabaseExclamation size={64} className='text-gray-500' />
           <span className='mb-8 text-lg text-gray-600'>No records found.</span>
         </Box>

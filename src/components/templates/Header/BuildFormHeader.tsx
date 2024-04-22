@@ -5,7 +5,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
 
-import GreenLogo from '@/assets/images/greenlogo.png';
+import BlueLogo from '@/assets/images/bluelogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
@@ -71,7 +71,7 @@ export const BuildFormHeader = () => {
       )}
     >
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>
-        <Image src={GreenLogo} h={LOGO_HEIGHT} />
+        <Image src={BlueLogo} h={LOGO_HEIGHT} />
       </Anchor>
 
       <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
@@ -109,7 +109,7 @@ export const BuildFormHeader = () => {
             />
           )}
         </div>
-        <div className='text-[13px] text-malachite-500'>
+        <div className='text-navy-500 text-[13px]'>
           {isEditForm &&
             (form.updatedAt
               ? `Last updated at ${updatedDate}`
@@ -139,14 +139,14 @@ export const BuildFormHeader = () => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoPersonOutline size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
                 onClick={() => navigate(PATH.MY_ACCOUNT_PAGE)}
               >
                 Account
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoIosLogOut size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
                 onClick={handleLogout}
               >
                 Logout

@@ -43,7 +43,7 @@ export const Menu = (props: MenuProps) => {
       <MenuMantine.Target>
         <Button {...buttonProps} />
       </MenuMantine.Target>
-      <MenuMantine.Dropdown className='!bg-malachite-100'>
+      <MenuMantine.Dropdown className='!bg-navy-100'>
         {itemList.map((item, index) => (
           <MenuMantine.Item
             key={index}
@@ -57,9 +57,9 @@ export const Menu = (props: MenuProps) => {
               ) : null
             }
             className={cn(
-              'mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white',
+              'hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white',
               {
-                'bg-malachite-400 text-white':
+                'bg-navy-400 text-white':
                   itemList[sortOptionIndex].field === item.field &&
                   itemList[sortOptionIndex].sortDirection ===
                     item.sortDirection,

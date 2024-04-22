@@ -28,13 +28,9 @@ export const ButtonIcon = (props: ButtonIconProps) => {
     <motion.button
       onClick={() => onClick(elementId)}
       layout
-      className={cn(
-        `w-10 rounded-lg border-none bg-malachite-100 p-3`,
-        className,
-        {
-          'w-24 rounded-full': isHovered,
-        },
-      )}
+      className={cn(`bg-navy-100 w-10 rounded-lg border-none p-3`, className, {
+        'w-24 rounded-full': isHovered,
+      })}
       onMouseOver={() => handleHovered(title)}
       onMouseOut={() => handleHovered(null)}
     >
