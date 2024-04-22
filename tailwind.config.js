@@ -14,6 +14,7 @@ export default {
         'light-error': '#f8e0d1',
         'light-warning': '#fef2cb',
         navy: {
+          10: '#DBE2EF',
           50: '#3F72AF',
           100: '#3a6aa4',
           200: '#356399',

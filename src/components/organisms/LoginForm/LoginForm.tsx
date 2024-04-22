@@ -56,7 +56,7 @@ export const LoginForm = (props: LoginFormProps) => {
           <span>Don't have an account?</span>
           <Link
             to={PATH.SIGNUP_PAGE}
-            className='text-navy-500 hover:text-navy-600 ml-1 no-underline hover:font-medium'
+            className='text-navy-500 hover:text-navy-800 ml-1 w-[50px] no-underline hover:font-medium'
           >
             Sign Up
           </Link>

@@ -37,19 +37,19 @@ export const Button = forwardRef(
           switch (true) {
             case variant === 'filled':
               buttonStyles =
-                'bg-navy-500 text-white hover:bg-navy-600 hover:text-white';
+                'bg-navy-50 text-white hover:bg-navy-600 hover:text-white';
               break;
             case variant === 'light':
               buttonStyles =
-                'bg-navy-50 text-navy-500 hover:bg-navy-100 hover:text-navy-500';
+                'bg-navy-50 text-navy-50 hover:bg-navy-100 hover:text-navy-50';
               break;
             case variant === 'outline':
               buttonStyles =
-                'border-navy-500 bg-white text-navy-500 hover:bg-navy-50 hover:text-navy-500';
+                'border-navy-50 bg-white text-navy-50 hover:bg-navy-50 hover:text-navy-50';
               break;
             case variant === 'subtle':
               buttonStyles =
-                'bg-transparent text-navy-500 hover:bg-navy-100 hover:text-navy-500';
+                'bg-transparent text-navy-50 hover:bg-navy-100 hover:text-navy-50';
               break;
             default:
               break;
