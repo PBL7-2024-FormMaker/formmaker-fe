@@ -23,7 +23,7 @@ export const Header = () => {
   };
 
   return (
-    <header className='flex h-[70px] flex-row items-center justify-between bg-malachite-500 px-10 py-3'>
+    <header className='bg-navy-500 flex h-[70px] flex-row items-center justify-between px-10 py-3'>
       <Anchor href={PATH.ROOT_PAGE}>
         <Image src={WhiteLogo} h={LOGO_HEIGHT} />
       </Anchor>
@@ -49,14 +49,14 @@ export const Header = () => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoPersonOutline size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
                 onClick={() => navigate(PATH.MY_ACCOUNT_PAGE)}
               >
                 Account
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoIosLogOut size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
                 onClick={handleLogout}
               >
                 Logout

@@ -12,7 +12,7 @@ export const PreviewSection = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   return (
-    <Stack className='relative flex h-screen w-full items-center justify-center overflow-y-scroll bg-malachite-50'>
+    <Stack className='bg-navy-50 relative flex h-screen w-full items-center justify-center overflow-y-scroll'>
       {isSuccess ? (
         <Box className='scale-90'>
           <SubmissionConfirmation />

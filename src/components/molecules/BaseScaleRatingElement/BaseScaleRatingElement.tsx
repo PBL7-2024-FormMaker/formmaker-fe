@@ -26,7 +26,7 @@ export const BaseScaleRatingElement = (
 
   const emptyStyle = 'border-slate-500 text-slate-500';
 
-  const fullStyle = 'border-malachite-500 text-white bg-malachite-500';
+  const fullStyle = 'border-navy-500 text-white bg-navy-500';
 
   const getEmptyIcon = (value: number) => {
     const iconEmptyStyle = cn(commonStyle, emptyStyle);

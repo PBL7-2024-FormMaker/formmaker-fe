@@ -72,7 +72,7 @@ export const FolderGroup = ({
           label: 'text-sm font-semibold',
         }}
         label='All forms'
-        leftSection={<FaFolder className='text-malachite-500' />}
+        leftSection={<FaFolder className='text-navy-500' />}
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(true);

@@ -262,7 +262,7 @@ export const BuildSection = () => {
       }}
     >
       <Form className='h-full w-full'>
-        <Box className='relative flex h-full w-full bg-malachite-50'>
+        <Box className='bg-navy-50 relative flex h-full w-full'>
           <Box
             flex={
               toggledLeftbar

@@ -42,10 +42,10 @@ export const PublishSection = () => {
   }, [form]);
 
   return (
-    <Box className='relative flex h-screen w-full items-center justify-center bg-malachite-50'>
+    <Box className='bg-navy-50 relative flex h-screen w-full items-center justify-center'>
       <Stack className='absolute top-[50%] w-[660px] -translate-y-[50%]'>
         <Group>
-          <Box className='flex h-10 w-10 items-center justify-center rounded bg-malachite-400'>
+          <Box className='bg-navy-400 flex h-10 w-10 items-center justify-center rounded'>
             <FaLink size={20} className='text-white' />
           </Box>
           <Stack className='gap-0'>
@@ -103,9 +103,7 @@ export const PublishSection = () => {
             <ToggleButton
               label={disabledForm ? 'DISABLED' : 'ENABLED'}
               labelClassName={
-                disabledForm
-                  ? 'text-gray-500 text-xs'
-                  : 'text-malachite-500 text-xs'
+                disabledForm ? 'text-gray-500 text-xs' : 'text-navy-500 text-xs'
               }
               className='text-sm text-gray-700'
               isEnable={!disabledForm}
