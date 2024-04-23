@@ -4,6 +4,7 @@ import { FiLink } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import {
   Box,
+  Button as MantineButton,
   CopyButton,
   Divider,
   Group,
@@ -42,10 +43,10 @@ export const PublishSection = () => {
   }, [form]);
 
   return (
-    <Box className='bg-navy-50 relative flex h-screen w-full items-center justify-center'>
+    <Box className='relative flex h-screen w-full items-center justify-center bg-navy-10'>
       <Stack className='absolute top-[50%] w-[660px] -translate-y-[50%]'>
         <Group>
-          <Box className='bg-navy-400 flex h-10 w-10 items-center justify-center rounded'>
+          <Box className='flex h-10 w-10 items-center justify-center rounded bg-navy-400'>
             <FaLink size={20} className='text-white' />
           </Box>
           <Stack className='gap-0'>
@@ -74,11 +75,13 @@ export const PublishSection = () => {
           <Group className='justify-end'>
             <CopyButton value={link}>
               {({ copied, copy }) => (
-                <Button
+                <MantineButton
+                  color='orange'
                   onClick={copy}
-                  title={copied ? 'Copied to clipboard!' : 'COPY LINK'}
                   disabled={!isEditForm}
-                />
+                >
+                  {copied ? 'Copied to clipboard!' : 'COPY LINK'}
+                </MantineButton>
               )}
             </CopyButton>
             <Button

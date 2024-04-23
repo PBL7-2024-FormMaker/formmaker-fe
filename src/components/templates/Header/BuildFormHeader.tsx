@@ -13,7 +13,7 @@ import { Loader } from '@/molecules/Loader';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { cn, formatDate, httpClient } from '@/utils';
 
-const LOGO_HEIGHT = 45;
+const LOGO_HEIGHT = 60;
 
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
@@ -67,11 +67,11 @@ export const BuildFormHeader = () => {
   return (
     <header
       className={cn(
-        'relative flex h-[70px] flex-row items-center justify-between px-10 py-3',
+        'relative flex h-[70px] flex-row items-center justify-between px-10',
       )}
     >
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>
-        <Image src={BlueLogo} h={LOGO_HEIGHT} />
+        <Image src={BlueLogo} h={LOGO_HEIGHT} className='pb-2' />
       </Anchor>
 
       <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
@@ -118,10 +118,10 @@ export const BuildFormHeader = () => {
       </div>
 
       {!myProfile || isLoading ? (
-        <Loader color='green' />
+        <Loader color='blue' />
       ) : (
         <div className='flex flex-row gap-6'>
-          <Menu shadow='sm' offset={5} position='bottom-end' withArrow>
+          <Menu shadow='md' offset={5} position='bottom-end' withArrow>
             <Menu.Target>
               <UserAvatar avatarUrl={myProfile.avatarUrl} />
             </Menu.Target>
@@ -139,14 +139,14 @@ export const BuildFormHeader = () => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoPersonOutline size={16} />}
-                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
+                className='hover:bg-navy-50 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:text-white'
                 onClick={() => navigate(PATH.MY_ACCOUNT_PAGE)}
               >
                 Account
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoIosLogOut size={16} />}
-                className='hover:bg-navy-50 hover:text-navy-500 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear'
+                className='hover:bg-navy-50 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:text-white'
                 onClick={handleLogout}
               >
                 Logout

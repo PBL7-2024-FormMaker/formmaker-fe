@@ -77,7 +77,7 @@ export const OverviewSidebar = () => {
               },
             )}
             label='Favorites'
-            leftSection={<FaStar className='text-amber-500' />}
+            leftSection={<FaStar className='text-orange-500' />}
             onClick={() => {
               setParams({
                 ...defaultFormsParams,

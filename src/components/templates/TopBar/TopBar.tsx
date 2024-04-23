@@ -119,7 +119,7 @@ export const TopBar = () => {
   return (
     <>
       {previewMode ? (
-        <Box className='from-navy-400 to-navy-600 relative flex h-[50px] items-center justify-start gap-0 bg-gradient-to-r pl-10'>
+        <Box className='relative flex h-[50px] items-center justify-start gap-0 bg-gradient-to-r from-navy-400 to-navy-600 pl-10'>
           <Group className='max-w-[300px] flex-1 items-center justify-between gap-0'>
             <input
               value={formURL}
@@ -147,14 +147,14 @@ export const TopBar = () => {
         </Box>
       ) : (
         <MantineTabs
-          color='#8ad56c'
+          color='#3F72AF'
           variant='pills'
           value={selectedTabValue}
           classNames={{ tabLabel: 'uppercase' }}
           onChange={(value: string | null) => handleChangeTab(value)}
           className='relative'
         >
-          <MantineTabs.List className='from-navy-400 to-navy-600 h-[50px] justify-center gap-0 bg-gradient-to-r'>
+          <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-navy-300 to-navy-600'>
             {tabList.map((tab, index) => (
               <MantineTabs.Tab
                 key={index}

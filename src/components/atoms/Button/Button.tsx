@@ -8,7 +8,7 @@ import { cn } from '@/utils';
 
 type ButtonVariant = 'filled' | 'light' | 'outline' | 'subtle';
 
-type ButtonColor = 'primary' | 'error' | 'gray';
+type ButtonColor = 'primary' | 'error' | 'gray' | 'orange';
 
 export interface ButtonProps
   extends Omit<MantineButtonProps, 'style'>,
@@ -45,11 +45,11 @@ export const Button = forwardRef(
               break;
             case variant === 'outline':
               buttonStyles =
-                'border-navy-50 bg-white text-navy-50 hover:bg-navy-50 hover:text-navy-50';
+                'border-navy-50 bg-white text-navy-50 hover:bg-navy-50 hover:text-white';
               break;
             case variant === 'subtle':
               buttonStyles =
-                'bg-transparent text-navy-50 hover:bg-navy-100 hover:text-navy-50';
+                'bg-transparent text-navy-50 hover:bg-navy-100 hover:text-white';
               break;
             default:
               break;
@@ -94,6 +94,28 @@ export const Button = forwardRef(
             case variant === 'subtle':
               buttonStyles =
                 'bg-transparent text-gray-600 hover:bg-gray-200 hover:text-gray-600';
+              break;
+            default:
+              break;
+          }
+          break;
+        case color === 'orange':
+          switch (true) {
+            case variant === 'filled':
+              buttonStyles =
+                'bg-orange-400 text-white hover:bg-orange-500 hover:text-white';
+              break;
+            case variant === 'light':
+              buttonStyles =
+                'bg-orange-100 text-orange-600 hover:bg-orange-200 hover:text-orange-600';
+              break;
+            case variant === 'outline':
+              buttonStyles =
+                'border-orange-600 bg-white text-orange-600 hover:bg-orange-50 hover:text-orange-600';
+              break;
+            case variant === 'subtle':
+              buttonStyles =
+                'bg-transparent text-orange-600 hover:bg-orange-200 hover:text-orange-600';
               break;
             default:
               break;

@@ -8,7 +8,7 @@ export const NotFoundPage = () => (
     <Box className='bg-navy-500 h-headerHeight px-4 pt-4'>
       <UnSignedHeader />
     </Box>
-    <Box className='bg-navy-100 h-full w-full pt-10'>
+    <Box className='bg-navy-10 h-full w-full pt-10'>
       <Stack className='items-center justify-center'>
         <span className='text-navy-900 text-5xl'>Whoops!</span>
         <span className='text-navy-900 text-center text-xl'>

@@ -78,7 +78,7 @@ export const FormRenderComponent = ({
             visible={isLoading || !form}
             zIndex={BIG_Z_INDEX}
             overlayProps={{ radius: 'sm', blur: 2 }}
-            loaderProps={{ color: 'green' }}
+            loaderProps={{ color: 'blue' }}
           />
           <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
             <Text className='mt-6 px-4 text-2xl font-bold'>{form?.title}</Text>

@@ -41,7 +41,7 @@ export const LoginPage = () => {
   return (
     <div className='flex h-screen w-screen flex-row'>
       <div className='bg-navy-10 flex h-full w-1/2 flex-col items-center justify-evenly'>
-        <Anchor href={PATH.ROOT_PAGE} className='h-[200px] w-[400px]'>
+        <Anchor href={PATH.ROOT_PAGE} className='w-[500px]'>
           <Image src={BlueLogo} className='h-full' />
         </Anchor>
         <div className='flex h-[600px] flex-col gap-6'>
