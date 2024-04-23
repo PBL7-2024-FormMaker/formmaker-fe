@@ -44,7 +44,7 @@ export const SaveButton = ({
             zIndex={1000}
             overlayProps={{ blur: 2 }}
             className='rounded-full'
-            loaderProps={{ color: 'green', size: 22 }}
+            loaderProps={{ color: 'blue', size: 22 }}
           />
           <span
             className={cn(

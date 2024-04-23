@@ -142,7 +142,7 @@ export const FormContainer = ({
                 <Button
                   title='Add your logo'
                   variant='subtle'
-                  color='gray'
+                  color='orange'
                   leftSection={<IoIosAdd size={16} />}
                   onClick={handleClickAddLogo}
                   className='my-2 text-xs font-medium uppercase'
@@ -152,6 +152,7 @@ export const FormContainer = ({
             labelPosition='center'
             variant='dashed'
             className='px-4'
+            color='orange'
           />
         )}
         <Box pos='relative' className='px-4'>
@@ -159,7 +160,7 @@ export const FormContainer = ({
             visible={isLoading}
             zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
-            loaderProps={{ color: 'green' }}
+            loaderProps={{ color: 'blue' }}
           />
           <ResponsiveGridLayout
             currentElementType={currentElementType!}

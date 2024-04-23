@@ -235,7 +235,7 @@ export const FormsTable = () => {
             variant='transparent'
             className={
               record.isFavourite
-                ? 'text-yellow-500 hover:text-yellow-500'
+                ? 'text-orange-500 hover:text-orange-500'
                 : 'text-gray-300 hover:text-gray-300'
             }
             aria-label='Favourites'
@@ -265,9 +265,7 @@ export const FormsTable = () => {
               <UnstyledButton>
                 <BsFileText
                   size={36}
-                  className={
-                    record.disabled ? 'text-gray-400' : 'text-navy-500'
-                  }
+                  className={record.disabled ? 'text-gray-400' : 'text-navy-50'}
                 />
               </UnstyledButton>
             </Tooltip>
@@ -303,7 +301,7 @@ export const FormsTable = () => {
                       ),
                     );
                   }}
-                  className='hover:text-navy-500 text-sm font-medium text-gray-500 hover:underline'
+                  className='text-sm font-medium text-gray-500 hover:text-navy-500 hover:underline'
                 >
                   {record.totalSubmissions} submissions.
                 </UnstyledButton>
@@ -369,7 +367,7 @@ export const FormsTable = () => {
                 />
               </Menu.Target>
 
-              <Menu.Dropdown className='!bg-navy-100 min-w-[200px]'>
+              <Menu.Dropdown className='min-w-[200px] !bg-navy-10'>
                 {record.disabled
                   ? moreOptions
                       .filter((option) => option.text !== 'Disable')
@@ -377,7 +375,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='hover:bg-navy-400 mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                           onClick={() => option.handleClick(record)}
                         >
                           {option.text}
@@ -389,7 +387,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='hover:bg-navy-400 mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                           onClick={() => option.handleClick(record)}
                         >
                           {option.text}
@@ -463,11 +461,11 @@ export const FormsTable = () => {
         paginationText={({ from, to, totalRecords }) =>
           `Showing ${from} - ${to} of ${totalRecords}`
         }
-        paginationActiveBackgroundColor='green'
+        paginationActiveBackgroundColor='blue'
         fetching={isFetching}
         loaderType='oval'
         loaderSize='md'
-        loaderColor='green'
+        loaderColor='blue'
         scrollAreaProps={{
           type: 'scroll',
         }}

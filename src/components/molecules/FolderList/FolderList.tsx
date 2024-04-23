@@ -101,7 +101,7 @@ export const FolderList = ({
   return (
     <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
-        <Loader color='green' />
+        <Loader color='blue' />
       ) : (
         folderList?.map((folder) => {
           const isActiveFolder = folder.id === activeFolder;
@@ -152,7 +152,7 @@ export const FolderList = ({
                     />
                   </Box>
                 </Menu.Target>
-                <Menu.Dropdown className='!bg-navy-100 min-w-[180px]'>
+                <Menu.Dropdown className='!bg-navy-10 min-w-[180px]'>
                   <Menu.Item
                     className='hover:bg-navy-400 mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
                     leftSection={<RiAddBoxFill />}

@@ -81,7 +81,7 @@ const Option = ({
         {...field}
         value={optionValue}
         className={cn(
-          'hover:bg-navy-100',
+          'hover:bg-navy-10',
           optionValue ? 'text-black' : 'text-slate-500',
         )}
         disabled={readOnly}

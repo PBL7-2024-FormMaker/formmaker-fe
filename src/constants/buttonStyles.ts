@@ -15,6 +15,6 @@ export const BUTTON_COLORS = {
   ORANGE: '#fd7e14',
 };
 
-export const DEFAULT_BUTTON_COLOR = BUTTON_COLORS.LIGHT_GREEN;
+export const DEFAULT_BUTTON_COLOR = BUTTON_COLORS.ORANGE;
 
 export const ALIGNMENT_OPTIONS = ['auto', 'left', 'center', 'right'];

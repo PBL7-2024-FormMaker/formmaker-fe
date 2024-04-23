@@ -33,9 +33,9 @@ export default {
           200: '#0A1551',
         },
         blueButton: '#4170E2',
-        toggleOn: '#92df2e',
+        toggleOn: '#FD7E14',
         toggleOff: '#e8edee',
-        activeTabBackground: '#8ad56c',
+        activeTabBackground: '#3F72AF',
       },
       height: {
         headerHeight: '90px',

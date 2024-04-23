@@ -43,7 +43,7 @@ export const Menu = (props: MenuProps) => {
       <MenuMantine.Target>
         <Button {...buttonProps} />
       </MenuMantine.Target>
-      <MenuMantine.Dropdown className='!bg-navy-100'>
+      <MenuMantine.Dropdown className='!bg-navy-10'>
         {itemList.map((item, index) => (
           <MenuMantine.Item
             key={index}
