@@ -57,7 +57,7 @@ export const Menu = (props: MenuProps) => {
               ) : null
             }
             className={cn(
-              'hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white',
+              'mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white',
               {
                 'bg-navy-400 text-white':
                   itemList[sortOptionIndex].field === item.field &&

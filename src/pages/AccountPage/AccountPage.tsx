@@ -564,7 +564,7 @@ export const AccountPage = () => {
   }, [changePwError]);
 
   return (
-    <Stack className='bg-navy-500 h-max min-h-screen w-full gap-0'>
+    <Stack className='h-max min-h-screen w-full gap-0 bg-navy-500'>
       <Header />
       <Stack className='px-40 pb-8 pt-5'>
         <Stack className='items-center justify-center gap-12 rounded-xl bg-white px-14 py-7'>

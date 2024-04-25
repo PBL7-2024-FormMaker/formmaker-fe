@@ -98,47 +98,49 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
   );
 
   return (
-    <DataTable
-      withTableBorder
-      highlightOnHover
-      borderRadius='sm'
-      withColumnBorders
-      verticalAlign='center'
-      records={records}
-      columns={columns}
-      selectedRecords={selectedRecords}
-      onSelectedRecordsChange={setSelectedRecords}
-      onRowClick={({ record }) => {
-        setSelectedRecords((prev) =>
-          prev
-            .reduce((acc: ResponseRow[], selectedRecord: ResponseRow) => {
-              if (selectedRecord.id !== record.id) acc.push(selectedRecord);
-              return acc;
-            }, [])
-            .concat(prev.some((rec) => rec.id === record.id) ? [] : [record]),
-        );
-      }}
-      page={currentPage}
-      noRecordsText='No records found'
-      onPageChange={setCurrentPage}
-      totalRecords={totalResponses}
-      paginationSize='sm'
-      recordsPerPage={pageSize}
-      paginationText={({ from, to, totalRecords }) =>
-        `Showing ${from} - ${to} of ${totalRecords}`
-      }
-      paginationActiveBackgroundColor='blue'
-      fetching={isLoading}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      loaderType='oval'
-      loaderSize='md'
-      loaderColor='blue'
-      height={records && records.length > 0 ? 'auto' : '100%'}
-      classNames={{
-        root: 'overflow-visible',
-        pagination: 'fixed w-full h-[50px] bottom-0 z-40',
-      }}
-    />
+    <div className='px-4'>
+      <DataTable
+        withTableBorder
+        highlightOnHover
+        borderRadius='sm'
+        withColumnBorders
+        verticalAlign='center'
+        records={records}
+        columns={columns}
+        selectedRecords={selectedRecords}
+        onSelectedRecordsChange={setSelectedRecords}
+        onRowClick={({ record }) => {
+          setSelectedRecords((prev) =>
+            prev
+              .reduce((acc: ResponseRow[], selectedRecord: ResponseRow) => {
+                if (selectedRecord.id !== record.id) acc.push(selectedRecord);
+                return acc;
+              }, [])
+              .concat(prev.some((rec) => rec.id === record.id) ? [] : [record]),
+          );
+        }}
+        page={currentPage}
+        noRecordsText='No records found'
+        onPageChange={setCurrentPage}
+        totalRecords={totalResponses}
+        paginationSize='sm'
+        recordsPerPage={pageSize}
+        paginationText={({ from, to, totalRecords }) =>
+          `Showing ${from} - ${to} of ${totalRecords}`
+        }
+        paginationActiveBackgroundColor='blue'
+        fetching={isLoading}
+        sortStatus={sortStatus}
+        onSortStatusChange={setSortStatus}
+        loaderType='oval'
+        loaderSize='md'
+        loaderColor='blue'
+        height={records && records.length > 0 ? 'auto' : '100%'}
+        classNames={{
+          root: 'overflow-visible',
+          pagination: 'fixed w-full h-[50px] bottom-0 z-40',
+        }}
+      />
+    </div>
   );
 };

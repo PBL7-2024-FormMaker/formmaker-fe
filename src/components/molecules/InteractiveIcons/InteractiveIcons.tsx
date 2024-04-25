@@ -20,7 +20,7 @@ export const InteractiveIcons = ({ removeItem }: InteractiveIconProps) => {
           onClick={() => {
             setToggledRightbar(!toggledRightbar);
           }}
-          className='bg-navy-500 group absolute left-[100%] top-[50%] ml-3 mt-[-22px] flex translate-y-[-50%] cursor-pointer items-center justify-center gap-2 rounded-full p-2 text-white'
+          className='group absolute left-[100%] top-[50%] ml-3 mt-[-22px] flex translate-y-[-50%] cursor-pointer items-center justify-center gap-2 rounded-full bg-navy-500 p-2 text-white'
         >
           <IoSettingsSharp className='size-5' />
           <Text className='hidden pr-1 text-sm group-hover:inline-block'>

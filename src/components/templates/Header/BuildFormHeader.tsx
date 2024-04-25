@@ -109,7 +109,7 @@ export const BuildFormHeader = () => {
             />
           )}
         </div>
-        <div className='text-navy-500 text-[13px]'>
+        <div className='text-[13px] text-navy-500'>
           {isEditForm &&
             (form.updatedAt
               ? `Last updated at ${updatedDate}`
@@ -139,14 +139,14 @@ export const BuildFormHeader = () => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoPersonOutline size={16} />}
-                className='hover:bg-navy-50 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:text-white'
+                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-navy-50 hover:text-white'
                 onClick={() => navigate(PATH.MY_ACCOUNT_PAGE)}
               >
                 Account
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoIosLogOut size={16} />}
-                className='hover:bg-navy-50 gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:text-white'
+                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-navy-50 hover:text-white'
                 onClick={handleLogout}
               >
                 Logout

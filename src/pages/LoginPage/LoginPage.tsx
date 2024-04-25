@@ -40,7 +40,7 @@ export const LoginPage = () => {
 
   return (
     <div className='flex h-screen w-screen flex-row'>
-      <div className='bg-navy-10 flex h-full w-1/2 flex-col items-center justify-evenly'>
+      <div className='flex h-full w-1/2 flex-col items-center justify-evenly bg-navy-10'>
         <Anchor href={PATH.ROOT_PAGE} className='w-[500px]'>
           <Image src={BlueLogo} className='h-full' />
         </Anchor>
@@ -59,10 +59,10 @@ export const LoginPage = () => {
           </div>
           <div className='flex justify-between'>
             Or login with
-            <UnstyledButton className='text-navy-300 hover:text-navy-600 hover:font-medium'>
+            <UnstyledButton className='text-navy-300 hover:font-medium hover:text-navy-600'>
               Facebook
             </UnstyledButton>
-            <UnstyledButton className='text-navy-300 hover:text-navy-600 hover:font-medium'>
+            <UnstyledButton className='text-navy-300 hover:font-medium hover:text-navy-600'>
               Google
             </UnstyledButton>
           </div>
@@ -74,7 +74,7 @@ export const LoginPage = () => {
             <Text className='text-3xl font-bold'>
               EASIEST ONLINE FORM BUILDER
             </Text>
-            <Text className='text-navy-50 mt-4 text-lg font-semibold'>
+            <Text className='mt-4 text-lg font-semibold text-navy-50'>
               We believe the right form makes all the difference. Go from
               busywork to less work with powerful forms that use conditional
               logic, accept payments, generate reports, and automate workflows

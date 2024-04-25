@@ -31,7 +31,7 @@ export const SaveButton = ({
       <UnstyledButton
         type='submit'
         className={cn(
-          'text-navy-500 fixed right-10 top-[160px] flex flex-col items-center transition-all duration-500 ease-linear',
+          'fixed right-10 top-[160px] flex flex-col items-center text-navy-500 transition-all duration-500 ease-linear',
           className,
           { 'top-[90px]': isScrolling },
         )}
@@ -48,14 +48,14 @@ export const SaveButton = ({
           />
           <span
             className={cn(
-              'bg-navy-400 relative flex h-12 w-12 items-center justify-center rounded-full',
+              'relative flex h-12 w-12 items-center justify-center rounded-full bg-navy-400',
               {
                 'bg-navy-300': !canSave,
               },
             )}
           >
             {canSave && (
-              <span className='bg-navy-400 absolute h-full w-full animate-ping rounded-full opacity-65 duration-1000'></span>
+              <span className='absolute h-full w-full animate-ping rounded-full bg-navy-400 opacity-65 duration-1000'></span>
             )}
             <FaSave size={24} className='text-white' />
           </span>

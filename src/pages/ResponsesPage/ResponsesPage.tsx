@@ -36,12 +36,8 @@ export const ResponsesPage = () => {
             };
 
             const fieldsAnswers = elementAnswers.answers.reduce(
-              (answers, currentFieldAnswer) => ({
+              (answers) => ({
                 ...answers,
-                [`NameField${elementAnswers.elementId}`]:
-                  currentFieldAnswer.fieldName,
-                [`ValueField${elementAnswers.elementId}`]:
-                  currentFieldAnswer.text,
               }),
               { ...elementAnswer },
             );
@@ -70,7 +66,7 @@ export const ResponsesPage = () => {
     return (
       <Box className='h-screen'>
         <Header />
-        <Box className='bg-navy-10 flex h-contentHeight w-full flex-col items-center justify-center gap-3 pt-10'>
+        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-navy-10 pt-10'>
           <BsDatabaseExclamation size={64} className='text-gray-500' />
           <span className='mb-8 text-lg text-gray-600'>No records found.</span>
         </Box>
@@ -85,6 +81,7 @@ export const ResponsesPage = () => {
         <TopBarSubmission
           formId={Number(formId)}
           selectedResponseIds={selectedResponseIds}
+          selectedRecords={selectedRecords}
           setSelectedRecords={setSelectedRecords}
           showingResponseRows={responseRows || []}
         />
