@@ -3,6 +3,7 @@ import { Box, Stack } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
 import { useBuildFormContext } from '@/contexts';
+import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 
 import { FormRenderComponent } from '../FormRenderComponent';
 import { SubmissionConfirmation } from '../SubmissionConfirmation';
@@ -12,13 +13,13 @@ export const PreviewSection = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   return (
-    <Stack className='relative flex h-screen w-full items-center justify-center overflow-y-scroll bg-navy-50'>
+    <Stack className='relative flex min-h-screen w-full items-center justify-center bg-navy-10'>
       {isSuccess ? (
         <Box className='scale-90'>
           <SubmissionConfirmation />
         </Box>
       ) : (
-        <Box className='absolute top-[50px] w-full py-7'>
+        <Box className='h-full w-full py-7'>
           <Formik
             validateOnBlur={true}
             validateOnChange={false}
@@ -33,6 +34,7 @@ export const PreviewSection = () => {
           </Formik>
         </Box>
       )}
+      <ScrollToTopButton className='fixed bottom-[-25%] right-10'></ScrollToTopButton>
     </Stack>
   );
 };

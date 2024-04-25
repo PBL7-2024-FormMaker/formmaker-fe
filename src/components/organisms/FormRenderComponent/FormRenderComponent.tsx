@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
-import { Box, Image, LoadingOverlay, Stack, Text } from '@mantine/core';
+import {
+  Box,
+  Divider,
+  Image,
+  LoadingOverlay,
+  Stack,
+  Text,
+} from '@mantine/core';
 
 import { BIG_Z_INDEX } from '@/constants';
 import { useElementLayouts } from '@/contexts';
@@ -80,13 +87,17 @@ export const FormRenderComponent = ({
             overlayProps={{ radius: 'sm', blur: 2 }}
             loaderProps={{ color: 'blue' }}
           />
-          <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
-            <Text className='mt-6 px-4 text-2xl font-bold'>{form?.title}</Text>
+          <div className='w-full rounded-md border border-solid border-slate-200 bg-white shadow-lg'>
+            <Text className='mt-6 p-7 px-4 text-2xl font-bold'>
+              {form?.title}
+            </Text>
+            <Divider />
             <ResponsiveReactGridLayout
               rowHeight={30}
               isResizable={false}
               isDroppable={false}
               isDraggable={false}
+              className='p-7'
             >
               {elements.map((element) => (
                 <Box
