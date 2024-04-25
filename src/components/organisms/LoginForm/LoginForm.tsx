@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Center } from '@mantine/core';
+import { Center, NavLink, Text } from '@mantine/core';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -9,7 +9,7 @@ import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
 import { signUpSchema } from '@/utils/schemas/signUpSchema';
 
-const loginSchema = signUpSchema.pick(['email', 'password']);
+export const loginSchema = signUpSchema.pick(['email', 'password']);
 
 export type LoginSchema = yup.InferType<typeof loginSchema>;
 
@@ -42,11 +42,16 @@ export const LoginForm = (props: LoginFormProps) => {
         />
 
         <Field
-          classNameWrapper='mb-3'
           name='password'
           label='Password'
           classNameError='min-h-0'
           component={PasswordInput}
+        />
+
+        <NavLink
+          href='/forgot-password'
+          label={<Text size='xs'>Forgot password?</Text>}
+          classNames={{ body: 'flex justify-end' }}
         />
 
         <Center className='py-2'>

@@ -20,6 +20,9 @@ import { PublicPage } from '@/pages/PublicPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
+import { ForgotPasswordPage } from '../pages/FogotPasswordPage';
+import { ResetPasswordPage } from '../pages/ResetPasswordPage';
+
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
 // route required authentication to navigate
 export function ProtectedRoute() {
@@ -56,6 +59,14 @@ export function useRouteElements() {
         {
           path: PATH.SIGNUP_PAGE,
           element: <SignupPage />,
+        },
+        {
+          path: PATH.FORGOT_PASSWORD_PAGE,
+          element: <ForgotPasswordPage />,
+        },
+        {
+          path: PATH.RESET_PASSWORD_PAGE,
+          element: <ResetPasswordPage />,
         },
       ],
     },
