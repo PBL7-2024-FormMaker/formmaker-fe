@@ -90,7 +90,7 @@ export const BuildFormLeftbar = ({
                       <Box key={`element-${index}`}>
                         {!isSubmitElement ? (
                           <Group
-                            className='hover:bg-navy-500 group cursor-move'
+                            className='group cursor-move hover:bg-navy-500'
                             draggable={true}
                             unselectable='on'
                             onDragStart={(e) => {
@@ -98,7 +98,7 @@ export const BuildFormLeftbar = ({
                               handleDrop(element.type);
                             }}
                           >
-                            <Box className='group-hover:bg-navy-400 flex bg-slate-600 p-3 text-white'>
+                            <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-navy-400'>
                               <element.icon size={ELEMENT_ICON_SIZE} />
                             </Box>
                             <Box className='text-white'>{element.type}</Box>
@@ -115,7 +115,7 @@ export const BuildFormLeftbar = ({
                             <Group
                               className={cn('group', {
                                 'cursor-not-allowed': hasSubmitButton,
-                                'hover:bg-navy-500 cursor-move':
+                                'cursor-move hover:bg-navy-500':
                                   !hasSubmitButton,
                               })}
                               draggable={!hasSubmitButton}

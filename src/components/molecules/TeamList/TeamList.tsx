@@ -141,9 +141,9 @@ export const TeamList = ({
                       />
                     </Box>
                   </Menu.Target>
-                  <Menu.Dropdown className='!bg-navy-10 min-w-[180px]'>
+                  <Menu.Dropdown className='min-w-[180px] !bg-navy-10'>
                     <Menu.Item
-                      className='hover:bg-navy-400 mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                      className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<RiTeamFill />}
                       onClick={() => {
                         openModal(ModalTypes.MANAGE_TEAM);
@@ -153,7 +153,7 @@ export const TeamList = ({
                       Manage members
                     </Menu.Item>
                     <Menu.Item
-                      className='hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<RiFolderAddFill />}
                       onClick={() => {
                         openModal(ModalTypes.CREATE_FOLDER);
@@ -163,7 +163,7 @@ export const TeamList = ({
                       Add new folder
                     </Menu.Item>
                     <Menu.Item
-                      className='hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<MdEdit />}
                       onClick={() => {
                         openModal(ModalTypes.UPDATE_TEAM);
@@ -174,7 +174,7 @@ export const TeamList = ({
                       Change name
                     </Menu.Item>
                     <Menu.Item
-                      className='hover:bg-navy-400 mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:text-white'
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<MdDelete />}
                       onClick={() => {
                         openModal(ModalTypes.DELETE_TEAM);

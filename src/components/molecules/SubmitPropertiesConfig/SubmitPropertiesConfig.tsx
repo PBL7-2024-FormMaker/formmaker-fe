@@ -102,7 +102,7 @@ export const SubmitProptertiesConfig = (
                 edittingItem.config.buttonColor === DEFAULT_BUTTON_COLOR,
             },
             {
-              'bg-navy-400 hover:bg-navy-500 text-white hover:text-white':
+              'bg-navy-400 text-white hover:bg-navy-500 hover:text-white':
                 edittingItem.config.buttonColor !== DEFAULT_BUTTON_COLOR,
             },
           )}
