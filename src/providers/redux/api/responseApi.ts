@@ -10,7 +10,7 @@ import {
 import { rootApi } from './rootApi';
 
 interface GetResponsesType extends GetResponsesParams {
-  formId: number;
+  formId: string;
 }
 
 export const responseApi = rootApi.injectEndpoints({
@@ -28,7 +28,7 @@ export const responseApi = rootApi.injectEndpoints({
     createResponse: build.mutation<
       SuccessResponse<FormAnswerResponse>,
       {
-        formId?: number;
+        formId?: string;
         payload: FormAnswerRequest;
       }
     >({
@@ -44,8 +44,8 @@ export const responseApi = rootApi.injectEndpoints({
         formId,
         responseId,
       }: {
-        formId: number;
-        responseId: number;
+        formId: string;
+        responseId: string;
       }) => ({
         url: `${API_URL.RESPONSES}/${formId}/${responseId}`,
         method: 'DELETE',
@@ -57,8 +57,8 @@ export const responseApi = rootApi.injectEndpoints({
         formId,
         responsesIds,
       }: {
-        formId: number;
-        responsesIds: number[];
+        formId: string;
+        responsesIds: string[];
       }) => ({
         url: `${API_URL.RESPONSES}/${formId}`,
         method: 'DELETE',

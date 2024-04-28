@@ -1,13 +1,25 @@
-import { Outlet } from 'react-router-dom';
-import { Box, Stack } from '@mantine/core';
+import { Outlet, useParams } from 'react-router-dom';
+import { Box, LoadingOverlay, Stack } from '@mantine/core';
 
 import { useBuildFormContext } from '@/contexts';
+import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { BuildFormHeader } from '@/templates/Header';
 import { TopBar } from '@/templates/TopBar';
 import { cn } from '@/utils';
 
+import { NotFoundPage } from '../NotFoundPage';
+
 export const BuildFormPage = () => {
   const { previewMode } = useBuildFormContext();
+  const { id: formId } = useParams();
+  const { data: formData, isLoading } = useGetFormDetailsQuery(
+    { id: formId || '' },
+    { skip: !formId },
+  );
+
+  if (!isLoading && formId && !formData) {
+    return <NotFoundPage />;
+  }
 
   return (
     <Box
@@ -23,7 +35,15 @@ export const BuildFormPage = () => {
         <Box className='sticky right-0 top-0 z-[100]'>
           <TopBar />
         </Box>
-        <Outlet />
+        <Box pos='relative'>
+          <LoadingOverlay
+            visible={isLoading}
+            zIndex={1000}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'blue' }}
+          />
+          <Outlet />
+        </Box>
       </Stack>
     </Box>
   );

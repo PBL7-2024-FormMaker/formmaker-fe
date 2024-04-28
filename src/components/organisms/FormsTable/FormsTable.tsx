@@ -188,7 +188,11 @@ export const FormsTable = () => {
       {
         text: 'Add to Folder',
         icon: <RiFolderAddFill size={18} />,
-        handleClick: (record: FormResponse) => {
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
           setSelectedRecords([record]);
           openModal(ModalTypes.ADD_TO_FOLDER);
         },
@@ -196,7 +200,11 @@ export const FormsTable = () => {
       {
         text: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
         icon: <RiTeamFill size={18} />,
-        handleClick: (record: FormResponse) => {
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
           setSelectedRecords([record]);
           if (activeTeam === -1) {
             openModal(ModalTypes.MOVE_TO_TEAM);
@@ -208,19 +216,35 @@ export const FormsTable = () => {
       {
         text: 'Disable',
         icon: <PiPauseCircleFill size={18} />,
-        handleClick: (record: FormResponse) =>
-          handleUpdateFormStatus(record, 'disable'),
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
+          handleUpdateFormStatus(record, 'disable');
+        },
       },
       {
         text: 'Enable',
         icon: <FaPlayCircle size={18} />,
-        handleClick: (record: FormResponse) =>
-          handleUpdateFormStatus(record, 'enable'),
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
+          handleUpdateFormStatus(record, 'enable');
+        },
       },
       {
         text: 'Delete',
         icon: <IoTrash size={18} />,
-        handleClick: (record: FormResponse) => handleDeleteForm(record),
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
+          handleDeleteForm(record);
+        },
       },
     ],
     [activeTeam],
@@ -338,7 +362,8 @@ export const FormsTable = () => {
                 root: 'flex justify-center items-center',
               }}
               className='h-full w-full font-medium focus:font-bold'
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setSelectedRecords([record]);
                 openModal(ModalTypes.DELETE_FORM_PERMANENTLY);
               }}
@@ -353,7 +378,8 @@ export const FormsTable = () => {
             <Menu shadow='sm' offset={10} position='bottom' withArrow>
               <Menu.Target>
                 <Button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setSelectedRecords([record]);
                   }}
                   title='More'
@@ -376,7 +402,10 @@ export const FormsTable = () => {
                           key={index}
                           leftSection={option.icon}
                           className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
-                          onClick={() => option.handleClick(record)}
+                          onClick={(
+                            e: React.MouseEvent<HTMLButtonElement, MouseEvent> &
+                              FormResponse,
+                          ) => option.handleClick(e, record)}
                         >
                           {option.text}
                         </Menu.Item>
@@ -388,7 +417,10 @@ export const FormsTable = () => {
                           key={index}
                           leftSection={option.icon}
                           className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
-                          onClick={() => option.handleClick(record)}
+                          onClick={(
+                            e: React.MouseEvent<HTMLButtonElement, MouseEvent> &
+                              FormResponse,
+                          ) => option.handleClick(e, record)}
                         >
                           {option.text}
                         </Menu.Item>
@@ -436,15 +468,15 @@ export const FormsTable = () => {
         records={data?.forms}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
-        onRowClick={({ record: clickedRecord }) => {
-          setSelectedRecords((prev) => {
-            const isSelectedRecord =
-              prev.findIndex((record) => record.id === clickedRecord.id) !== -1;
-            if (isSelectedRecord) {
-              return [...prev];
-            }
-            return [...prev, clickedRecord];
-          });
+        onRowClick={({ record }) => {
+          setSelectedRecords((prev) =>
+            prev
+              .reduce((acc: FormResponse[], selectedRecord: FormResponse) => {
+                if (selectedRecord.id !== record.id) acc.push(selectedRecord);
+                return acc;
+              }, [])
+              .concat(prev.some((rec) => rec.id === record.id) ? [] : [record]),
+          );
         }}
         noRecordsText='No records found'
         totalRecords={data?.totalForms}
