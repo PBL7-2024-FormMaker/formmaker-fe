@@ -15,7 +15,7 @@ export const ResponsesPage = () => {
   const [selectedRecords, setSelectedRecords] = useState<ResponseRow[]>([]);
   const [params, setParams] = useState<GetResponsesParams>();
   const { data: response, isFetching } = useGetResponsesByFormIdQuery({
-    formId: Number(formId),
+    formId: formId!,
     ...params,
   });
 
