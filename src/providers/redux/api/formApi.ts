@@ -30,21 +30,21 @@ const formApi = rootApi.injectEndpoints({
         response.data,
       providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
     }),
-    addToFavourites: build.mutation<SuccessResponse<unknown>, { id: number }>({
+    addToFavourites: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}/favourites`,
         method: 'PATCH',
       }),
       invalidatesTags: ['Forms'],
     }),
-    deleteForm: build.mutation<SuccessResponse<unknown>, { id: number }>({
+    deleteForm: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Forms'],
     }),
-    restoreForm: build.mutation<SuccessResponse<unknown>, { id: number }>({
+    restoreForm: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}/restore`,
         method: 'PATCH',
@@ -61,7 +61,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     updateForm: build.mutation<
       SuccessResponse<FormResponse>,
-      { id: number; data: FormRequest }
+      { id: string; data: FormRequest }
     >({
       query: ({ id, data }) => ({
         url: `${API_URL.FORMS}/${id}`,
@@ -72,7 +72,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     addToFolder: build.mutation<
       SuccessResponse<unknown>,
-      { formId: number; folderId: number }
+      { formId: string; folderId: string }
     >({
       query: ({ formId, folderId }) => ({
         url: `${API_URL.FORMS}/${formId}/folder/${folderId}/add`,
@@ -82,7 +82,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     moveToTeam: build.mutation<
       SuccessResponse<unknown>,
-      { formId: number; teamId: number }
+      { formId: string; teamId: string }
     >({
       query: ({ formId, teamId }) => ({
         url: `${API_URL.FORMS}/${formId}/team/${teamId}/add`,
@@ -92,7 +92,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     removeFromFolder: build.mutation<
       SuccessResponse<unknown>,
-      { formId: number; folderId: number }
+      { formId: string; folderId: string }
     >({
       query: ({ formId, folderId }) => ({
         url: `${API_URL.FORMS}/${formId}/folder/${folderId}/remove`,
@@ -102,7 +102,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     removeFromTeam: build.mutation<
       SuccessResponse<unknown>,
-      { formId: number; teamId: number }
+      { formId: string; teamId: string }
     >({
       query: ({ formId, teamId }) => ({
         url: `${API_URL.FORMS}/${formId}/team/${teamId}/remove`,
@@ -112,7 +112,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     createFormInFolder: build.mutation<
       SuccessResponse<FormResponse>,
-      { folderId: number; data: FormRequest }
+      { folderId: string; data: FormRequest }
     >({
       query: ({ folderId, data }) => ({
         url: `${API_URL.FORMS}/folder/${folderId}`,
@@ -123,7 +123,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     createFormInTeam: build.mutation<
       SuccessResponse<FormResponse>,
-      { teamId: number; data: FormRequest }
+      { teamId: string; data: FormRequest }
     >({
       query: ({ teamId, data }) => ({
         url: `${API_URL.FORMS}/team/${teamId}`,
@@ -134,7 +134,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     createFormInFolderOfTeam: build.mutation<
       SuccessResponse<FormResponse>,
-      { folderId: number; teamId: number; data: FormRequest }
+      { folderId: string; teamId: string; data: FormRequest }
     >({
       query: ({ folderId, teamId, data }) => ({
         url: `${API_URL.FORMS}/folder/${folderId}/team/${teamId}`,
@@ -145,7 +145,7 @@ const formApi = rootApi.injectEndpoints({
     }),
     updateDisabledStatus: build.mutation<
       SuccessResponse<FormResponse>,
-      { formId: number; disabled: boolean }
+      { formId: string; disabled: boolean }
     >({
       query: ({ formId, disabled }) => ({
         url: `${API_URL.FORMS}/${formId}/disabled/${disabled}`,
