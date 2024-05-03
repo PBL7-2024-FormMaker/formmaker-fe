@@ -95,8 +95,8 @@ export const BuildFormHeader = () => {
                 setCurrentTitle(DEFAULT_FORM_TITLE);
               }
             }}
-            className='min-w-14 overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
-            style={{ width: `${currentTitle.length * 12}px` }}
+            className='overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
+            style={{ width: `${currentTitle.length * 22}px` }}
           />
           {isPublishSection || isEditingTitle || (
             <MdOutlineModeEditOutline
