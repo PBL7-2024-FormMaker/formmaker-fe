@@ -57,7 +57,7 @@ export const LoginPage = () => {
             />
             <LoginForm onSubmit={onSubmit} />
           </div>
-          <div className='flex justify-between'>
+          {/* <div className='flex justify-between'>
             Or login with
             <UnstyledButton className='text-navy-300 hover:font-medium hover:text-navy-600'>
               Facebook
@@ -65,19 +65,20 @@ export const LoginPage = () => {
             <UnstyledButton className='text-navy-300 hover:font-medium hover:text-navy-600'>
               Google
             </UnstyledButton>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className='flex h-contentHeight w-1/2 flex-col justify-center gap-7'>
         <div className='flex flex-col items-center justify-between gap-2 text-center'>
           <div className='w-[80%]'>
             <Text className='text-3xl font-bold'>
-              EASIEST ONLINE FORM BUILDER
+              SIMPLEST ONLINE FORM MAKER
             </Text>
             <Text className='mt-4 text-lg font-semibold text-navy-50'>
-              We believe the right form makes all the difference. Go from
-              busywork to less work with powerful forms that use conditional
-              logic, accept payments, generate reports, and automate workflows
+              Say goodbye to boring tasks and welcome streamlined efficiency
+              with our advanced form maker. Experience the power of
+              drag-and-drop simplicity and automated form generation,
+              simplifying your online form-building journey like never before
             </Text>
           </div>
           <Image
