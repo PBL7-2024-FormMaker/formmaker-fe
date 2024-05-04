@@ -1,12 +1,12 @@
 export interface FolderResponse {
-  id: number;
+  id: string;
   name: string;
   permissions: object;
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  creatorId: number;
-  teamId: number;
+  creatorId: string;
+  teamId: string;
 }
 
 export interface FolderRequest {

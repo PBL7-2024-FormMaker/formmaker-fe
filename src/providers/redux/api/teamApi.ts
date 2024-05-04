@@ -62,7 +62,7 @@ const teamApi = rootApi.injectEndpoints({
     }),
     removeMember: build.mutation<
       SuccessResponse<TeamResponse>,
-      { id: string; memberIds: number[] }
+      { id: string; memberIds: string[] }
     >({
       query: ({ id, memberIds }) => ({
         url: `${API_URL.TEAMS}/${id}/remove-member`,

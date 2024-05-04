@@ -1,6 +1,10 @@
 import { Box, Stack } from '@mantine/core';
 
-import { FormParamsProvider, useOverviewContext } from '@/contexts';
+import {
+  BuildFormContextProvider,
+  FormParamsProvider,
+  useOverviewContext,
+} from '@/contexts';
 import { ActionToolbar } from '@/organisms/ActionToolbar';
 import { FormsTable } from '@/organisms/FormsTable';
 import { OverviewSidebar } from '@/organisms/OverviewSidebar';
@@ -15,7 +19,9 @@ export const OverviewPage = () => {
         <Header />
         <Box className='flex h-full w-full items-start justify-between gap-0'>
           <Stack className='h-full w-[20%] border-y-0 border-l-0 border-r border-solid border-slate-300'>
-            <OverviewSidebar />
+            <BuildFormContextProvider>
+              <OverviewSidebar />
+            </BuildFormContextProvider>
           </Stack>
           <Stack className='h-full w-[80%] gap-0'>
             <ActionToolbar

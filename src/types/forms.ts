@@ -8,12 +8,12 @@ export interface GetFormsParams {
   isFavourite?: number;
   sortField?: string;
   sortDirection?: string;
-  folderId?: number;
-  teamId?: number;
+  folderId?: string;
+  teamId?: string;
 }
 
 export interface FormResponse {
-  id: number;
+  id: string;
   title: string;
   logoUrl: string;
   settings: object;
@@ -23,15 +23,15 @@ export interface FormResponse {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  creatorId: number;
-  teamId: number;
-  folderId: number;
+  creatorId: string;
+  teamId: string;
+  folderId: string;
   folder: {
-    id: number;
+    id: string;
     name: string;
   };
   favouritedByUsers: {
-    id: number;
+    id: string;
     email: string;
   };
   isFavourite: boolean;
@@ -47,7 +47,7 @@ export interface GetFormsResponse {
 }
 
 export interface FormRequest {
-  id?: number;
+  id?: string;
   disabled?: boolean;
   title: string;
   logoUrl: string;

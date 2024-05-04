@@ -12,8 +12,8 @@ import { cn } from '@/utils';
 import { transformObjects } from '@/utils/transformObj';
 
 interface TopBarSubmission {
-  formId: number;
-  selectedResponseIds: number[];
+  formId: string;
+  selectedResponseIds: string[];
   selectedRecords: ResponseRow[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<ResponseRow[]>>;
   showingResponseRows: ResponseRow[];

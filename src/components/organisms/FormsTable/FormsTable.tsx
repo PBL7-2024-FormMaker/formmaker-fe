@@ -198,7 +198,7 @@ export const FormsTable = () => {
         },
       },
       {
-        text: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
+        text: activeTeam === '' ? 'Move to Team' : 'Move to My Forms',
         icon: <RiTeamFill size={18} />,
         handleClick: (
           e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -206,7 +206,7 @@ export const FormsTable = () => {
         ) => {
           e.stopPropagation();
           setSelectedRecords([record]);
-          if (activeTeam === -1) {
+          if (activeTeam === '') {
             openModal(ModalTypes.MOVE_TO_TEAM);
             return;
           }

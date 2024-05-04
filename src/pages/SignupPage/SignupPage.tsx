@@ -1,11 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Anchor,
-  Image,
-  LoadingOverlay,
-  Text,
-  UnstyledButton,
-} from '@mantine/core';
+import { Anchor, Image, LoadingOverlay, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import BlueLogo from '@/assets/images/bluelogo.png';

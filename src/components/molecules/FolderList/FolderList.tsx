@@ -33,11 +33,11 @@ interface FolderListProps {
   openModal: (type: ModalType) => void;
   closeModal: () => void;
   setFolderName: (folderName: string) => void;
-  setFolderId: (folderId: number) => void;
+  setFolderId: (folderId: string) => void;
   modalType: ModalType | '';
   folderName: string;
-  folderId: number;
-  teamId?: number;
+  folderId: string;
+  teamId?: string;
 }
 
 export const FolderList = ({
@@ -87,7 +87,7 @@ export const FolderList = ({
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
         setActiveAllForms(true);
-        setActiveFolder(-1);
+        setActiveFolder('');
         setParams({ ...defaultFormsParams });
 
         closeModal();
@@ -127,7 +127,7 @@ export const FolderList = ({
                 )}
                 onClick={() => {
                   setActiveFolder(folder.id);
-                  setActiveTeam(teamId || -1);
+                  setActiveTeam(teamId || '');
                   setActiveAllForms(false);
                   setSelectedRecords([]);
                   setParams({

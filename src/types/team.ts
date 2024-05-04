@@ -1,17 +1,17 @@
 export interface Member {
-  id: number;
+  id: string;
   username: string;
   email: string;
   avatarUrl: string;
 }
 
 export interface FolderInTeamResponse {
-  id: number;
+  id: string;
   name: string;
 }
 
 export interface TeamResponse {
-  id: number;
+  id: string;
   name: string;
   folders: FolderInTeamResponse[];
   logoUrl: string;
@@ -19,7 +19,7 @@ export interface TeamResponse {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  creatorId: number;
+  creatorId: string;
   members: Member[];
 }
 

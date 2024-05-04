@@ -11,7 +11,7 @@ import { Modal } from '../Modal';
 
 interface ManageFolderModalProps extends MantineModalProps {
   folderName?: string;
-  folderId?: number;
+  folderId?: string;
   setFolderName: (arg0: string) => void;
   inputTitle?: string;
   onClickCancel: () => void;

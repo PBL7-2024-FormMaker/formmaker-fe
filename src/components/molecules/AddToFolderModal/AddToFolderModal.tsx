@@ -19,7 +19,7 @@ import { Modal } from '../Modal';
 
 interface AddToFolderModalProps extends MantineModalProps {
   closeModal: () => void;
-  selectedFormIds: number[];
+  selectedFormIds: string[];
 }
 
 export const AddToFolderModal = ({
@@ -38,7 +38,7 @@ export const AddToFolderModal = ({
 
   const { data: team } = useGetTeamDetailsQuery(
     { id: activeTeam },
-    { skip: activeTeam === -1 },
+    { skip: activeTeam === '' },
   );
 
   const [folderList, setFolderList] = useState<
@@ -46,7 +46,7 @@ export const AddToFolderModal = ({
   >();
 
   useEffect(() => {
-    if (activeTeam === -1) {
+    if (activeTeam === '') {
       setFolderList(folders);
       return;
     }
@@ -63,7 +63,7 @@ export const AddToFolderModal = ({
   const handleAddToFolder = async () => {
     await Promise.allSettled(
       selectedFormIds.map((id) =>
-        addToFolder({ formId: id, folderId: Number(selectedFolderId) }),
+        addToFolder({ formId: id, folderId: selectedFolderId }),
       ),
     ).then((response) => {
       const { successCount, errorCount } = countSuccessAndErrors(response);

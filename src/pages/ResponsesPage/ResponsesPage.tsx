@@ -56,7 +56,7 @@ export const ResponsesPage = () => {
     [rawRecords],
   );
   const selectedResponseIds = useMemo(
-    () => selectedRecords.map((selectedRecord) => selectedRecord.id as number),
+    () => selectedRecords.map((selectedRecord) => selectedRecord.id as string),
     [selectedRecords],
   );
 
@@ -79,7 +79,7 @@ export const ResponsesPage = () => {
       <div className='bg-white'>
         <Header />
         <TopBarSubmission
-          formId={Number(formId)}
+          formId={formId!}
           selectedResponseIds={selectedResponseIds}
           selectedRecords={selectedRecords}
           setSelectedRecords={setSelectedRecords}
