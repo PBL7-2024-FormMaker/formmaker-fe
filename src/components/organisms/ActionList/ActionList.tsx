@@ -23,7 +23,7 @@ import { ModalType, ModalTypes } from '@/types';
 import { countSuccessAndErrors, toastify } from '@/utils';
 
 interface ActionListFormProps {
-  selectedFormIds: number[];
+  selectedFormIds: string[];
 }
 
 export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
@@ -116,9 +116,9 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     },
     {
       icon: <RiTeamFill size={24} />,
-      title: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
+      title: activeTeam === '' ? 'Move to Team' : 'Move to My Forms',
       onClick: () => {
-        if (activeTeam === -1) {
+        if (activeTeam === '') {
           openModal(ModalTypes.MOVE_TO_TEAM);
           return;
         }
@@ -142,9 +142,9 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     },
     {
       icon: <RiTeamFill size={24} />,
-      title: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
+      title: activeTeam === '' ? 'Move to Team' : 'Move to My Forms',
       onClick: () => {
-        if (activeTeam === -1) {
+        if (activeTeam === '') {
           openModal(ModalTypes.MOVE_TO_TEAM);
           return;
         }

@@ -15,7 +15,7 @@ import { cn } from '@/utils';
 
 export const OverviewSidebar = () => {
   const [folderName, setFolderName] = useState<string>('');
-  const [folderId, setFolderId] = useState<number>(0);
+  const [folderId, setFolderId] = useState<string>('');
 
   const {
     activeFolder,
@@ -44,8 +44,8 @@ export const OverviewSidebar = () => {
           onClick={() =>
             navigate(PATH.BUILD_FORM_PAGE, {
               state: {
-                folderId: activeFolder === -1 ? undefined : activeFolder,
-                teamId: activeTeam === -1 ? undefined : activeTeam,
+                folderId: activeFolder === '' ? undefined : activeFolder,
+                teamId: activeTeam === '' ? undefined : activeTeam,
               },
             })
           }
@@ -83,8 +83,8 @@ export const OverviewSidebar = () => {
                 ...defaultFormsParams,
                 isFavourite: 1,
               });
-              setActiveFolder(-1);
-              setActiveTeam(-1);
+              setActiveFolder('');
+              setActiveTeam('');
               setActiveAllForms(false);
               setSelectedRecords([]);
             }}
@@ -104,8 +104,8 @@ export const OverviewSidebar = () => {
                 isDeleted: 1,
               });
               setActiveAllForms(false);
-              setActiveFolder(-1);
-              setActiveTeam(-1);
+              setActiveFolder('');
+              setActiveTeam('');
               setSelectedRecords([]);
             }}
           />

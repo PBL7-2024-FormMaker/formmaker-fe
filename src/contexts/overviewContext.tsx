@@ -3,22 +3,22 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { FormResponse } from '@/types';
 
 interface OverviewContextType {
-  activeFolder: number;
-  setActiveFolder: React.Dispatch<React.SetStateAction<number>>;
+  activeFolder: string;
+  setActiveFolder: React.Dispatch<React.SetStateAction<string>>;
   activeAllForms: boolean;
   setActiveAllForms: React.Dispatch<React.SetStateAction<boolean>>;
-  activeTeam: number;
-  setActiveTeam: React.Dispatch<React.SetStateAction<number>>;
+  activeTeam: string;
+  setActiveTeam: React.Dispatch<React.SetStateAction<string>>;
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
 }
 
 const OverviewContext = createContext<OverviewContextType>({
-  activeFolder: -1,
+  activeFolder: '',
   setActiveFolder: () => {},
   activeAllForms: true,
   setActiveAllForms: () => {},
-  activeTeam: -1,
+  activeTeam: '',
   setActiveTeam: () => {},
   selectedRecords: [],
   setSelectedRecords: () => {},
@@ -27,9 +27,9 @@ const OverviewContext = createContext<OverviewContextType>({
 export const OverviewContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [activeFolder, setActiveFolder] = useState<number>(-1);
+  const [activeFolder, setActiveFolder] = useState<string>('');
   const [activeAllForms, setActiveAllForms] = useState<boolean>(true);
-  const [activeTeam, setActiveTeam] = useState<number>(-1);
+  const [activeTeam, setActiveTeam] = useState<string>('');
   const [selectedRecords, setSelectedRecords] = useState<FormResponse[]>([]);
 
   return (

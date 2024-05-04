@@ -30,7 +30,7 @@ export interface GetResponsesParams {
 
 export interface RawResponseRow {
   formAnswers: RawFormAnswerCell[];
-  id: number;
+  id: string;
   createdAt: Date;
 }
 

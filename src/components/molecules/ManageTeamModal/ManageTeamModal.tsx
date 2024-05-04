@@ -11,7 +11,7 @@ import { Modal } from '../Modal';
 
 interface ManageTeamModalProps extends MantineModalProps {
   teamName?: string;
-  teamId?: number;
+  teamId?: string;
   setTeamName: (arg0: string) => void;
   onClickBack: () => void;
   onClickSubmit: () => void;

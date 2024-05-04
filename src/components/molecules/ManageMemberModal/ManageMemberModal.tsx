@@ -21,16 +21,16 @@ import { TextInput } from '../TextInput';
 
 interface ManageMemberModalProps extends MantineModalProps {
   teamList?: TeamResponse[];
-  teamId: number;
+  teamId: string;
   handleInviteMember: (value: { email: string }) => void;
-  handleRemoveMember: (id: number) => void;
+  handleRemoveMember: (id: string) => void;
   isLoading: boolean;
 }
 const emailSchema = signUpSchema.pick(['email']);
 
 const getMembersInTeamWithOwnership = (
   teamList: TeamResponse[],
-  teamId: number,
+  teamId: string,
 ) => {
   const team = teamList.find((team) => team.id === teamId);
 

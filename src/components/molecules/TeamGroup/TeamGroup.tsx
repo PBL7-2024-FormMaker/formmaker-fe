@@ -24,8 +24,8 @@ import { TeamList } from '../TeamList';
 
 interface TeamListProps {
   setFolderName: (folderName: string) => void;
-  setFolderId: (folderId: number) => void;
-  folderId: number;
+  setFolderId: (folderId: string) => void;
+  folderId: string;
   folderName: string;
 }
 
@@ -36,7 +36,7 @@ export const TeamGroup = ({
   folderName,
 }: TeamListProps) => {
   const [teamName, setTeamName] = useState<string>('');
-  const [teamId, setTeamId] = useState<number>(0);
+  const [teamId, setTeamId] = useState<string>('');
   const [modalType, setModalType] = useState<ModalType | ''>('');
 
   const [addMember, { isLoading: isAddMemberLoading }] = useAddMemberMutation();
@@ -80,7 +80,7 @@ export const TeamGroup = ({
     });
   };
 
-  const handleRemoveMember = (id: number) => {
+  const handleRemoveMember = (id: string) => {
     removeMember({ id: teamId, memberIds: [id] }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);

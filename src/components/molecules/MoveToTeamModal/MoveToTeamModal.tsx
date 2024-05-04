@@ -18,7 +18,7 @@ import { Modal } from '../Modal';
 
 interface MoveToTeamModalProps extends MantineModalProps {
   closeModal: () => void;
-  selectedFormIds: number[];
+  selectedFormIds: string[];
 }
 
 export const MoveToTeamModal = ({
@@ -41,7 +41,7 @@ export const MoveToTeamModal = ({
   const handleMoveToTeam = async () => {
     await Promise.allSettled(
       selectedFormIds.map((id) =>
-        moveToTeam({ formId: id, teamId: Number(selectedTeamId) }),
+        moveToTeam({ formId: id, teamId: selectedTeamId! }),
       ),
     ).then((response) => {
       const { successCount, errorCount } = countSuccessAndErrors(response);

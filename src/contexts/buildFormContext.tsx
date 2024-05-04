@@ -10,6 +10,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { FormRequest } from '@/types';
 
+import { DEFAULT_ELEMENTS } from './elementLayoutContext';
+
 interface BuildFormContextType {
   form: FormRequest;
   setForm: React.Dispatch<React.SetStateAction<FormRequest>>;
@@ -30,10 +32,10 @@ interface BuildFormContextType {
 }
 
 export const initFormRequestState: FormRequest = {
-  title: '',
+  title: 'Form',
   logoUrl: '',
   settings: {},
-  elements: [],
+  elements: DEFAULT_ELEMENTS,
   updatedAt: '',
   createdAt: '',
 };

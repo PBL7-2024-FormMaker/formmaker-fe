@@ -22,8 +22,8 @@ interface FolderListProps {
   setFolderName: (folderName: string) => void;
   folderList?: FolderResponse[];
   isLoading: boolean;
-  folderId: number;
-  setFolderId: (folderId: number) => void;
+  folderId: string;
+  setFolderId: (folderId: string) => void;
 }
 
 export const FolderGroup = ({
@@ -76,8 +76,8 @@ export const FolderGroup = ({
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(true);
-          setActiveFolder(-1);
-          setActiveTeam(-1);
+          setActiveFolder('');
+          setActiveTeam('');
           setSelectedRecords([]);
           setParams({ ...defaultFormsParams });
         }}
