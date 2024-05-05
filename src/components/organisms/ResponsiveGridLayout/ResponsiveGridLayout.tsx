@@ -36,7 +36,6 @@ interface ResponsiveGridLayoutProps {
   currentElementType: ElementType;
   updateItem: (item: ElementItem) => void;
   handleConfig: (config: ElementItem['config']) => void;
-  isDisabled: boolean;
 }
 
 const FLEETING_INDEX = 'fleeting';
@@ -45,7 +44,6 @@ export const ResponsiveGridLayout = ({
   currentElementType,
   updateItem,
   handleConfig,
-  isDisabled,
 }: ResponsiveGridLayoutProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
@@ -350,8 +348,8 @@ export const ResponsiveGridLayout = ({
         measureBeforeMount={false}
         useCSSTransforms={mounted}
         isResizable={false}
-        isDroppable={!isDisabled}
-        isDraggable={!isDisabled}
+        isDroppable={true}
+        isDraggable={true}
         isBounded={true}
         containerPadding={[0, 0]}
         onDragStart={handleDragStart}

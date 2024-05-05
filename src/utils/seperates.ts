@@ -13,6 +13,18 @@ export function separateFields(form: FormRequest) {
   return formWithoutText;
 }
 
+export function separateFieldsInElements(elements: ElementItem[]) {
+  const elementsWithoutText = JSON.parse(JSON.stringify(elements));
+
+  elementsWithoutText.forEach((element: ElementItem) => {
+    element.fields.forEach((field) => {
+      delete field.text;
+    });
+  });
+
+  return elementsWithoutText;
+}
+
 export const getFormAnswerFields = (elements: ElementItem[]) => {
   const formAnswers: FormAnswer[] = [];
 

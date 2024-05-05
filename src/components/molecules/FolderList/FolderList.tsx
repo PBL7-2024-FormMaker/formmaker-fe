@@ -9,11 +9,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { PATH } from '@/constants';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
-import { useFormParams, useOverviewContext } from '@/contexts';
+import {
+  useBuildFormContext,
+  useFormParams,
+  useOverviewContext,
+} from '@/contexts';
 import {
   useDeleteFolderMutation,
   useUpdateFolderMutation,
 } from '@/redux/api/folderApi';
+import {
+  useCreateFormInFolderMutation,
+  useCreateFormInFolderOfTeamMutation,
+} from '@/redux/api/formApi';
 import {
   ErrorResponse,
   FolderResponse,
@@ -22,6 +30,7 @@ import {
   TeamResponse,
 } from '@/types';
 import { cn, toastify } from '@/utils';
+import { separateFields } from '@/utils/seperates';
 
 import { ConfirmationModal } from '../ComfirmationModal';
 import { Loader } from '../Loader';
@@ -64,7 +73,14 @@ export const FolderList = ({
   const navigate = useNavigate();
 
   const { setParams } = useFormParams();
+  const { form } = useBuildFormContext();
 
+  const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
+    useCreateFormInFolderMutation();
+  const [
+    createFormInFolderOfTeam,
+    { isLoading: isCreatingFormInFolderOfTeam },
+  ] = useCreateFormInFolderOfTeamMutation();
   const [updateFolder, { isLoading: isFolderUpdating }] =
     useUpdateFolderMutation();
   const [deleteFolder, { isLoading: isFolderDeleting }] =
@@ -98,6 +114,40 @@ export const FolderList = ({
     });
   };
 
+  const handleCreateFormInFolder = (folderId: string) => {
+    const filteredForm = separateFields(form);
+
+    return createFormInFolder({ folderId, data: filteredForm }).then((res) => {
+      if ('data' in res) {
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const handleCreateFormInFolderOfTeam = (folderId: string, teamId: string) => {
+    const filteredForm = separateFields(form);
+
+    return createFormInFolderOfTeam({
+      folderId,
+      teamId,
+      data: filteredForm,
+    }).then((res) => {
+      if ('data' in res) {
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const handleCreateFormBasedOnIds = (formId: string, teamId?: string) => {
+    if (teamId === undefined) {
+      return handleCreateFormInFolder(formId);
+    }
+
+    return handleCreateFormInFolderOfTeam(formId, teamId);
+  };
+
   return (
     <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
@@ -105,7 +155,9 @@ export const FolderList = ({
       ) : (
         folderList?.map((folder) => {
           const isActiveFolder = folder.id === activeFolder;
-          return (
+          return isCreatingFormInFolder || isCreatingFormInFolderOfTeam ? (
+            <Loader color='blue' />
+          ) : (
             <Group
               key={uuidv4()}
               className={cn(
@@ -157,9 +209,7 @@ export const FolderList = ({
                     className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                     leftSection={<RiAddBoxFill />}
                     onClick={() =>
-                      navigate(PATH.BUILD_FORM_PAGE, {
-                        state: { folderId: folder.id, teamId },
-                      })
+                      handleCreateFormBasedOnIds(folder.id, teamId)
                     }
                   >
                     Add new form

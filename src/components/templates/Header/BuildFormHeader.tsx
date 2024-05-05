@@ -4,34 +4,34 @@ import { IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
+import _debounce from 'lodash.debounce';
 
 import BlueLogo from '@/assets/images/bluelogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
 import { Loader } from '@/molecules/Loader';
+import { useUpdateFormMutation } from '@/redux/api/formApi';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { cn, formatDate, httpClient } from '@/utils';
+import { ErrorResponse } from '@/types';
+import { cn, formatDate, httpClient, toastify } from '@/utils';
+import { separateFields } from '@/utils/seperates';
 
 const LOGO_HEIGHT = 60;
 
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
-  const {
-    form,
-    isEditForm,
-    setForm,
-    isPublishSection,
-    currentTitle,
-    setCurrentTitle,
-  } = useBuildFormContext();
+  const { form, isEditForm, isPublishSection, currentTitle, setCurrentTitle } =
+    useBuildFormContext();
 
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
+
+  const [updateForm] = useUpdateFormMutation();
 
   const createdDate = useMemo(
     () => formatDate(form.createdAt, 'MMM D, YYYY h:mm A'),
@@ -48,21 +48,31 @@ export const BuildFormHeader = () => {
     navigate(PATH.ROOT_PAGE);
   };
 
-  useEffect(() => {
-    if (isEditForm && form.title !== '') {
-      setCurrentTitle(form.title);
-    } else {
-      setCurrentTitle(currentTitle);
-    }
-  }, [isEditForm, currentTitle, form.title, setCurrentTitle]);
+  const handleUpdateForm = (formId: string, title: string) => {
+    const filteredForm = separateFields(form);
+    if (!form.id) return;
+
+    return updateForm({
+      id: formId,
+      data: {
+        ...filteredForm,
+        title,
+      },
+    }).then((res) => {
+      if ('data' in res) {
+        return;
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const debounceSetTitle = _debounce((formId: string, value: string) => {
+    handleUpdateForm(formId, value);
+  }, 1000);
 
   useEffect(() => {
-    if (isEditForm) return;
-    setForm((prevState) => ({
-      ...prevState,
-      title: currentTitle,
-    }));
-  }, [currentTitle, isEditForm, setForm]);
+    setCurrentTitle(form.title);
+  }, [form.title, setCurrentTitle]);
 
   return (
     <header
@@ -81,10 +91,7 @@ export const BuildFormHeader = () => {
             value={currentTitle}
             onChange={(event) => {
               setCurrentTitle(event.target.value);
-              setForm((prevState) => ({
-                ...prevState,
-                title: event.target.value,
-              }));
+              debounceSetTitle(form.id!, event.target.value);
             }}
             onFocus={() => {
               setIsEditingTitle(true);
