@@ -53,7 +53,7 @@ export const ResponsesPage = () => {
         };
       }),
     [rawRecords],
-  );
+  );  
   const selectedResponseIds = useMemo(
     () => selectedRecords.map((selectedRecord) => selectedRecord.id as string),
     [selectedRecords],
