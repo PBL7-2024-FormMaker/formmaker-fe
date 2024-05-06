@@ -10,6 +10,7 @@ import {
 import { BuildSection } from '@/organisms/BuildSection';
 import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
+import { SettingsSection } from '@/organisms/SettingsSection';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoadingPage } from '@/pages/LoadingPage';
@@ -113,6 +114,10 @@ export function useRouteElements() {
               element: <PublishSection />,
             },
             {
+              path: 'settings',
+              element: <SettingsSection />,
+            },
+            {
               path: 'preview',
               element: <PreviewSection />,
             },
@@ -139,6 +144,10 @@ export function useRouteElements() {
             {
               path: 'publish',
               element: <PublishSection />,
+            },
+            {
+              path: 'settings',
+              element: <SettingsSection />,
             },
             {
               path: 'preview',

@@ -29,6 +29,7 @@ interface BuildFormContextType {
   initTitle: string;
   isEditForm: boolean;
   isPublishSection: boolean;
+  isSettingsSection: boolean;
 }
 
 export const initFormRequestState: FormRequest = {
@@ -59,6 +60,7 @@ const BuildFormContext = createContext<BuildFormContextType>({
   initLogo: '',
   initTitle: '',
   isPublishSection: false,
+  isSettingsSection: false,
 });
 
 export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
@@ -69,6 +71,7 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const isEditForm = Boolean(formId);
   const isPublishSection = pathname.includes('publish');
+  const isSettingsSection = pathname.includes('settings');
 
   const [form, setForm] = useState<FormRequest>(initFormRequestState);
   const [currentLogo, setCurrentLogo] = useState<string>('');
@@ -112,6 +115,7 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
         initLogo,
         initTitle,
         isPublishSection,
+        isSettingsSection,
       }}
     >
       {children}

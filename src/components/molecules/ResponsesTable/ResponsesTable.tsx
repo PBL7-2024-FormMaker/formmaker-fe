@@ -62,7 +62,8 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       ),
     [sortStatus, responseRows],
   );
-
+  console.log('responseRow', responseRows);
+  console.log('records', records);
   useEffect(() => {
     setParams({ ...params, page: currentPage });
   }, [currentPage]);
@@ -95,8 +96,9 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       })),
     ],
     [elementIdAndNameList],
-  );
-
+  );  
+  console.log('columns', columns);
+  
   return (
     <div className='px-4'>
       <DataTable
