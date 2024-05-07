@@ -60,6 +60,17 @@ const teamApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Teams'],
     }),
+    inviteMember: build.mutation<
+      SuccessResponse<TeamResponse>,
+      { id: string; email: string }
+    >({
+      query: ({ id, email }) => ({
+        url: `${API_URL.TEAMS}/${id}/invite-member`,
+        method: 'POST',
+        data: { email },
+      }),
+      invalidatesTags: ['Teams'],
+    }),
     removeMember: build.mutation<
       SuccessResponse<TeamResponse>,
       { id: string; memberIds: string[] }
@@ -82,5 +93,6 @@ export const {
   useUpdateTeamMutation,
   useDeleteTeamMutation,
   useAddMemberMutation,
+  useInviteMemberMutation,
   useRemoveMemberMutation,
 } = teamApi;

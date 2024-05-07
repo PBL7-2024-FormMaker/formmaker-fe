@@ -14,6 +14,7 @@ export const LoginPage = () => {
   const [loginUser] = useLoginUserMutation();
   const [visible, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
+  const acceptUrl = localStorage.getItem('acceptUrl');
 
   const onSubmit = (values: LoginSchema) => {
     open();
@@ -22,7 +23,7 @@ export const LoginPage = () => {
         httpClient.setToken(res.data.data.token);
         saveAccessTokenToLS(res.data.data.token);
         close();
-        navigate(PATH.ROOT_PAGE);
+        acceptUrl ? navigate(`${acceptUrl}`) : navigate(PATH.ROOT_PAGE);
         return;
       }
       if (res.error as ErrorResponse) {

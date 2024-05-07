@@ -6,10 +6,10 @@ import { Box, Text } from '@mantine/core';
 import { Button } from '@/atoms/Button';
 import { useCreateFolderMutation } from '@/redux/api/folderApi';
 import {
-  useAddMemberMutation,
   useCreateTeamMutation,
   useDeleteTeamMutation,
   useGetMyTeamsQuery,
+  useInviteMemberMutation,
   useRemoveMemberMutation,
   useUpdateTeamMutation,
 } from '@/redux/api/teamApi';
@@ -39,7 +39,8 @@ export const TeamGroup = ({
   const [teamId, setTeamId] = useState<string>('');
   const [modalType, setModalType] = useState<ModalType | ''>('');
 
-  const [addMember, { isLoading: isAddMemberLoading }] = useAddMemberMutation();
+  const [inviteMember, { isLoading: isInviteMemberLoading }] =
+    useInviteMemberMutation();
   const [removeMember, { isLoading: isRemoveMemberLoading }] =
     useRemoveMemberMutation();
 
@@ -69,10 +70,9 @@ export const TeamGroup = ({
   };
 
   const handleInviteMember = (value: { email: string }) => {
-    addMember({ id: teamId, email: value.email }).then((res) => {
+    inviteMember({ id: teamId, email: value.email }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
-        closeModal();
         return;
       }
       if (res.error as ErrorResponse)
@@ -84,7 +84,6 @@ export const TeamGroup = ({
     removeMember({ id: teamId, memberIds: [id] }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
-        closeModal();
         return;
       }
       if (res.error as ErrorResponse)
@@ -161,7 +160,7 @@ export const TeamGroup = ({
         onClose={closeModal}
         handleInviteMember={handleInviteMember}
         handleRemoveMember={handleRemoveMember}
-        isLoading={isAddMemberLoading || isRemoveMemberLoading}
+        isLoading={isInviteMemberLoading || isRemoveMemberLoading}
       />
       <ManageFolderModal
         opened={modalType === ModalTypes.CREATE_FOLDER}

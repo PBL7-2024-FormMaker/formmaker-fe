@@ -10,4 +10,6 @@ export const PATH = {
   MY_ACCOUNT_PAGE: '/my-account',
   PUBLIC_PAGE: '/form/:id',
   RESPONSE_PAGE: '/responses/:formId',
+  ACCEPT_INVITATION: '/accept-invite',
+  MY_TEAM: 'teams/:id',
 };

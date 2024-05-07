@@ -28,10 +28,14 @@ interface ManageMemberModalProps extends MantineModalProps {
 }
 const emailSchema = signUpSchema.pick(['email']);
 
-const getMembersInTeamWithOwnership = (
-  teamList: TeamResponse[],
-  teamId: string,
+export const getMembersInTeamWithOwnership = (
+  teamList?: TeamResponse[],
+  teamId?: string,
 ) => {
+  if (!teamList) return null;
+
+  if (!teamId) return null;
+
   const team = teamList.find((team) => team.id === teamId);
 
   if (!team) return null;
@@ -96,7 +100,7 @@ export const ManageMemberModal = ({
                       </Box>
                       {!member.isOwner && (
                         <ActionIcon
-                          className='h-9 w-10 bg-red-500 text-white hover:bg-red-600 hover:text-white'
+                          className='h-9 w-[64px] bg-red-500 text-white hover:bg-red-600 hover:text-white'
                           onClick={() => handleRemoveMember(member.id)}
                         >
                           <MdDelete size={22} />
@@ -112,7 +116,10 @@ export const ManageMemberModal = ({
             validateOnBlur={true}
             validateOnChange={false}
             validationSchema={emailSchema}
-            onSubmit={handleInviteMember}
+            onSubmit={(value, { resetForm }) => {
+              handleInviteMember(value);
+              resetForm();
+            }}
           >
             <Form className='flex w-full justify-between'>
               <Field
