@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
 import {
@@ -18,6 +18,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
 import { PublicPage } from '@/pages/PublicPage';
 import { SignupPage } from '@/pages/SignupPage';
+import { TeamPage } from '@/pages/TeamPage';
 import { getAccessTokenFromLS } from '@/utils';
 
 import { ForgotPasswordPage } from '../pages/FogotPasswordPage';
@@ -43,6 +44,17 @@ export function RejectedRoute() {
 }
 
 export function useRouteElements() {
+  const params = useLocation();
+
+  const token = new URLSearchParams(params.search).get('token');
+  const viewInvitation = new URLSearchParams(params.search).get(
+    'view-invitation',
+  );
+
+  if (viewInvitation && token) {
+    localStorage.setItem('acceptUrl', `${params.pathname}${params.search}`);
+  }
+
   const routeElements = useRoutes([
     {
       path: PATH.ROOT_PAGE,
@@ -148,6 +160,14 @@ export function useRouteElements() {
             <Suspense fallback={<LoadingPage />}>
               <ResponsesPage />
             </Suspense>
+          ),
+        },
+        {
+          path: PATH.MY_TEAM,
+          element: (
+            <OverviewContextProvider>
+              <TeamPage />
+            </OverviewContextProvider>
           ),
         },
       ],

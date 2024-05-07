@@ -179,7 +179,7 @@ export const FolderList = ({
                 )}
                 onClick={() => {
                   setActiveFolder(folder.id);
-                  setActiveTeam(teamId || '');
+                  setActiveTeam('');
                   setActiveAllForms(false);
                   setSelectedRecords([]);
                   setParams({

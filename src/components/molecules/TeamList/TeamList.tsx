@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { HiRectangleGroup } from 'react-icons/hi2';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Collapse,
@@ -54,6 +56,9 @@ export const TeamList = ({
     setActiveFolder,
     setSelectedRecords,
   } = useOverviewContext();
+
+  const navigate = useNavigate();
+
   const openModal = (type: ModalType) => setModalType(type);
 
   const closeModal = () => setModalType('');
@@ -142,6 +147,13 @@ export const TeamList = ({
                     </Box>
                   </Menu.Target>
                   <Menu.Dropdown className='min-w-[180px] !bg-navy-10'>
+                    <Menu.Item
+                      className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
+                      leftSection={<HiRectangleGroup />}
+                      onClick={() => navigate(`/teams/${team.id}`)}
+                    >
+                      Team workspace
+                    </Menu.Item>
                     <Menu.Item
                       className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<RiTeamFill />}

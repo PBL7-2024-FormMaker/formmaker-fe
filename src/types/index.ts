@@ -5,6 +5,7 @@ export * from './auth';
 export * from './elements';
 export * from './folder';
 export * from './forms';
+export * from './jwtPayload';
 export * from './modalType';
 export * from './responses';
 export * from './team';
