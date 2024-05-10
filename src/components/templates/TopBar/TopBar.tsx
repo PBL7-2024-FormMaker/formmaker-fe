@@ -35,6 +35,8 @@ export const TopBar = () => {
     isEditForm,
     isPublishSection,
     isSettingsSection,
+    isEmailsSettingPage,
+    isGeneralSettingPage,
     form,
     setForm,
     previewMode,
@@ -92,11 +94,30 @@ export const TopBar = () => {
       navigate(pathname.replace('/publish', ''));
       return;
     }
+    if (
+      value === tabList[0].value &&
+      isEmailsSettingPage &&
+      isSettingsSection
+    ) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('/settings/emails', ''));
+      return;
+    }
+    if (
+      value === tabList[0].value &&
+      isGeneralSettingPage &&
+      isSettingsSection
+    ) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('/settings/general', ''));
+      return;
+    }
     if (value === tabList[0].value && isSettingsSection) {
       setSelectedTabValue(value);
       navigate(pathname.replace('/settings', ''));
       return;
     }
+
     if (value === tabList[1].value && isSettingsSection) {
       setSelectedTabValue(value);
       navigate(pathname.replace('settings', 'publish'));
