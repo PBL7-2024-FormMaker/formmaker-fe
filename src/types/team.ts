@@ -15,7 +15,9 @@ export interface TeamResponse {
   name: string;
   folders: FolderInTeamResponse[];
   logoUrl: string;
-  permissions: object;
+  permissions: {
+    [key: string]: string[];
+  };
   createdAt: string;
   updatedAt: string;
   deletedAt: string;

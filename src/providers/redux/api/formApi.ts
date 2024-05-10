@@ -5,6 +5,7 @@ import {
   GetFormsParams,
   GetFormsResponse,
   SuccessResponse,
+  UserProfileResponse,
 } from '@/types';
 
 import { rootApi } from './rootApi';
@@ -29,6 +30,37 @@ const formApi = rootApi.injectEndpoints({
       transformResponse: (response: SuccessResponse<FormResponse>) =>
         response.data,
       providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
+    }),
+    getUsersInForm: build.query<UserProfileResponse[], { id: string }>({
+      query: ({ id }) => ({
+        url: `${API_URL.FORMS}/${id}/members`,
+        method: 'GET',
+      }),
+      transformResponse: (response: SuccessResponse<UserProfileResponse[]>) =>
+        response.data,
+      providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
+    }),
+    inviteFormMember: build.mutation<
+      SuccessResponse<FormResponse>,
+      { id: string; email: string }
+    >({
+      query: ({ id, email }) => ({
+        url: `${API_URL.FORMS}/${id}/invite-member`,
+        method: 'POST',
+        data: { email },
+      }),
+      invalidatesTags: ['Forms'],
+    }),
+    removeFormMember: build.mutation<
+      SuccessResponse<FormResponse>,
+      { id: string; memberIds: string[] }
+    >({
+      query: ({ id, memberIds }) => ({
+        url: `${API_URL.FORMS}/${id}/remove-member`,
+        method: 'PATCH',
+        data: { memberIds },
+      }),
+      invalidatesTags: ['Forms'],
     }),
     addToFavourites: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
@@ -168,6 +200,9 @@ const formApi = rootApi.injectEndpoints({
 });
 
 export const {
+  useGetUsersInFormQuery,
+  useInviteFormMemberMutation,
+  useRemoveFormMemberMutation,
   useGetMyFormsQuery,
   useGetFormDetailsQuery,
   useAddToFavouritesMutation,

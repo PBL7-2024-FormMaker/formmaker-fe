@@ -156,6 +156,28 @@ export const OverviewSidebar = () => {
           folderId={folderId}
         />
         <Divider />
+        <NavLink
+          className={cn(
+            'rounded-md font-semibold text-slate-600 hover:bg-slate-200',
+            {
+              'bg-slate-300 hover:bg-slate-300': params.isSharedForms,
+            },
+          )}
+          label='Shared with me'
+          onClick={() => {
+            // setIsSharedForms(true);
+            setParams({
+              ...defaultFormsParams,
+              isSharedForms: 1,
+            });
+            setActiveFolder('');
+            setActiveTeam('');
+            setActiveAllForms(false);
+            setSelectedRecords([]);
+          }}
+        />
+        <Divider />
+
         <Box className='flex flex-col gap-2'>
           <NavLink
             className={cn(
