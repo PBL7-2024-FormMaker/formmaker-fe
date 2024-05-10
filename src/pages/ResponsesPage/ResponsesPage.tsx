@@ -48,7 +48,6 @@ export const ResponsesPage = () => {
             createdAt: formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A'),
           },
         );
-
         return {
           ...answers,
         };

@@ -36,6 +36,7 @@ export interface FormResponse {
   };
   isFavourite: boolean;
   disabled: boolean;
+  disabledNotification: boolean;
 }
 
 export interface GetFormsResponse {

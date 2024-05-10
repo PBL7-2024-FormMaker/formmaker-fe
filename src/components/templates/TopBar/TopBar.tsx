@@ -27,12 +27,14 @@ import { ElementItem } from '@/types';
 const tabList = [
   { title: 'Build', value: '/' },
   { title: 'Publish', value: 'publish' },
+  { title: 'Settings', value: 'settings' },
 ];
 
 export const TopBar = () => {
   const {
     isEditForm,
     isPublishSection,
+    isSettingsSection,
     form,
     setForm,
     previewMode,
@@ -72,7 +74,11 @@ export const TopBar = () => {
   const formURL = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
 
   const handleChangeTab = (value: string | null) => {
-    if (value === tabList[1].value && !isPublishSection) {
+    if (
+      (value === tabList[1].value || value === tabList[2].value) &&
+      !isPublishSection &&
+      !isSettingsSection
+    ) {
       if (haveUnsavedChanges) {
         openConfirmModal();
         return;
@@ -84,6 +90,21 @@ export const TopBar = () => {
     if (value === tabList[0].value && isPublishSection) {
       setSelectedTabValue(value);
       navigate(pathname.replace('/publish', ''));
+      return;
+    }
+    if (value === tabList[0].value && isSettingsSection) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('/settings', ''));
+      return;
+    }
+    if (value === tabList[1].value && isSettingsSection) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('settings', 'publish'));
+      return;
+    }
+    if (value === tabList[2].value && isPublishSection) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('publish', 'settings'));
       return;
     }
   };
