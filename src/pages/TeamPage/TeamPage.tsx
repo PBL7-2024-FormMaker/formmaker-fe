@@ -163,48 +163,59 @@ export const TeamPage = () => {
           {!viewInvitation && (
             <Box className='absolute right-10 top-5 flex items-center justify-center gap-4'>
               <Box className='flex items-center justify-center gap-2'>
-                {membersInTeam.map((member) => (
-                  <HoverCard shadow='md' withArrow position='bottom-end'>
-                    <HoverCard.Target>
-                      <UserAvatar
-                        size='30'
-                        iconSize='15'
-                        avatarUrl={member.avatarUrl ?? ''}
-                      />
-                    </HoverCard.Target>
-                    <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
-                      <span className='text-[20px] font-semibold'>
-                        {member.username}
-                      </span>
-                      <span className='text-[15px] font-medium text-gray-500'>
-                        {member.email}
-                      </span>
-                      <Chip variant='filled' checked={false}>
-                        {member.isOwner ? 'Team owner' : 'Team member'}
-                      </Chip>
-                      {myProfile!.email === creatorEmail && !member.isOwner && (
-                        <>
-                          <Divider className='my-2 w-full' />
-                          <Box pos='relative'>
-                            <LoadingOverlay
-                              visible={isRemoveMemberLoading}
-                              zIndex={BIG_Z_INDEX}
-                              overlayProps={{ radius: 'sm', blur: 2 }}
-                              loaderProps={{ color: 'blue', size: 'sm' }}
-                            />
-                            <Button
-                              variant='filled'
-                              title='Delete member'
-                              size='sm'
-                              className='w-full'
-                              onClick={() => handleRemoveMember(member.id)}
-                            />
-                          </Box>
-                        </>
-                      )}
-                    </HoverCard.Dropdown>
-                  </HoverCard>
-                ))}
+                {membersInTeam
+                  .sort((firstVal, secondVal) => {
+                    if (firstVal.isOwner && !secondVal.isOwner) {
+                      return 1;
+                    } else if (!firstVal.isOwner && secondVal.isOwner) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  })
+                  .map((member) => (
+                    <HoverCard shadow='md' withArrow position='bottom-end'>
+                      <HoverCard.Target>
+                        <UserAvatar
+                          size='30'
+                          iconSize='15'
+                          avatarUrl={member.avatarUrl ?? ''}
+                        />
+                      </HoverCard.Target>
+                      <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
+                        <span className='text-[20px] font-semibold'>
+                          {member.username}
+                        </span>
+                        <span className='text-[15px] font-medium text-gray-500'>
+                          {member.email}
+                        </span>
+                        <Chip variant='filled' checked={false}>
+                          {member.isOwner ? 'Team owner' : 'Team member'}
+                        </Chip>
+                        {myProfile!.email === creatorEmail &&
+                          !member.isOwner && (
+                            <>
+                              <Divider className='my-2 w-full' />
+                              <Box pos='relative'>
+                                <LoadingOverlay
+                                  visible={isRemoveMemberLoading}
+                                  zIndex={BIG_Z_INDEX}
+                                  overlayProps={{ radius: 'sm', blur: 2 }}
+                                  loaderProps={{ color: 'blue', size: 'sm' }}
+                                />
+                                <Button
+                                  variant='filled'
+                                  title='Delete member'
+                                  size='sm'
+                                  className='w-full'
+                                  onClick={() => handleRemoveMember(member.id)}
+                                />
+                              </Box>
+                            </>
+                          )}
+                      </HoverCard.Dropdown>
+                    </HoverCard>
+                  ))}
               </Box>
               <Button
                 title='Invite'

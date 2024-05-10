@@ -6,6 +6,7 @@ export interface GetFormsParams {
   search?: string;
   isDeleted?: number;
   isFavourite?: number;
+  isSharedForms?: number;
   sortField?: string;
   sortDirection?: string;
   folderId?: string;
@@ -19,7 +20,9 @@ export interface FormResponse {
   settings: object;
   elements: ElementItem[];
   totalSubmissions: number;
-  permissions: object;
+  permissions: {
+    [key: string]: string[];
+  };
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
