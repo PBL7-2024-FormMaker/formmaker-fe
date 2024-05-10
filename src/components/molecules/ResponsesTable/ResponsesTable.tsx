@@ -96,9 +96,9 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       })),
     ],
     [elementIdAndNameList],
-  );  
+  );
   console.log('columns', columns);
-  
+
   return (
     <div className='px-4'>
       <DataTable

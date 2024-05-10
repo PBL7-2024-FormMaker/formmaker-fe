@@ -47,13 +47,13 @@ export const ResponsesPage = () => {
             id: record.id,
             createdAt: formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A'),
           },
-        );        
+        );
         return {
           ...answers,
         };
       }),
     [rawRecords],
-  );  
+  );
   const selectedResponseIds = useMemo(
     () => selectedRecords.map((selectedRecord) => selectedRecord.id as string),
     [selectedRecords],

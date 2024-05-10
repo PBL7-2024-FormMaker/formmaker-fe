@@ -22,6 +22,8 @@ import { SignupPage } from '@/pages/SignupPage';
 import { TeamPage } from '@/pages/TeamPage';
 import { getAccessTokenFromLS } from '@/utils';
 
+import { EmailsSettingpage } from '../components/organisms/EmailsSettingpage';
+import { FormsettingsPage } from '../components/organisms/FormsettingsPage';
 import { ForgotPasswordPage } from '../pages/FogotPasswordPage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 
@@ -148,6 +150,16 @@ export function useRouteElements() {
             {
               path: 'settings',
               element: <SettingsSection />,
+              children: [
+                {
+                  path: 'general',
+                  element: <FormsettingsPage />,
+                },
+                {
+                  path: 'emails',
+                  element: <EmailsSettingpage />,
+                },
+              ],
             },
             {
               path: 'preview',
