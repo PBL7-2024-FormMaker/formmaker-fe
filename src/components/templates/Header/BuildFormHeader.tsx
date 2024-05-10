@@ -162,7 +162,7 @@ export const BuildFormHeader = () => {
               }
             }}
             className='overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
-            style={{ width: `${currentTitle.length * 15}px` }}
+            style={{ width: `${currentTitle.length * 25}px` }}
           />
           {isPublishSection || isEditingTitle || (
             <MdOutlineModeEditOutline
