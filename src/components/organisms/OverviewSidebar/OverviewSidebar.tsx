@@ -21,7 +21,7 @@ import {
   useCreateFormInTeamMutation,
   useCreateFormMutation,
 } from '@/redux/api/formApi';
-import { ErrorResponse } from '@/types';
+import { ErrorResponse, FormType } from '@/types';
 import { cn, toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
 
@@ -160,7 +160,8 @@ export const OverviewSidebar = () => {
           className={cn(
             'rounded-md font-semibold text-slate-600 hover:bg-slate-200',
             {
-              'bg-slate-300 hover:bg-slate-300': params.isSharedForms,
+              'bg-slate-300 hover:bg-slate-300':
+                params.formType === FormType.Shared,
             },
           )}
           label='Shared with me'
@@ -168,7 +169,7 @@ export const OverviewSidebar = () => {
             // setIsSharedForms(true);
             setParams({
               ...defaultFormsParams,
-              isSharedForms: 1,
+              formType: FormType.Shared,
             });
             setActiveFolder('');
             setActiveTeam('');
@@ -192,6 +193,7 @@ export const OverviewSidebar = () => {
               setParams({
                 ...defaultFormsParams,
                 isFavourite: 1,
+                formType: FormType.All,
               });
               setActiveFolder('');
               setActiveTeam('');

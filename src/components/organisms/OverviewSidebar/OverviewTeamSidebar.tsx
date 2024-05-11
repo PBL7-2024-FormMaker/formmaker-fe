@@ -30,7 +30,13 @@ import {
   useCreateFormInFolderOfTeamMutation,
   useCreateFormInTeamMutation,
 } from '@/redux/api/formApi';
-import { ErrorResponse, ModalType, ModalTypes, TeamResponse } from '@/types';
+import {
+  ErrorResponse,
+  FormType,
+  ModalType,
+  ModalTypes,
+  TeamResponse,
+} from '@/types';
 import { cn, toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
 
@@ -251,6 +257,7 @@ export const OverviewTeamSidebar = ({
               setParams({
                 ...defaultFormsParams,
                 isFavourite: 1,
+                formType: FormType.All,
               });
               setActiveFolder('');
               setActiveTeam('');

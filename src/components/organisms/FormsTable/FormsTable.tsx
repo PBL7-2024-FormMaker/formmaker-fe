@@ -42,7 +42,6 @@ import {
   useRestoreFormMutation,
   useUpdateDisabledStatusMutation,
 } from '@/redux/api/formApi';
-import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
@@ -445,8 +444,8 @@ export const FormsTable = () => {
     ],
     [moreOptions],
   );
-  const { data: myProfile } = useGetMyProfileQuery();
-  const [sharedForms, setShareForms] = useState<FormResponse[]>([]);
+  // const { data: myProfile } = useGetMyProfileQuery();
+  // const [sharedForms, setShareForms] = useState<FormResponse[]>([]);
 
   useEffect(() => {
     refetch();
@@ -460,17 +459,17 @@ export const FormsTable = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (params.isSharedForms === 1 && data) {
-      const forms = data.forms.filter((form) => {
-        const permissions = form.permissions[myProfile!.id];
+  // useEffect(() => {
+  //   if (params.isSharedForms === 1 && data) {
+  //     const forms = data.forms.filter((form) => {
+  //       const permissions = form.permissions[myProfile!.id];
 
-        return permissions && !permissions.includes('delete');
-      });
-      setShareForms(forms);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, data]);
+  //       return permissions && !permissions.includes('delete');
+  //     });
+  //     setShareForms(forms);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [params, data]);
 
   return (
     <>
@@ -480,7 +479,7 @@ export const FormsTable = () => {
         highlightOnHover
         rowClassName='cursor-pointer'
         columns={columns}
-        records={params.isSharedForms === 1 ? sharedForms : data?.forms}
+        records={data?.forms}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
         onRowClick={({ record }) => {
