@@ -1,12 +1,18 @@
 import { ElementItem } from '.';
 
+export enum FormType {
+  All = 'all',
+  Shared = 'shared',
+  Owned = 'owned',
+}
+
 export interface GetFormsParams {
   page?: number;
   pageSize?: number;
   search?: string;
   isDeleted?: number;
   isFavourite?: number;
-  isSharedForms?: number;
+  formType?: FormType;
   sortField?: string;
   sortDirection?: string;
   folderId?: string;

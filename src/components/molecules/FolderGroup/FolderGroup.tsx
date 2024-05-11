@@ -10,6 +10,7 @@ import { useCreateFolderMutation } from '@/redux/api/folderApi';
 import {
   ErrorResponse,
   FolderResponse,
+  FormType,
   type ModalType,
   ModalTypes,
 } from '@/types';
@@ -79,7 +80,7 @@ export const FolderGroup = ({
           setActiveFolder('');
           setActiveTeam('');
           setSelectedRecords([]);
-          setParams({ ...defaultFormsParams });
+          setParams({ ...defaultFormsParams, formType: FormType.Owned });
         }}
       />
       <FolderList
