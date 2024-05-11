@@ -118,9 +118,32 @@ export const TopBar = () => {
       return;
     }
 
-    if (value === tabList[1].value && isSettingsSection) {
+    if (
+      value === tabList[1].value &&
+      isSettingsSection &&
+      !isEmailsSettingPage &&
+      !isGeneralSettingPage
+    ) {
       setSelectedTabValue(value);
       navigate(pathname.replace('settings', 'publish'));
+      return;
+    }
+    if (
+      value === tabList[1].value &&
+      isSettingsSection &&
+      isEmailsSettingPage
+    ) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('settings/emails', 'publish'));
+      return;
+    }
+    if (
+      value === tabList[1].value &&
+      isSettingsSection &&
+      isGeneralSettingPage
+    ) {
+      setSelectedTabValue(value);
+      navigate(pathname.replace('settings/general', 'publish'));
       return;
     }
     if (value === tabList[2].value && isPublishSection) {
