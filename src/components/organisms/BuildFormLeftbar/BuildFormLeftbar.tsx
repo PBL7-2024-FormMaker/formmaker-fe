@@ -6,11 +6,13 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
-import { useElementLayouts } from '@/contexts';
-import { ElementType } from '@/types';
+import { useBuildFormContext, useElementLayouts } from '@/contexts';
+import { ElementItem, ElementType } from '@/types';
 import { cn } from '@/utils';
+import { getDefaultWidthHeight } from '@/utils/elements';
 
-const elementList = ElementList;
+import { createItem } from '../ResponsiveGridLayout';
+
 interface BuildFormLeftbarProps {
   setCurrentElementType: (element: ElementType) => void;
 }
@@ -20,7 +22,8 @@ const ELEMENT_ICON_SIZE = 25;
 export const BuildFormLeftbar = ({
   setCurrentElementType,
 }: BuildFormLeftbarProps) => {
-  const { elements } = useElementLayouts();
+  const { elements, setElements } = useElementLayouts();
+  const { form } = useBuildFormContext();
 
   const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
@@ -32,6 +35,33 @@ export const BuildFormLeftbar = ({
 
   const handleDrop = (elementType: ElementType) => {
     setCurrentElementType(elementType);
+  };
+
+  const onClickCreateItem = (elementType: ElementType) => {
+    const elementsInForm = form.elements;
+    let maxYElement: ElementItem | undefined = undefined;
+
+    for (const element of elementsInForm) {
+      if (!maxYElement || element.gridSize.y > maxYElement.gridSize.y) {
+        maxYElement = element;
+      }
+    }
+
+    if (!maxYElement) {
+      return;
+    }
+
+    const newElement = createItem(elementType, {
+      x: 0,
+      y: maxYElement.gridSize.y + maxYElement.gridSize.h,
+      ...getDefaultWidthHeight(elementType),
+    });
+
+    if (!newElement) {
+      return;
+    }
+
+    setElements((prev) => [...prev, newElement]);
   };
 
   return (
@@ -77,7 +107,7 @@ export const BuildFormLeftbar = ({
               <Text size='lg'>Form Elements</Text>
             </Box>
             <Divider color='gray' />
-            {elementList.map((elementType, index) => (
+            {ElementList.map((elementType, index) => (
               <Stack key={`category-${index}`} className='gap-0'>
                 <Box className='flex justify-center bg-slate-600 p-2 uppercase text-slate-300'>
                   <Text className='text-[13px]'>{elementType.title}</Text>
@@ -87,7 +117,10 @@ export const BuildFormLeftbar = ({
                   {elementType.elements.map(({ element }, index) => {
                     const isSubmitElement = element.type === ElementType.SUBMIT;
                     return (
-                      <Box key={`element-${index}`}>
+                      <Box
+                        key={`element-${index}`}
+                        onClick={() => onClickCreateItem(element.type)}
+                      >
                         {!isSubmitElement ? (
                           <Group
                             className='group cursor-move hover:bg-navy-500'

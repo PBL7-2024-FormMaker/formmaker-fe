@@ -151,7 +151,6 @@ export const ElementList = [
       { element: ELEMENTS.SINGLE_CHOICE },
       { element: ELEMENTS.MULTIPLE_CHOICE },
       { element: ELEMENTS.TIME },
-      { element: ELEMENTS.SUBMIT },
     ],
   },
   {
