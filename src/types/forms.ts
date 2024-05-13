@@ -45,6 +45,8 @@ export interface FormResponse {
   };
   isFavourite: boolean;
   disabled: boolean;
+  disabledOnSpecificDate: boolean;
+  specificDate: Date;
   disabledNotification: boolean;
 }
 
