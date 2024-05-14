@@ -15,6 +15,8 @@ interface ElementLayoutContextType {
     React.SetStateAction<ElementItem | undefined>
   >;
   isReadOnly: boolean;
+  isScrollToBottom: boolean;
+  setIsScrollToBottom: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ElementLayoutContext = createContext<ElementLayoutContextType>({
@@ -23,6 +25,8 @@ const ElementLayoutContext = createContext<ElementLayoutContextType>({
   edittingItem: undefined,
   setEdittingItem: () => {},
   isReadOnly: false,
+  isScrollToBottom: false,
+  setIsScrollToBottom: () => {},
 });
 
 export const DEFAULT_ELEMENTS: ElementItem[] = [
@@ -61,6 +65,7 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
     isEditForm ? [] : DEFAULT_ELEMENTS,
   );
   const [edittingItem, setEdittingItem] = useState<ElementItem>();
+  const [isScrollToBottom, setIsScrollToBottom] = useState<boolean>(false);
   const location = useLocation();
   const isReadOnly =
     location.pathname.includes('build') &&
@@ -74,6 +79,8 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
         edittingItem,
         setEdittingItem,
         isReadOnly,
+        isScrollToBottom,
+        setIsScrollToBottom,
       }}
     >
       {children}

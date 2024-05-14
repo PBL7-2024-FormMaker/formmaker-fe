@@ -140,8 +140,8 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   };
 
   return (
-    <Stack className='min-h-screen items-center py-7'>
-      <Stack className='w-[45%] justify-between gap-7'>
+    <Stack className='h-mainHeight py-7'>
+      <Stack className='w-[65%] justify-between gap-7'>
         {currentLogo ? (
           <Group className='relative mx-auto'>
             <input
