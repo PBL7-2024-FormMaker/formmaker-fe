@@ -40,6 +40,7 @@ export default {
       height: {
         headerHeight: '90px',
         contentHeight: `calc( 100vh - 70px)`,
+        mainHeight: `calc( 100vh - 120px)`,
       },
       boxShadow: {
         whiteShadow: '0 0 1px 2px rgba(225,225,225,0.5)',

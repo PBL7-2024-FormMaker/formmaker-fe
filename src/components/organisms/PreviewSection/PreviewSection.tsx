@@ -3,7 +3,6 @@ import { Box, Stack } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
 import { useBuildFormContext } from '@/contexts';
-import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 
 import { FormRenderComponent } from '../FormRenderComponent';
 import { SubmissionConfirmation } from '../SubmissionConfirmation';
@@ -34,7 +33,6 @@ export const PreviewSection = () => {
           </Formik>
         </Box>
       )}
-      <ScrollToTopButton className='fixed bottom-[-25%] right-10'></ScrollToTopButton>
     </Stack>
   );
 };

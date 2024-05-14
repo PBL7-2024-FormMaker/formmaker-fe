@@ -95,7 +95,7 @@ export const TeamPage = () => {
 
     addMember({ id: teamId, email }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess('You have joined this team successfully!');
         localStorage.removeItem('acceptUrl');
         navigate(`/teams/${teamId}`);
         return;

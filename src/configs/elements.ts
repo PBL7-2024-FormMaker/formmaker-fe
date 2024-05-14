@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fa';
 import { FaChartSimple, FaLocationDot, FaStar, FaTable } from 'react-icons/fa6';
 import { IoMdCheckbox, IoMdRadioButtonOn } from 'react-icons/io';
+import { IconType } from 'react-icons/lib';
 import { MdEmail, MdInsertPageBreak, MdWatchLater } from 'react-icons/md';
 import { PiTextbox, PiTextboxBold } from 'react-icons/pi';
 import { RiNumber7 } from 'react-icons/ri';
@@ -130,7 +131,18 @@ export const ELEMENTS = {
   },
 };
 
-export const ElementList = [
+export interface ElementGroupType {
+  title: string;
+  elements: {
+    element: {
+      icon: IconType;
+      type: ElementType;
+      isDisabled: boolean;
+    };
+  }[];
+}
+
+export const ElementList: ElementGroupType[] = [
   {
     title: 'Necessary elements',
     elements: [
