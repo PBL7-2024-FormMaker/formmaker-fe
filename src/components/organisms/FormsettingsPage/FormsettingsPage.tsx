@@ -1,6 +1,8 @@
 import { IoSettingsSharp } from 'react-icons/io5';
 import { Box, Group, Stack } from '@mantine/core';
 
+import { DisableOnSpecificDate } from '../DisableOnSpecificDate';
+
 export const FormsettingsPage = () => (
   <>
     <Group>
@@ -16,6 +18,6 @@ export const FormsettingsPage = () => (
         </span>
       </Stack>
     </Group>
-    <Stack className='mt-4 gap-8 rounded border border-solid border-blue-50 bg-white px-6 py-8'></Stack>
+    <DisableOnSpecificDate />
   </>
 );

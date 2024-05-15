@@ -185,6 +185,17 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    updateDisabledOnspecificDateStatus: build.mutation<
+      SuccessResponse<FormResponse>,
+      { formId: string; disabledOnSpecificDate: boolean; specificDate: Date }
+    >({
+      query: ({ formId, disabledOnSpecificDate, specificDate }) => ({
+        url: `${API_URL.FORMS}/${formId}/disabled-on-specific-date/${disabledOnSpecificDate}`,
+        method: 'PATCH',
+        data: { specificDate },
+      }),
+      invalidatesTags: ['Forms'],
+    }),
     updateDisabledNotificationStatus: build.mutation<
       SuccessResponse<FormResponse>,
       { formId: string; disabledNotification: boolean }
@@ -218,5 +229,6 @@ export const {
   useCreateFormInTeamMutation,
   useCreateFormInFolderOfTeamMutation,
   useUpdateDisabledStatusMutation,
+  useUpdateDisabledOnspecificDateStatusMutation,
   useUpdateDisabledNotificationStatusMutation,
 } = formApi;
