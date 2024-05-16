@@ -14,6 +14,7 @@ import {
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
+  isImageElement,
   isMultipleChoiceElement,
   isNumberPhoneElement,
   isScaleRatingElement,
@@ -27,6 +28,7 @@ import {
 } from '@/molecules/FactoryElement';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { ImagePropertiesConfig } from '@/molecules/ImagePropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
 import { MultipleChoicePropertiesConfig } from '@/molecules/MultipleChoicePropertiesConfig';
 import { PhoneNumberPropertiesConfig } from '@/molecules/PhoneNumberPropertiesConfig';
@@ -168,6 +170,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isTimeInputElement(edittingItem):
                 return (
                   <TimeInputPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isImageElement(edittingItem):
+                return (
+                  <ImagePropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

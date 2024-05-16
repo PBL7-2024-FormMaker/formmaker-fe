@@ -19,6 +19,7 @@ import {
   defaultAddressHeightWidth,
   defaultDropdownHeightWidth,
   defaultHeadingHeightWidth,
+  defaultImageConfig,
   defaultLongTextHeightWidth,
   defaultMultipleChoiceHeightWidth,
   defaultScaleRatingHeightWidth,
@@ -263,6 +264,15 @@ export const createItem = (
           },
         ],
       };
+    case ElementType.IMAGE:
+      return {
+        id: uid,
+        type: ElementType.IMAGE,
+        gridSize: getGridSize(currentItem),
+        config: defaultImageConfig,
+        fields: [],
+      };
+
     default:
       return undefined;
   }
