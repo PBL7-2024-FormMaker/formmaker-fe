@@ -12,15 +12,13 @@ import App from './App';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <MantineProvider>
-        <ReduxProvider store={store}>
-          <Layout>
-            <App />
-          </Layout>
-        </ReduxProvider>
-      </MantineProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <MantineProvider>
+      <ReduxProvider store={store}>
+        <Layout>
+          <App />
+        </Layout>
+      </ReduxProvider>
+    </MantineProvider>
+  </BrowserRouter>,
 );

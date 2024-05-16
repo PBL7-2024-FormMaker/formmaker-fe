@@ -2,10 +2,12 @@ import { Box, Stack } from '@mantine/core';
 
 import {
   BuildFormContextProvider,
+  ElementLayoutProvider,
   FormParamsProvider,
   useOverviewContext,
 } from '@/contexts';
 import { ActionToolbar } from '@/organisms/ActionToolbar';
+import { Chatbot } from '@/organisms/ChatBot';
 import { FormsTable } from '@/organisms/FormsTable';
 import { OverviewSidebar } from '@/organisms/OverviewSidebar';
 import { Header } from '@/templates/Header';
@@ -28,6 +30,11 @@ export const OverviewPage = () => {
               selectedFormIds={selectedRecords.map(({ id }) => id)}
             />
             <FormsTable />
+            <BuildFormContextProvider>
+              <ElementLayoutProvider>
+                <Chatbot />
+              </ElementLayoutProvider>
+            </BuildFormContextProvider>
           </Stack>
         </Box>
       </Box>

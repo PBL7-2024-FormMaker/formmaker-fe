@@ -36,3 +36,41 @@
 .mantine-active:active {
   transform: translateY(0);
 }
+
+/* style for the chatbox */
+.rcw-widget-container {
+  bottom: 5%;
+  right: 10px;
+}
+.rcw-launcher {
+  background-color: #3f72af;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rcw-conversation-container .rcw-header {
+  background-color: #3f72af;
+  padding: 15px 0;
+}
+.rcw-conversation-container .rcw-title {
+  padding: 0;
+}
+.rcw-conversation-container.active {
+  width: 400px;
+}
+.rcw-sender {
+  display: flex;
+  justify-content: space-between;
+}
+.rcw-sender .rcw-picker-btn {
+  display: none;
+}
+.rcw-new-message {
+  width: calc(100% - 60px);
+}
+.rcw-client .rcw-message-text {
+  background-color: #dbe2ef;
+}
+.rcw-snippet-details {
+  border-left: 2px solid #3f72af;
+}

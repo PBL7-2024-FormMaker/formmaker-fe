@@ -39,7 +39,7 @@ export const CreateFormModal = ({
           </>
         }
       >
-        <Group className='h-[300px] justify-center gap-[100px]'>
+        <Group className='h-[250px] justify-center gap-[100px]'>
           <Stack className='items-center'>
             <ActionIcon
               variant='filled'
@@ -50,7 +50,7 @@ export const CreateFormModal = ({
               <FiPlus style={{ width: '40%', height: '70%' }} />
             </ActionIcon>
             <Text className='font-medium'>Start from scrach</Text>
-            <Text className='text-sm'>Ablank slate is all you need</Text>
+            <Text className='text-sm'>A blank slate is all you need</Text>
           </Stack>
           <Stack className='items-center'>
             <ActionIcon
