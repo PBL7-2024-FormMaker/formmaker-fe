@@ -99,6 +99,15 @@ export interface DatePickerConfig {
   sublabel: string;
 }
 
+export interface ImageConfig {
+  image: string;
+  size: {
+    width: string;
+    height: string;
+  };
+  imageAlignment: string;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -113,7 +122,8 @@ export type ElementConfig =
   | AddressConfig
   | NumberPhoneConfig
   | DatePickerConfig
-  | TimeInputConfig;
+  | TimeInputConfig
+  | ImageConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -195,6 +205,8 @@ export type MultipleChoiceElement = BaseElement<
   MultipleChoiceConfig
 >;
 
+export type ImageElement = BaseElement<ElementType.IMAGE, ImageConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -210,4 +222,5 @@ export type ElementItem =
   | AddressElement
   | NumberPhoneElement
   | DatePickerElement
-  | TimeInputElement;
+  | TimeInputElement
+  | ImageElement;

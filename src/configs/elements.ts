@@ -87,7 +87,7 @@ export const ELEMENTS = {
   IMAGE: {
     icon: FaImage,
     type: ElementType.IMAGE,
-    isDisabled: true,
+    isDisabled: false,
   },
   FILE_UPLOAD: {
     icon: FaFileUpload,
@@ -163,6 +163,7 @@ export const ElementList: ElementGroupType[] = [
       { element: ELEMENTS.SINGLE_CHOICE },
       { element: ELEMENTS.MULTIPLE_CHOICE },
       { element: ELEMENTS.TIME },
+      { element: ELEMENTS.IMAGE },
     ],
   },
   {

@@ -6,6 +6,7 @@ import {
   EmailConfig,
   FullnameConfig,
   HeadingConfig,
+  ImageConfig,
   MultipleChoiceConfig,
   NumberPhoneConfig,
   ScaleRatingConfig,
@@ -109,6 +110,15 @@ export const defaultTimeInputConfig: TimeInputConfig = {
     hour: 'hour',
     minutes: 'minutes',
   },
+};
+
+export const defaultImageConfig: ImageConfig = {
+  image: '',
+  size: {
+    width: '100',
+    height: '150',
+  },
+  imageAlignment: 'center',
 };
 
 export const defaultShortTextHeightWidth = {
