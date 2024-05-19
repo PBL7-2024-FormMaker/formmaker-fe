@@ -22,3 +22,8 @@ export const isValidPhoneNumber = yup
   .string()
   .trim()
   .matches(RULES.PHONE_NUMBER_REGEX, 'Please enter a valid phone number.');
+
+export const isValidGGFormURL = yup
+  .string()
+  .trim()
+  .matches(RULES.GOOGLE_FORM_URL, 'Please enter a valid Google form URL');

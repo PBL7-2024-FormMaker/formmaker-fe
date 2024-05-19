@@ -3,6 +3,7 @@ import { FaStar } from 'react-icons/fa';
 import { IoTrash } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { Box, Divider, LoadingOverlay, NavLink } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
@@ -25,10 +26,15 @@ import { ErrorResponse, FormType } from '@/types';
 import { cn, toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
 
+import { CreateFormModal } from '../../molecules/CreateFormModal/CreateFormModal';
+
 export const OverviewSidebar = () => {
   const [folderName, setFolderName] = useState<string>('');
   const [folderId, setFolderId] = useState<string>('');
-
+  const [
+    openedModalCreateForm,
+    { open: openModalCreateForm, close: closeModalCreateForm },
+  ] = useDisclosure(false);
   const {
     activeFolder,
     activeTeam,
@@ -135,8 +141,9 @@ export const OverviewSidebar = () => {
             size='md'
             title='CREATE FORM'
             className='w-full font-bold'
-            onClick={() => handleCreateFormBasedOnIds()}
+            onClick={openModalCreateForm}
           />
+          <NavLink />
         </Box>
       </Box>
       <Box className='flex flex-col gap-5 bg-inherit p-5'>
@@ -223,6 +230,11 @@ export const OverviewSidebar = () => {
           />
         </Box>
       </Box>
+      <CreateFormModal
+        opened={openedModalCreateForm}
+        onClose={closeModalCreateForm}
+        onClickCreateScratch={handleCreateFormBasedOnIds}
+      />
     </Box>
   );
 };

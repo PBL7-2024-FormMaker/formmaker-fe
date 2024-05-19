@@ -247,7 +247,7 @@ export const createItem = (
         fields: [
           {
             id: uuidv4(),
-            name: 'longText',
+            name: 'datePicker',
           },
         ],
       };

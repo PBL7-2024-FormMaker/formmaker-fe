@@ -25,6 +25,7 @@ import { getAccessTokenFromLS } from '@/utils';
 import { EmailsSettingpage } from '../components/organisms/EmailsSettingpage';
 import { FormsettingsPage } from '../components/organisms/FormsettingsPage';
 import { ForgotPasswordPage } from '../pages/FogotPasswordPage';
+import { ImportFormPage } from '../pages/ImportFormpage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
@@ -112,6 +113,10 @@ export function useRouteElements() {
               element: <BuildSection />,
             },
             {
+              path: 'import-form',
+              element: <h1>Import form here</h1>,
+            },
+            {
               path: 'publish',
               element: <PublishSection />,
             },
@@ -142,6 +147,10 @@ export function useRouteElements() {
             {
               path: '',
               element: <BuildSection />,
+            },
+            {
+              path: 'import-form',
+              element: <ImportFormPage />,
             },
             {
               path: 'publish',
