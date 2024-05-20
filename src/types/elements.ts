@@ -108,6 +108,12 @@ export interface ImageConfig {
   imageAlignment: string;
 }
 
+export interface FileConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -123,7 +129,8 @@ export type ElementConfig =
   | NumberPhoneConfig
   | DatePickerConfig
   | TimeInputConfig
-  | ImageConfig;
+  | ImageConfig
+  | FileConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -207,6 +214,8 @@ export type MultipleChoiceElement = BaseElement<
 
 export type ImageElement = BaseElement<ElementType.IMAGE, ImageConfig>;
 
+export type FileElement = BaseElement<ElementType.FILE_UPLOAD, FileConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -223,4 +232,5 @@ export type ElementItem =
   | NumberPhoneElement
   | DatePickerElement
   | TimeInputElement
-  | ImageElement;
+  | ImageElement
+  | FileElement;

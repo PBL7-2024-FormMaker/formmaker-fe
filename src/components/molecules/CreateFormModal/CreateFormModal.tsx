@@ -44,7 +44,7 @@ export const CreateFormModal = ({
             <ActionIcon
               variant='filled'
               aria-label='scratch'
-              className='h-[150px] w-[150px]'
+              className='h-[150px] w-[150px] bg-navy-100'
               onClick={onClickCreateScratch}
             >
               <FiPlus style={{ width: '40%', height: '70%' }} />
@@ -56,7 +56,7 @@ export const CreateFormModal = ({
             <ActionIcon
               variant='filled'
               aria-label='Settings'
-              className='h-[150px] w-[150px]'
+              className='h-[150px] w-[150px] bg-navy-100'
               onClick={openImportForm}
             >
               <BiImport style={{ width: '40%', height: '70%' }} />

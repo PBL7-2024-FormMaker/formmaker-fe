@@ -18,6 +18,7 @@ import {
 import {
   defaultAddressHeightWidth,
   defaultDropdownHeightWidth,
+  defaultFileConfig,
   defaultHeadingHeightWidth,
   defaultImageConfig,
   defaultLongTextHeightWidth,
@@ -271,6 +272,19 @@ export const createItem = (
         gridSize: getGridSize(currentItem),
         config: defaultImageConfig,
         fields: [],
+      };
+    case ElementType.FILE_UPLOAD:
+      return {
+        id: uid,
+        type: ElementType.FILE_UPLOAD,
+        gridSize: getGridSize(currentItem),
+        config: defaultFileConfig,
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'fileUpload',
+          },
+        ],
       };
 
     default:

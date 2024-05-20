@@ -12,6 +12,7 @@ import {
   isDatePickerInputElement,
   isDropdownElement,
   isEmailElement,
+  isFileElement,
   isFullnameElement,
   isHeadingElement,
   isImageElement,
@@ -39,6 +40,8 @@ import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
 import { TimeInputPropertiesConfig } from '@/molecules/TimeInputPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
+
+import { FilePropertiesConfig } from '../../molecules/FilePropertiesConfig/FilePropertiesConfig';
 
 export interface BasePropertiesProps<T extends ElementItem = ElementItem> {
   edittingItem: T;
@@ -180,6 +183,10 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
                     edittingItem={edittingItem}
                     {...rest}
                   />
+                );
+              case isFileElement(edittingItem):
+                return (
+                  <FilePropertiesConfig edittingItem={edittingItem} {...rest} />
                 );
               default:
                 return <></>;
