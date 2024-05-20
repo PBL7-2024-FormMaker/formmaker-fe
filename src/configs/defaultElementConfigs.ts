@@ -148,11 +148,16 @@ export const defaultLongTextHeightWidth = {
 };
 
 export const defaultHeadingHeightWidth = {
-  h: 4,
+  h: 3,
   w: 12,
 };
 
 export const defaultSubmitHeightWidth = {
+  h: 3,
+  w: 12,
+};
+
+export const defaultFullNameHeightWidth = {
   h: 4,
   w: 12,
 };

@@ -181,7 +181,11 @@ export const FormsTable = () => {
       {
         text: 'View',
         icon: <IoEye size={18} />,
-        handleClick: (record: FormResponse) => {
+        handleClick: (
+          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          record: FormResponse,
+        ) => {
+          e.stopPropagation();
           navigate(`/form/${record.id}`);
         },
       },
@@ -444,8 +448,6 @@ export const FormsTable = () => {
     ],
     [moreOptions],
   );
-  // const { data: myProfile } = useGetMyProfileQuery();
-  // const [sharedForms, setShareForms] = useState<FormResponse[]>([]);
 
   useEffect(() => {
     refetch();
@@ -458,18 +460,6 @@ export const FormsTable = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   if (params.isSharedForms === 1 && data) {
-  //     const forms = data.forms.filter((form) => {
-  //       const permissions = form.permissions[myProfile!.id];
-
-  //       return permissions && !permissions.includes('delete');
-  //     });
-  //     setShareForms(forms);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [params, data]);
 
   return (
     <>

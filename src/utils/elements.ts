@@ -19,6 +19,7 @@ import {
   defaultAddressHeightWidth,
   defaultDropdownHeightWidth,
   defaultFileConfig,
+  defaultFullNameHeightWidth,
   defaultHeadingHeightWidth,
   defaultImageConfig,
   defaultLongTextHeightWidth,
@@ -29,7 +30,7 @@ import {
   defaultSubmitHeightWidth,
   defaultTimeHeightWidth,
 } from '@/configs/defaultElementConfigs';
-import { ElementItem, ElementType, GridSize } from '@/types';
+import { ElementConfig, ElementItem, ElementType, GridSize } from '@/types';
 
 export const getDefaultWidthHeight = (type: ElementType | undefined) => {
   switch (true) {
@@ -53,6 +54,8 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
       return defaultHeadingHeightWidth;
     case type === ElementType.SUBMIT:
       return defaultSubmitHeightWidth;
+    case type === ElementType.FULLNAME:
+      return defaultFullNameHeightWidth;
     default:
       return {
         h: 5,
@@ -287,6 +290,231 @@ export const createItem = (
         ],
       };
 
+    default:
+      return undefined;
+  }
+};
+
+export const createElement = (
+  elementType: ElementType,
+  config: ElementConfig,
+) => {
+  const uid = uuidv4();
+
+  switch (elementType) {
+    case ElementType.HEADING:
+      return {
+        id: uid,
+        type: ElementType.HEADING,
+        gridSize: { x: 0, y: 0, w: 12, h: 3 },
+        config: { ...defaultHeadingConfig, ...config },
+        fields: [],
+      };
+    case ElementType.EMAIL:
+      return {
+        id: uid,
+        type: ElementType.EMAIL,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: { ...defaultEmailConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'email',
+            text: '',
+          },
+        ],
+      };
+    case ElementType.FULLNAME:
+      return {
+        id: uid,
+        type: ElementType.FULLNAME,
+        gridSize: { x: 0, y: 0, w: 12, h: 4 },
+        config: { ...defaultFullnameConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'firstName',
+            text: '',
+          },
+          {
+            id: uuidv4(),
+            name: 'lastName',
+            text: '',
+          },
+        ],
+      };
+    case ElementType.SUBMIT:
+      return {
+        id: uid,
+        type: ElementType.SUBMIT,
+        gridSize: { x: 0, y: 0, w: 12, h: 3 },
+        config: { ...defaultSubmitConfig, ...config },
+        fields: [],
+      };
+    case ElementType.SHORT_TEXT:
+      return {
+        id: uid,
+        type: ElementType.SHORT_TEXT,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: { ...defaultTextConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'shortText',
+          },
+        ],
+      };
+    case ElementType.LONG_TEXT:
+      return {
+        id: uid,
+        type: ElementType.LONG_TEXT,
+        gridSize: { x: 0, y: 0, w: 12, h: 7 },
+        config: { ...defaultTextConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'longText',
+          },
+        ],
+      };
+    case ElementType.SCALE_RATING:
+      return {
+        id: uid,
+        type: ElementType.SCALE_RATING,
+        gridSize: { x: 0, y: 0, w: 12, h: 4 },
+        config: { ...defaultScaleRatingConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'scaleRating',
+            text: '',
+          },
+        ],
+      };
+    case ElementType.ADDRESS:
+      return {
+        id: uid,
+        type: ElementType.ADDRESS,
+        gridSize: { x: 0, y: 0, w: 12, h: 10 },
+        config: { ...defaultAddressConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'street',
+          },
+          {
+            id: uuidv4(),
+            name: 'ward',
+          },
+          {
+            id: uuidv4(),
+            name: 'district',
+          },
+          {
+            id: uuidv4(),
+            name: 'city',
+          },
+        ],
+      };
+    case ElementType.DROPDOWN:
+      return {
+        id: uid,
+        type: ElementType.DROPDOWN,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: { ...defaultDropdownConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'dropdown',
+          },
+        ],
+      };
+    case ElementType.SINGLE_CHOICE:
+      return {
+        id: uid,
+        type: ElementType.SINGLE_CHOICE,
+        gridSize: { x: 0, y: 0, w: 12, h: 7 },
+        config: { ...defaultSingleChoiceConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'singleChoice',
+          },
+        ],
+      };
+    case ElementType.MULTIPLE_CHOICE:
+      return {
+        id: uid,
+        type: ElementType.MULTIPLE_CHOICE,
+        gridSize: { x: 0, y: 0, w: 12, h: 7 },
+        config: { ...defaultMultipleChoiceConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'multipleChoice',
+          },
+        ],
+      };
+    case ElementType.PHONE:
+      return {
+        id: uid,
+        type: ElementType.PHONE,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: { ...defaultNumberPhoneConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'phoneNumber',
+          },
+        ],
+      };
+    case ElementType.DATEPICKER:
+      return {
+        id: uid,
+        type: ElementType.DATEPICKER,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: { ...defaultDatePickerConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'longText',
+          },
+        ],
+      };
+    case ElementType.TIME:
+      return {
+        id: uid,
+        type: ElementType.TIME,
+        gridSize: { x: 0, y: 0, w: 12, h: 4 },
+        config: { ...defaultTimeInputConfig, ...config },
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'timeInput',
+          },
+        ],
+      };
+    case ElementType.IMAGE:
+      return {
+        id: uid,
+        type: ElementType.IMAGE,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: defaultImageConfig,
+        fields: [],
+      };
+    case ElementType.FILE_UPLOAD:
+      return {
+        id: uid,
+        type: ElementType.FILE_UPLOAD,
+        gridSize: { x: 0, y: 0, w: 12, h: 5 },
+        config: defaultFileConfig,
+        fields: [
+          {
+            id: uuidv4(),
+            name: 'fileUpload',
+          },
+        ],
+      };
     default:
       return undefined;
   }

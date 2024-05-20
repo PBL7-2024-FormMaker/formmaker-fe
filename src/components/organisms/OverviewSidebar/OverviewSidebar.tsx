@@ -135,7 +135,7 @@ export const OverviewSidebar = () => {
             }
             zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
-            loaderProps={{ color: 'blue', size: 'md' }}
+            loaderProps={{ color: 'blue', size: 'sm' }}
           />
           <Button
             size='md'
