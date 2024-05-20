@@ -4,6 +4,7 @@ import {
   DatePickerConfig,
   DropdownConfig,
   EmailConfig,
+  FileConfig,
   FullnameConfig,
   HeadingConfig,
   ImageConfig,
@@ -119,6 +120,12 @@ export const defaultImageConfig: ImageConfig = {
     height: '150',
   },
   imageAlignment: 'center',
+};
+
+export const defaultFileConfig: FileConfig = {
+  fieldLabel: 'File upload',
+  required: false,
+  sublabel: 'Only .pdf, .doc and .txt files are allowed!',
 };
 
 export const defaultShortTextHeightWidth = {

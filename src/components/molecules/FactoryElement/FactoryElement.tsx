@@ -5,6 +5,7 @@ import {
   ElementItem,
   ElementType,
   EmailElement,
+  FileElement,
   FullnameElement,
   HeadingElement,
   ImageElement,
@@ -22,6 +23,7 @@ import { BaseAddressElement } from '../BaseAddressElement';
 import { BaseDatePickerElement } from '../BaseDatePickerElement';
 import { BaseDropdownElement } from '../BaseDropdownElement';
 import { BaseEmailElement } from '../BaseEmailElement';
+import { BaseFileElement } from '../BaseFileElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseImageElement } from '../BaseImageElement/BaseImageElement';
@@ -80,6 +82,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseTimeInputElement item={item} {...rest} />;
     case isImageElement(item):
       return <BaseImageElement item={item} {...rest} />;
+    case isFileElement(item):
+      return <BaseFileElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -157,4 +161,8 @@ export function isTimeInputElement(
 
 export function isImageElement(item: ElementItem): item is ImageElement {
   return item?.type === ElementType.IMAGE;
+}
+
+export function isFileElement(item: ElementItem): item is FileElement {
+  return item?.type === ElementType.FILE_UPLOAD;
 }

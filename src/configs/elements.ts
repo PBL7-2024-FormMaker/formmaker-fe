@@ -92,7 +92,7 @@ export const ELEMENTS = {
   FILE_UPLOAD: {
     icon: FaFileUpload,
     type: ElementType.FILE_UPLOAD,
-    isDisabled: true,
+    isDisabled: false,
   },
   TIME: {
     icon: MdWatchLater,
@@ -164,6 +164,7 @@ export const ElementList: ElementGroupType[] = [
       { element: ELEMENTS.MULTIPLE_CHOICE },
       { element: ELEMENTS.TIME },
       { element: ELEMENTS.IMAGE },
+      { element: ELEMENTS.FILE_UPLOAD },
     ],
   },
   {
