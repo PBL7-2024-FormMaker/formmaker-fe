@@ -94,8 +94,7 @@ export const PublicPage = () => {
         <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-navy-500 bg-white px-6 py-8 shadow-lg'>
           <h2 className='text-[32px]'>{formData?.title}</h2>
           <span className='leading-7'>
-            This form is no longer accepting submissions. <br></br> Try
-            contacting the owner of the form if you think this is a mistake.
+            This form is no longer accepting submissions
           </span>
           <img
             src={DisabledFormIcon}
