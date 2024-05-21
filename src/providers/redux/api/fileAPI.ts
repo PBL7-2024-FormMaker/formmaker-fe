@@ -5,7 +5,7 @@ import { rootApi } from './rootApi';
 
 const fileApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    uploadFle: build.mutation<SuccessResponse<UploadImageResponse>, File>({
+    uploadFile: build.mutation<SuccessResponse<UploadImageResponse>, File>({
       query: (file) => {
         const payload = new FormData();
         payload.append('file', file);
@@ -23,4 +23,4 @@ const fileApi = rootApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useUploadFleMutation } = fileApi;
+export const { useUploadFileMutation } = fileApi;

@@ -59,7 +59,7 @@ export const TeamGroup = ({
     createFolder({ teamId: teamId, payload: { name: folderName } }).then(
       (res) => {
         if ('data' in res) {
-          toastify.displaySuccess(res.data.message as string);
+          toastify.displaySuccess(res.data!.message as string);
           closeModal();
           return;
         }
@@ -72,7 +72,7 @@ export const TeamGroup = ({
   const handleInviteMember = (value: { email: string }) => {
     inviteMember({ id: teamId, email: value.email }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)
@@ -83,7 +83,7 @@ export const TeamGroup = ({
   const handleRemoveMember = (id: string) => {
     removeMember({ id: teamId, memberIds: [id] }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)
@@ -94,7 +94,7 @@ export const TeamGroup = ({
   const handleCreateTeam = () => {
     createTeam({ name: teamName }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         closeModal();
         return;
       }
@@ -106,7 +106,7 @@ export const TeamGroup = ({
   const handleUpdateTeam = () => {
     updateTeam({ id: teamId, data: { name: teamName } }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         closeModal();
         return;
       }
@@ -118,7 +118,7 @@ export const TeamGroup = ({
   const handleDeleteTeam = () => {
     deleteTeam({ id: teamId }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         closeModal();
         return;
       }

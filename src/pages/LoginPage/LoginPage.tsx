@@ -20,8 +20,8 @@ export const LoginPage = () => {
     open();
     loginUser(values).then((res) => {
       if ('data' in res) {
-        httpClient.setToken(res.data.data.token);
-        saveAccessTokenToLS(res.data.data.token);
+        httpClient.setToken(res.data!.data.token);
+        saveAccessTokenToLS(res.data!.data.token);
         close();
         acceptUrl ? navigate(`${acceptUrl}`) : navigate(PATH.ROOT_PAGE);
         return;

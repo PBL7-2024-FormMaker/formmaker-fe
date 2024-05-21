@@ -110,7 +110,7 @@ export const TeamPage = () => {
 
     inviteMember({ id: teamId, email: value.email }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)
@@ -123,7 +123,7 @@ export const TeamPage = () => {
 
     removeMember({ id: teamId, memberIds: [id] }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)

@@ -106,7 +106,7 @@ export const BuildFormHeader = () => {
 
     inviteFormMember({ id: form.id, email: value.email }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)
@@ -119,7 +119,7 @@ export const BuildFormHeader = () => {
 
     removeFormMember({ id: form.id, memberIds: [id] }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         return;
       }
       if (res.error as ErrorResponse)

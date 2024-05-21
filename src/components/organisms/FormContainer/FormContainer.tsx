@@ -40,7 +40,7 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
-          const logoUrl = imgRes.data.data.url;
+          const logoUrl = imgRes.data!.data.url;
 
           return updateForm({
             id: formId,

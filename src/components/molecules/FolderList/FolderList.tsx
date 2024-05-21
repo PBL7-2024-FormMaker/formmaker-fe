@@ -89,7 +89,7 @@ export const FolderList = ({
   const handleUpdateFolder = () => {
     updateFolder({ id: folderId, data: { name: folderName } }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         closeModal();
         return;
       }
@@ -101,7 +101,7 @@ export const FolderList = ({
   const handleDeleteFolder = () => {
     deleteFolder(folderId).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         setActiveAllForms(true);
         setActiveFolder('');
         setParams({ ...defaultFormsParams });
@@ -119,7 +119,7 @@ export const FolderList = ({
 
     return createFormInFolder({ folderId, data: filteredForm }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -134,7 +134,7 @@ export const FolderList = ({
       data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
