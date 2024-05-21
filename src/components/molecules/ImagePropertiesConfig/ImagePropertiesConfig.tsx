@@ -68,12 +68,12 @@ export const ImagePropertiesConfig = (
     if (selectedFile) {
       uploadImage(selectedFile).then((res) => {
         if ('data' in res) {
-          handleConfig({ ...edittingItem.config, image: res.data.data.url });
+          handleConfig({ ...edittingItem.config, image: res.data!.data.url });
           updateItem({
             ...edittingItem,
             config: {
               ...edittingItem.config,
-              image: res.data.data.url,
+              image: res.data!.data.url,
             },
           });
           setEdditingFieldName('');

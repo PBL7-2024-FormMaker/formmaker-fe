@@ -53,7 +53,7 @@ export const FolderGroup = ({
   const handleCreateFolder = () => {
     createFolder({ payload: { name: folderName } }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data!.message as string);
         closeModal();
         return;
       }

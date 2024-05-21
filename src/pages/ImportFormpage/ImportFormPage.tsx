@@ -72,7 +72,7 @@ export const ImportFormPage = () => {
     const filteredForm = separateFields(form);
     return createForm(filteredForm).then((res) => {
       if ('data' in res) {
-        setFormId(res.data.data.id);
+        setFormId(res.data!.data.id);
         return;
       }
       return toastify.displayError((res.error as ErrorResponse).message);
@@ -431,7 +431,7 @@ export const ImportFormPage = () => {
     }).then((res) => {
       if ('data' in res) {
         setdisableButton(false);
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });

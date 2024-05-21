@@ -83,7 +83,7 @@ export const FormsTable = () => {
   const handleDeleteForm = (record: FormResponse) => {
     deleteForm({ id: record.id }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message);
+        toastify.displaySuccess(res.data!.message);
         closeModal();
         setSelectedRecords([]);
         return;
@@ -100,7 +100,7 @@ export const FormsTable = () => {
     setSelectedRecords([record]);
     restoreForm({ id: record.id }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message);
+        toastify.displaySuccess(res.data!.message);
         setSelectedRecords([]);
         return;
       }
@@ -115,7 +115,7 @@ export const FormsTable = () => {
     removeFromFolder({ formId: record.id, folderId: record.folderId }).then(
       (res) => {
         if ('data' in res) {
-          toastify.displaySuccess(res.data.message);
+          toastify.displaySuccess(res.data!.message);
           setSelectedRecords([]);
           return;
         }
@@ -130,7 +130,7 @@ export const FormsTable = () => {
   const handleRemoveFromTeam = (record: FormResponse) => {
     removeFromTeam({ formId: record.id, teamId: record.teamId }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message);
+        toastify.displaySuccess(res.data!.message);
         closeModal();
         setSelectedRecords([]);
         return;

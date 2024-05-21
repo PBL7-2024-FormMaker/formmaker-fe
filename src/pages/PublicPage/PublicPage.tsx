@@ -42,7 +42,7 @@ export const PublicPage = () => {
     return createFormResponse({ formId: formId!, payload: formResponse }).then(
       (res) => {
         if ('data' in res) {
-          toastify.displaySuccess(res.data.message as string);
+          toastify.displaySuccess(res.data!.message as string);
           setIsSuccess(true);
           return;
         }

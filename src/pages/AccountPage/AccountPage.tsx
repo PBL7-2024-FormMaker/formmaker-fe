@@ -155,8 +155,8 @@ export const AccountPage = () => {
       uploadImage(selectedFile).then((res) => {
         if ('data' in res) {
           type === UploadImage.AVATAR
-            ? updateProfile({ avatarUrl: res.data.data.url })
-            : updateProfile({ organizationLogo: res.data.data.url });
+            ? updateProfile({ avatarUrl: res.data!.data.url })
+            : updateProfile({ organizationLogo: res.data!.data.url });
           handleCancelEdit();
           return;
         }

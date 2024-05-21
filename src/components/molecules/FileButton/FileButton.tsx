@@ -17,7 +17,7 @@ import {
 } from 'formik';
 
 import { Button } from '@/atoms/Button';
-import { useUploadFleMutation } from '@/redux/api/fileAPI';
+import { useUploadFileMutation } from '@/redux/api/fileAPI';
 import { cn, toastify } from '@/utils';
 
 import { ErrorResponse } from '../../../types';
@@ -57,7 +57,7 @@ export const FileButtonUpload = (props: FileButtonProps) => {
     classNameError,
     ...rest
   } = props;
-  const [uploadFile, { isLoading: isLoadingUpload }] = useUploadFleMutation();
+  const [uploadFile, { isLoading: isLoadingUpload }] = useUploadFileMutation();
   useEffect(() => {
     if (field.value) {
       setFieldValue(field.name, field.value);
@@ -74,7 +74,7 @@ export const FileButtonUpload = (props: FileButtonProps) => {
     if (value) {
       uploadFile(value).then((res) => {
         if ('data' in res) {
-          handleChange(elementId, elementFieldId, res.data.data.url);
+          handleChange(elementId, elementFieldId, res.data!.data.url);
           return;
         }
         if (res.error as ErrorResponse)

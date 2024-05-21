@@ -10,7 +10,7 @@ import { PATH } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { useCreateFormMutation } from '@/redux/api/formApi';
 import { useGetElementsFromQuestionMutation } from '@/redux/api/openAiApi';
-import { ElementType } from '@/types';
+import { ElementConfig, ElementType } from '@/types';
 import { createElement } from '@/utils/elements';
 import { separateFields } from '@/utils/seperates';
 
@@ -44,7 +44,10 @@ export const Chatbot = () => {
       if ('data' in elementsResponse) {
         if (elementsResponse.data.form) {
           const newElements = elementsResponse.data.form[0].elements.map(
-            (elementResponse) =>
+            (elementResponse: {
+              elementType: ElementType;
+              config: ElementConfig;
+            }) =>
               createElement(
                 elementResponse.elementType,
                 elementResponse.config,
@@ -67,7 +70,7 @@ export const Chatbot = () => {
                 toggleMsgLoader();
                 addLinkSnippet({
                   title: 'Your form link',
-                  link: `http://localhost:5173${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`,
+                  link: `http://localhost:5173${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`,
                   target: '_blank',
                 });
               } else {
