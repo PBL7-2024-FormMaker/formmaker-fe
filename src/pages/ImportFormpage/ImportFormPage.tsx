@@ -21,6 +21,8 @@ import {
   ElementItem,
   ElementType,
   ErrorResponse,
+  FileElement,
+  ImageElement,
   LongTextElement,
   MultipleChoiceElement,
   ScaleRatingElement,
@@ -29,12 +31,20 @@ import {
   TimeInputElement,
 } from '@/types';
 import {
+  checkboxInputTable,
   datePickerGG,
   dropdownGG,
+  fileGG,
   getFormGG,
+  getGroupItemsFormGG,
+  getImageItemFormGG,
+  groupQuestionGG,
+  itemsGG,
   longTextGG,
   multiplechoiceGG,
   questionGG,
+  questionItemGG,
+  radioInputTable,
   scaleRatingGG,
   shorttextGG,
   singleChoiceGG,
@@ -171,234 +181,296 @@ export const ImportFormPage = () => {
     });
 
     formGGResponse.items.map((item) => {
-      const question = item.questionItem?.question;
-      if (question) {
-        if (isShorttextGG(question)) {
-          (elements as ShortTextElement[]).push({
-            id: uuidv4(),
-            type: ElementType.SHORT_TEXT,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              placeholder: 'Type a sublabel',
-              sublabel: 'Type a sublabel',
+      if (imageItem(item)) {
+        (elements as ImageElement[]).push({
+          id: uuidv4(),
+          type: ElementType.IMAGE,
+          config: {
+            image: item.imageItem.image.contentUri,
+            size: {
+              width: '150',
+              height: '150',
             },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.SHORT_TEXT),
+            imageAlignment:
+              item.imageItem.image.properties.alignment.toLowerCase(),
+          },
+          gridSize: {
+            x: 0,
+            y: elements.length * 5 + 4,
+            ...getDefaultWidthHeight(ElementType.IMAGE),
+          },
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'image',
             },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'shortText',
-              },
-            ],
-          });
+          ],
+        });
+      }
+      if (groupItems(item)) {
+        if (radioInputTableItem(item.questionGroupItem)) {
+          toastify.displayWarning(
+            'Formmaker currently can not display radio input table',
+          );
         }
-        if (isLongtextGG(question)) {
-          (elements as LongTextElement[]).push({
-            id: uuidv4(),
-            type: ElementType.LONG_TEXT,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              placeholder: 'Type a sublabel',
-              sublabel: 'Type a sublabel',
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.LONG_TEXT),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'longText',
-              },
-            ],
-          });
+        if (checkboxInputTableItem(item.questionGroupItem)) {
+          toastify.displayWarning(
+            'Formmaker currently can not display checkbox input table',
+          );
         }
-        if (singgleChoice(question)) {
-          const options: string[] = [];
-          const otherOption: { isDisplayed: boolean; text: string } = {
-            isDisplayed: false,
-            text: 'Other',
-          };
-          question.choiceQuestion.options.map((option) => {
-            if ('value' in option) {
-              options.push((option as valueOption).value);
-            }
-            if ('isOther' in option && option.isOther) {
-              otherOption.isDisplayed = true;
-              otherOption.text = 'Other';
-            }
-          });
-          (elements as SingleChoiceElement[]).push({
-            id: uuidv4(),
-            type: ElementType.SINGLE_CHOICE,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              options: options,
-              otherOption: otherOption,
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.SINGLE_CHOICE),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'singleChoice',
+      }
+      if (questionItem(item)) {
+        const question = item.questionItem?.question;
+        if (question) {
+          if (isShorttextGG(question)) {
+            (elements as ShortTextElement[]).push({
+              id: uuidv4(),
+              type: ElementType.SHORT_TEXT,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                placeholder: 'Type a sublabel',
+                sublabel: 'Type a sublabel',
               },
-            ],
-          });
-        }
-        if (multipleChoice(question)) {
-          const options: string[] = [];
-          const otherOption: { isDisplayed: boolean; text: string } = {
-            isDisplayed: false,
-            text: 'Other',
-          };
-          question.choiceQuestion.options.map((option) => {
-            if ('value' in option) {
-              options.push((option as valueOption).value);
-            }
-            if ('isOther' in option && option.isOther) {
-              otherOption.isDisplayed = true;
-              otherOption.text = 'Other';
-            }
-          });
-          (elements as MultipleChoiceElement[]).push({
-            id: uuidv4(),
-            type: ElementType.MULTIPLE_CHOICE,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              options: options,
-              otherOption: otherOption,
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.MULTIPLE_CHOICE),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'multipleChoice',
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.SHORT_TEXT),
               },
-            ],
-          });
-        }
-        if (dropDown(question)) {
-          const options: string[] = [];
-          const otherOption: { isDisplayed: boolean; text: string } = {
-            isDisplayed: false,
-            text: 'Other',
-          };
-          question.choiceQuestion.options.map((option) => {
-            if ('value' in option) {
-              options.push((option as valueOption).value);
-            }
-            if ('isOther' in option && option.isOther) {
-              otherOption.isDisplayed = true;
-              otherOption.text = 'Other';
-            }
-          });
-          (elements as DropdownElement[]).push({
-            id: uuidv4(),
-            type: ElementType.DROPDOWN,
-            config: {
-              fieldLabel: item.title,
-              sublabel: 'Type a sublabel',
-              required: question.required ?? false,
-              options: options,
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.DROPDOWN),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'dropdown',
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'shortText',
+                },
+              ],
+            });
+          }
+          if (isLongtextGG(question)) {
+            (elements as LongTextElement[]).push({
+              id: uuidv4(),
+              type: ElementType.LONG_TEXT,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                placeholder: 'Type a sublabel',
+                sublabel: 'Type a sublabel',
               },
-            ],
-          });
-        }
-        if (datePicker(question)) {
-          (elements as DatePickerElement[]).push({
-            id: uuidv4(),
-            type: ElementType.DATEPICKER,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              sublabel: 'Date',
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.DATEPICKER),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'datePicker',
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.LONG_TEXT),
               },
-            ],
-          });
-        }
-        if (time(question)) {
-          (elements as TimeInputElement[]).push({
-            id: uuidv4(),
-            type: ElementType.TIME,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              sublabels: {
-                hour: 'hour',
-                minutes: 'minutes',
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'longText',
+                },
+              ],
+            });
+          }
+          if (singgleChoice(question)) {
+            const options: string[] = [];
+            const otherOption: { isDisplayed: boolean; text: string } = {
+              isDisplayed: false,
+              text: 'Other',
+            };
+            question.choiceQuestion.options.map((option) => {
+              if ('value' in option) {
+                options.push((option as valueOption).value);
+              }
+              if ('isOther' in option && option.isOther) {
+                otherOption.isDisplayed = true;
+                otherOption.text = 'Other';
+              }
+            });
+            (elements as SingleChoiceElement[]).push({
+              id: uuidv4(),
+              type: ElementType.SINGLE_CHOICE,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                options: options,
+                otherOption: otherOption,
               },
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.TIME),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'timeInput',
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.SINGLE_CHOICE),
               },
-            ],
-          });
-        }
-        if (scaleRating(question)) {
-          (elements as ScaleRatingElement[]).push({
-            id: uuidv4(),
-            type: ElementType.SCALE_RATING,
-            config: {
-              fieldLabel: item.title,
-              required: question.required ?? false,
-              lowestRatingText: question.scaleQuestion.lowLabel ?? 'Worst',
-              highestRatingText: question.scaleQuestion.highLabel ?? 'Best',
-            },
-            gridSize: {
-              x: 0,
-              y: elements.length * 5 + 4,
-              ...getDefaultWidthHeight(ElementType.SCALE_RATING),
-            },
-            fields: [
-              {
-                id: uuidv4(),
-                name: 'scaleRating',
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'singleChoice',
+                },
+              ],
+            });
+          }
+          if (multipleChoice(question)) {
+            const options: string[] = [];
+            const otherOption: { isDisplayed: boolean; text: string } = {
+              isDisplayed: false,
+              text: 'Other',
+            };
+            question.choiceQuestion.options.map((option) => {
+              if ('value' in option) {
+                options.push((option as valueOption).value);
+              }
+              if ('isOther' in option && option.isOther) {
+                otherOption.isDisplayed = true;
+                otherOption.text = 'Other';
+              }
+            });
+            (elements as MultipleChoiceElement[]).push({
+              id: uuidv4(),
+              type: ElementType.MULTIPLE_CHOICE,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                options: options,
+                otherOption: otherOption,
               },
-            ],
-          });
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.MULTIPLE_CHOICE),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'multipleChoice',
+                },
+              ],
+            });
+          }
+          if (dropDown(question)) {
+            const options: string[] = [];
+            const otherOption: { isDisplayed: boolean; text: string } = {
+              isDisplayed: false,
+              text: 'Other',
+            };
+            question.choiceQuestion.options.map((option) => {
+              if ('value' in option) {
+                options.push((option as valueOption).value);
+              }
+              if ('isOther' in option && option.isOther) {
+                otherOption.isDisplayed = true;
+                otherOption.text = 'Other';
+              }
+            });
+            (elements as DropdownElement[]).push({
+              id: uuidv4(),
+              type: ElementType.DROPDOWN,
+              config: {
+                fieldLabel: item.title,
+                sublabel: 'Type a sublabel',
+                required: question.required ?? false,
+                options: options,
+              },
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.DROPDOWN),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'dropdown',
+                },
+              ],
+            });
+          }
+          if (datePicker(question)) {
+            (elements as DatePickerElement[]).push({
+              id: uuidv4(),
+              type: ElementType.DATEPICKER,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                sublabel: 'Date',
+              },
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.DATEPICKER),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'datePicker',
+                },
+              ],
+            });
+          }
+          if (time(question)) {
+            (elements as TimeInputElement[]).push({
+              id: uuidv4(),
+              type: ElementType.TIME,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                sublabels: {
+                  hour: 'hour',
+                  minutes: 'minutes',
+                },
+              },
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.TIME),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'timeInput',
+                },
+              ],
+            });
+          }
+          if (scaleRating(question)) {
+            (elements as ScaleRatingElement[]).push({
+              id: uuidv4(),
+              type: ElementType.SCALE_RATING,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                lowestRatingText: question.scaleQuestion.lowLabel ?? 'Worst',
+                highestRatingText: question.scaleQuestion.highLabel ?? 'Best',
+              },
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.SCALE_RATING),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'scaleRating',
+                },
+              ],
+            });
+          }
+          if (file(question)) {
+            (elements as FileElement[]).push({
+              id: uuidv4(),
+              type: ElementType.FILE_UPLOAD,
+              config: {
+                fieldLabel: item.title,
+                required: question.required ?? false,
+                sublabel: 'Only .pdf, .doc and .txt files are allowed!',
+              },
+              gridSize: {
+                x: 0,
+                y: elements.length * 5 + 4,
+                ...getDefaultWidthHeight(ElementType.FILE_UPLOAD),
+              },
+              fields: [
+                {
+                  id: uuidv4(),
+                  name: 'fileUpload',
+                },
+              ],
+            });
+          }
         }
       }
       return;
@@ -531,4 +603,38 @@ export function time(obj: questionGG): obj is timeGG {
 }
 export function scaleRating(obj: questionGG): obj is scaleRatingGG {
   return typeof obj === 'object' && obj !== null && 'scaleQuestion' in obj;
+}
+
+export function file(obj: questionGG): obj is fileGG {
+  return typeof obj === 'object' && obj !== null && 'fileUploadQuestion' in obj;
+}
+
+export function imageItem(obj: itemsGG): obj is getImageItemFormGG {
+  return typeof obj === 'object' && obj !== null && 'imageItem' in obj;
+}
+
+export function questionItem(obj: itemsGG): obj is questionItemGG {
+  return typeof obj === 'object' && obj !== null && 'questionItem' in obj;
+}
+
+export function groupItems(obj: itemsGG): obj is getGroupItemsFormGG {
+  return typeof obj === 'object' && obj !== null && 'questionGroupItem' in obj;
+}
+
+export function radioInputTableItem(
+  obj: groupQuestionGG,
+): obj is radioInputTable {
+  return (
+    typeof obj === 'object' && obj !== null && obj.grid.columns.type === 'RADIO'
+  );
+}
+
+export function checkboxInputTableItem(
+  obj: groupQuestionGG,
+): obj is checkboxInputTable {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    obj.grid.columns.type === 'CHECKBOX'
+  );
 }

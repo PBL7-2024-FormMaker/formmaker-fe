@@ -73,6 +73,49 @@ export interface timeGG {
   required: boolean;
   timeQuestion: object;
 }
+
+export interface fileGG {
+  questionId: string;
+  required: boolean;
+  fileUploadQuestion: {
+    folderId: string;
+    type: string[];
+    maxFiles: number;
+    maxFileSize: string;
+  };
+}
+
+export interface inputTableRow {
+  questionId: string;
+  required: boolean;
+  rowQuestion: { title: string };
+}
+
+export interface radioInputTableCol {
+  columns: {
+    type: 'RADIO';
+    options: { value: string }[];
+  };
+}
+
+export interface checkboxInputTableCol {
+  columns: {
+    type: 'CHECKBOX';
+    options: { value: string }[];
+  };
+}
+export interface radioInputTable {
+  questions: inputTableRow[];
+  grid: radioInputTableCol;
+}
+
+export interface checkboxInputTable {
+  questions: inputTableRow[];
+  grid: checkboxInputTableCol;
+}
+
+export type groupQuestionGG = radioInputTable | checkboxInputTable;
+
 export type questionGG =
   | shorttextGG
   | longTextGG
@@ -81,7 +124,8 @@ export type questionGG =
   | dropdownGG
   | datePickerGG
   | scaleRatingGG
-  | timeGG;
+  | timeGG
+  | fileGG;
 export interface getFormGG {
   formId: string;
   info: {
@@ -90,11 +134,33 @@ export interface getFormGG {
     documentTitle: string;
   };
   settings: object;
-  items: {
-    itemId: string;
-    title: string;
-    questionItem: {
-      question: questionGG;
-    };
-  }[];
+  items: itemsGG[];
 }
+
+export interface questionItemGG {
+  itemId: string;
+  title: string;
+  questionItem: {
+    question: questionGG;
+  };
+}
+export interface getGroupItemsFormGG {
+  itemId: string;
+  title: string;
+  questionGroupItem: groupQuestionGG;
+}
+
+export interface getImageItemFormGG {
+  itemId: string;
+  imageItem: {
+    image: {
+      contentUri: string;
+      properties: {
+        alignment: string;
+        width: number;
+      };
+    };
+  };
+}
+
+export type itemsGG = questionItemGG | getGroupItemsFormGG | getImageItemFormGG;
