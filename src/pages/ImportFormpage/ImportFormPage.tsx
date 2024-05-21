@@ -444,7 +444,7 @@ export const ImportFormPage = () => {
       .catch((err) => err.errors[0]);
   return (
     <Box className='relative flex h-[330px] w-full items-center justify-center'>
-      <Stack className=' gap-2  rounded bg-white'>
+      <Stack className='gap-2 rounded bg-white'>
         <Text>Enter URL Google form</Text>
         <Text className='text-sm text-slate-400'>
           Note: URL must be following this format:
@@ -459,12 +459,12 @@ export const ImportFormPage = () => {
             handleCreateFormByFormURl(value.formUrl);
           }}
         >
-          <Form>
+          <Form className='mt-5'>
             <Field
               validate={validateGGFormURL}
               name='formUrl'
               placeholder='Type Google form URL to import'
-              classNameWrapper='w-full'
+              classNameWrapper='w-full min-h-[56px]'
               component={TextInput}
             />
             <Group className='justify-end'>
