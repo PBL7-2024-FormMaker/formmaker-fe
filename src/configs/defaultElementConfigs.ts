@@ -116,7 +116,7 @@ export const defaultTimeInputConfig: TimeInputConfig = {
 export const defaultImageConfig: ImageConfig = {
   image: '',
   size: {
-    width: '100',
+    width: '150',
     height: '150',
   },
   imageAlignment: 'center',

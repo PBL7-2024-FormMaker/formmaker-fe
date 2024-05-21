@@ -1,5 +1,6 @@
 import { Group, Image } from '@mantine/core';
 
+import ImagePlaceHolder from '@/assets/images/image_placeholder.png';
 import { ALIGNMENT_OPTIONS } from '@/constants/buttonStyles';
 import { ImageElement } from '@/types';
 
@@ -26,11 +27,7 @@ export const BaseImageElement = (props: BaseElementProps<ImageElement>) => {
   return (
     <Group className={`py-2 ${alignment}`}>
       <Image
-        src={
-          item.config.image
-            ? item.config.image
-            : 'https://www.jotform.com/images/image_placeholder.png'
-        }
+        src={item.config.image ? item.config.image : ImagePlaceHolder}
         h={item.config.size.height}
         w={item.config.size.width}
       />
