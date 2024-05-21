@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from '@/atoms/Button';
 import { defaultSubmitConfig } from '@/configs';
+import { API_KEY, CLIENT_ID } from '@/configs';
 import { PATH } from '@/constants';
 import { useBuildFormContext } from '@/contexts';
 import {
@@ -47,9 +48,6 @@ import { separateFields } from '@/utils/seperates';
 
 import { TextInput } from '../../components/molecules/TextInput';
 
-const CLIENT_ID =
-  '430729365593-enr48glee1tp8uslbma8o11hraj5vavv.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyD4Ep4CnrZndkOF7V6NhRXHvreWIjtsIHY';
 const DISCOVERY_DOCS = [
   'https://forms.googleapis.com/$discovery/rest?version=v1',
 ];

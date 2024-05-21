@@ -24,7 +24,7 @@ interface ModalProps extends MantineModalProps {
 
 interface NoFooterModalProps
   extends Omit<ModalProps, 'hasFooter' | 'onClickCancel' | 'onClickSubmit'> {
-  hasFooter: false;
+  hasFooter: boolean;
   isLoading: boolean;
 }
 
@@ -63,14 +63,14 @@ export const Modal = ({
           <Divider className='mb-3' />
           <Group className='justify-between'>
             <Button
-              onClick={props.onClickCancel}
+              onClick={(props as ModalProps).onClickCancel}
               className='font-bold'
               title='Cancel'
               color='gray'
               variant='outline'
             />
             <Button
-              onClick={props.onClickSubmit}
+              onClick={(props as ModalProps).onClickSubmit}
               className='font-bold'
               title='Submit'
               disabled={!canSubmit}
