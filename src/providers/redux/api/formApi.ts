@@ -51,6 +51,17 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    addFormMember: build.mutation<
+      SuccessResponse<FormResponse>,
+      { id: string; email: string }
+    >({
+      query: ({ id, email }) => ({
+        url: `${API_URL.FORMS}/${id}/add-member`,
+        method: 'PATCH',
+        data: { email },
+      }),
+      invalidatesTags: ['Forms'],
+    }),
     removeFormMember: build.mutation<
       SuccessResponse<FormResponse>,
       { id: string; memberIds: string[] }
@@ -212,6 +223,7 @@ const formApi = rootApi.injectEndpoints({
 
 export const {
   useGetUsersInFormQuery,
+  useAddFormMemberMutation,
   useInviteFormMemberMutation,
   useRemoveFormMemberMutation,
   useGetMyFormsQuery,
