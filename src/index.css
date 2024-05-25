@@ -74,3 +74,6 @@
 .rcw-snippet-details {
   border-left: 2px solid #3f72af;
 }
+.rcw-input {
+  line-height: normal;
+}

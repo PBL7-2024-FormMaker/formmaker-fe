@@ -78,7 +78,7 @@ export const ImportFormPage = () => {
   const [elements, setElements] = useState<ElementItem[]>([]);
   const [disableButton, setdisableButton] = useState<boolean>(false);
 
-  const handleCreateForm = () => {
+  const handleCreateForm = async () => {
     const filteredForm = separateFields(form);
     return createForm(filteredForm).then((res) => {
       if ('data' in res) {
@@ -118,8 +118,8 @@ export const ImportFormPage = () => {
     gapi.load('client:auth2', initClient);
   }, [formIdGG]);
 
-  const handleCreateFormByFormURl = (formUrl: string) => {
-    handleCreateForm();
+  const handleCreateFormByFormURl = async (formUrl: string) => {
+    await handleCreateForm();
     const parts = formUrl.split('/');
     if (
       parts.length > 5 &&
