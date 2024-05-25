@@ -18,6 +18,7 @@ import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
 import { PublicPage } from '@/pages/PublicPage';
+import { SharingForm } from '@/pages/SharingForm';
 import { SignupPage } from '@/pages/SignupPage';
 import { TeamPage } from '@/pages/TeamPage';
 import { getAccessTokenFromLS } from '@/utils';
@@ -97,6 +98,10 @@ export function useRouteElements() {
               <OverviewPage />
             </OverviewContextProvider>
           ),
+        },
+        {
+          path: PATH.ACCEPT_TO_FORM,
+          element: <SharingForm />,
         },
         {
           path: PATH.BUILD_FORM_PAGE,

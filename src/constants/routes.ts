@@ -7,6 +7,7 @@ export const PATH = {
   OVERVIEW_PAGE: '/overview',
   BUILD_FORM_PAGE: '/build',
   EDIT_FORM_PAGE: '/build/:id',
+  ACCEPT_TO_FORM: '/sharing-form/:id',
   MY_ACCOUNT_PAGE: '/my-account',
   PUBLIC_PAGE: '/form/:id',
   RESPONSE_PAGE: '/responses/:formId',
