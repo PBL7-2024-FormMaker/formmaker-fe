@@ -77,3 +77,18 @@
 .rcw-input {
   line-height: normal;
 }
+.quick-buttons-container .quick-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.quick-button {
+  border: 1px solid #3f72af;
+  font-weight: 400;
+}
+
+.quick-button:hover {
+  background-color: #3f72af;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}

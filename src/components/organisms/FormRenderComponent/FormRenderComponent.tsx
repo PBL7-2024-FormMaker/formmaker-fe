@@ -12,17 +12,20 @@ import { BIG_Z_INDEX } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { ElementItem, FormRequest, FormResponse } from '@/types';
+import { cn } from '@/utils';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
   form?: FormResponse | FormRequest;
   isLoading?: boolean;
+  width?: string;
 }
 
 export const FormRenderComponent = ({
   form,
   isLoading,
+  width,
 }: FormRenderComponentProps) => {
   const { elements, setElements } = useElementLayouts();
 
@@ -79,7 +82,7 @@ export const FormRenderComponent = ({
           className='mb-8 h-[140px] w-[360px] object-cover'
         />
       )}
-      <Stack className='w-[45%] justify-between gap-7'>
+      <Stack className={cn('justify-between gap-7', width ? width : 'w-[45%]')}>
         <Box pos='relative'>
           <LoadingOverlay
             visible={isLoading || !form}
@@ -87,7 +90,7 @@ export const FormRenderComponent = ({
             overlayProps={{ radius: 'sm', blur: 2 }}
             loaderProps={{ color: 'blue' }}
           />
-          <div className='w-full rounded-md border border-solid border-slate-200 bg-white shadow-lg'>
+          <div className='w-full rounded-md border border-solid border-slate-200 bg-white pb-4 shadow-lg'>
             <Text className='mt-6 p-7 px-4 text-2xl font-bold'>
               {form?.title}
             </Text>
