@@ -63,6 +63,9 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
         { 'translate-x-[0]': toggledRightbar },
         { 'top-[50px]': scroll.y > 0 },
       )}
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
     >
       <IoMdClose
         className='absolute right-2 top-2 size-6 cursor-pointer text-white transition-all duration-150 ease-linear hover:bg-slate-600'

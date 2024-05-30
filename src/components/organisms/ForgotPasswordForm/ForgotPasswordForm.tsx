@@ -29,7 +29,7 @@ export const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     >
       <Form className='w-full'>
         <Field
-          classNameWrapper='mb-3'
+          classNameWrapper='mb-3 min-h-[88px]'
           name='email'
           label='Type your email'
           classNameError='min-h-0'

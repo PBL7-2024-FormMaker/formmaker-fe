@@ -12,15 +12,16 @@ interface InteractiveIconProps {
 export const InteractiveIcons = ({ removeItem }: InteractiveIconProps) => {
   const { edittingItem } = useElementLayouts();
 
-  const { toggledRightbar, setToggledRightbar } = useBuildFormContext();
+  const { setToggledRightbar } = useBuildFormContext();
   const isSubmitElement = edittingItem?.type === ElementType.SUBMIT;
 
   return (
     <>
       <Stack>
         <Box
-          onClick={() => {
-            setToggledRightbar(!toggledRightbar);
+          onClick={(e) => {
+            e.stopPropagation();
+            setToggledRightbar(true);
           }}
           className='group absolute left-[100%] top-[50%] ml-3 mt-[-22px] flex translate-y-[-50%] cursor-pointer items-center justify-center gap-2 rounded-full bg-navy-500 p-2 text-white'
         >
@@ -49,7 +50,11 @@ export const InteractiveIcons = ({ removeItem }: InteractiveIconProps) => {
           </Tooltip>
         ) : (
           <Box
-            onClick={() => removeItem(edittingItem!.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              removeItem(edittingItem!.id);
+              setToggledRightbar(false);
+            }}
             className={
               'group absolute bottom-[50%] left-[100%] mb-[-22px] ml-3 flex translate-y-[50%] cursor-pointer items-center justify-center gap-2 rounded-full bg-error p-2 text-white'
             }

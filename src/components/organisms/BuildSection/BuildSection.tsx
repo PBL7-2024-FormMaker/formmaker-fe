@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
+import { useBuildFormContext } from '@/contexts';
 import { ElementType } from '@/types';
 
 import { BuildFormLeftbar } from '../BuildFormLeftbar';
@@ -13,6 +14,7 @@ const STRETCH_FORM_CONTAINER = 9;
 
 export const BuildSection = () => {
   const [currentElementType, setCurrentElementType] = useState<ElementType>();
+  const { setToggledRightbar } = useBuildFormContext();
 
   return (
     <Formik
@@ -28,7 +30,13 @@ export const BuildSection = () => {
               <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
             </Box>
           </Box>
-          <Box flex={STRETCH_FORM_CONTAINER} className='overflow-auto'>
+          <Box
+            flex={STRETCH_FORM_CONTAINER}
+            className='overflow-auto'
+            onClick={() => {
+              setToggledRightbar(false);
+            }}
+          >
             <FormContainer currentElementType={currentElementType!} />
           </Box>
         </Box>

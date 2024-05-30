@@ -143,7 +143,7 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
     <Stack className='h-mainHeight py-7'>
       <Stack className='w-[65%] justify-between gap-7'>
         {currentLogo ? (
-          <Group className='relative mx-auto'>
+          <Group className='relative mx-auto w-full'>
             <input
               type='file'
               ref={logoInputRef}

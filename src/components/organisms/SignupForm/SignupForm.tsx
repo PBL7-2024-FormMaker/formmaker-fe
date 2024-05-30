@@ -34,21 +34,21 @@ export const SignupForm = (props: SignupFormProps) => {
     >
       <Form className='h-full w-full'>
         <Field
-          classNameWrapper='mb-2'
+          classNameWrapper='mb-2 min-h-[88px]'
           name='username'
           label='Username'
           size='xs'
           component={TextInput}
         />
         <Field
-          classNameWrapper='mb-2'
+          classNameWrapper='mb-2 min-h-[88px]'
           name='email'
           label='Email'
           size='xs'
           component={TextInput}
         />
         <Field
-          classNameWrapper='mb-2'
+          classNameWrapper='mb-2 min-h-[88px]'
           name='password'
           label='Password'
           type='password'
@@ -56,7 +56,7 @@ export const SignupForm = (props: SignupFormProps) => {
           component={PasswordInput}
         />
         <Field
-          classNameWrapper='mb-2'
+          classNameWrapper='mb-2 min-h-[88px]'
           name='confirmPassword'
           label='Confirm Password'
           type='password'

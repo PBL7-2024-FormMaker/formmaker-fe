@@ -298,10 +298,20 @@ export const FormsTable = () => {
               </UnstyledButton>
             </Tooltip>
             <Stack className='gap-2'>
-              <Group>
-                <Text className='text-lg font-semibold text-gray-900'>
-                  {record.title}
-                </Text>
+              <Group className='min-w-[750px]'>
+                <Tooltip label={record.title} withArrow>
+                  <Text
+                    className='max-w-[600px] truncate text-lg font-semibold text-gray-900'
+                    style={{
+                      display: 'block',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {record.title}
+                  </Text>
+                </Tooltip>
                 {record.folder && (
                   <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'>
                     <Badge

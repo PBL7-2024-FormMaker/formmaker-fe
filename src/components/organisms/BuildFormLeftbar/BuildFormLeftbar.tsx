@@ -82,7 +82,7 @@ export const BuildFormLeftbar = ({
 
     const newElement = createItem(elementType, {
       x: 0,
-      y: maxYElement.gridSize.y + maxYElement.gridSize.h,
+      y: maxYElement.gridSize.y - maxYElement.gridSize.h,
       ...getDefaultWidthHeight(elementType),
     });
 
