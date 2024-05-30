@@ -38,6 +38,8 @@ import { separateFields } from '@/utils/seperates';
 
 const LOGO_HEIGHT = 60;
 
+const MAX_VISIBLE_USERS = 5;
+
 const emailSchema = signUpSchema.pick(['email']);
 
 export const BuildFormHeader = () => {
@@ -56,6 +58,7 @@ export const BuildFormHeader = () => {
   )?.email;
 
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(false);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
@@ -76,6 +79,25 @@ export const BuildFormHeader = () => {
     () => formatDate(form.updatedAt, 'MMM D, YYYY h:mm A'),
     [form.updatedAt],
   );
+
+  const sortedUsers = [...usersInForm!].sort((firstVal, secondVal) => {
+    if (
+      firstVal.id === (form as FormResponse).creatorId &&
+      secondVal.id !== (form as FormResponse).creatorId
+    ) {
+      return 1;
+    } else if (
+      firstVal.id !== (form as FormResponse).creatorId &&
+      secondVal.id === (form as FormResponse).creatorId
+    ) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  const visibleUsers = sortedUsers.slice(0, MAX_VISIBLE_USERS);
+  const hiddenUsers = sortedUsers.slice(MAX_VISIBLE_USERS);
 
   const handleLogout = () => {
     httpClient.logout();
@@ -190,79 +212,130 @@ export const BuildFormHeader = () => {
           {myProfile.email === creatorEmail && (
             <>
               <div className='flex flex-row items-center gap-2'>
-                {usersInForm &&
-                  [...usersInForm]
-                    .sort((firstVal, secondVal) => {
-                      if (
-                        firstVal.id === (form as FormResponse).creatorId &&
-                        secondVal.id !== (form as FormResponse).creatorId
-                      ) {
-                        return 1;
-                      } else if (
-                        firstVal.id !== (form as FormResponse).creatorId &&
-                        secondVal.id === (form as FormResponse).creatorId
-                      ) {
-                        return -1;
-                      } else {
-                        return 0;
-                      }
-                    })
-                    .map((member) => {
-                      if (member.id !== (form as FormResponse).creatorId)
-                        return (
-                          !(form as FormResponse).teamId && (
-                            <HoverCard
-                              shadow='md'
-                              withArrow
-                              position='bottom-end'
-                            >
-                              <HoverCard.Target>
+                {visibleUsers.map((member) => {
+                  if (member.id !== (form as FormResponse).creatorId)
+                    return (
+                      !(form as FormResponse).teamId && (
+                        <HoverCard shadow='md' withArrow position='bottom-end'>
+                          <HoverCard.Target>
+                            <UserAvatar avatarUrl={member.avatarUrl ?? ''} />
+                          </HoverCard.Target>
+                          <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
+                            <span className='text-[20px] font-semibold'>
+                              {member.username}
+                            </span>
+                            <span className='text-[15px] font-medium text-gray-500'>
+                              {member.email}
+                            </span>
+                            {myProfile.email === creatorEmail &&
+                              member.id !==
+                                (form as FormResponse).creatorId && (
+                                <>
+                                  <Divider className='my-2 w-full' />
+                                  <Box pos='relative'>
+                                    <LoadingOverlay
+                                      visible={isRemoveMemberLoading}
+                                      zIndex={1000}
+                                      overlayProps={{ radius: 'sm', blur: 2 }}
+                                      loaderProps={{
+                                        color: 'blue',
+                                        size: 'sm',
+                                      }}
+                                    />
+                                    <Button
+                                      variant='filled'
+                                      title='Delete member'
+                                      size='sm'
+                                      className='w-full'
+                                      onClick={() =>
+                                        handleRemoveMemberToForm(member.id)
+                                      }
+                                    />
+                                  </Box>
+                                </>
+                              )}
+                          </HoverCard.Dropdown>
+                        </HoverCard>
+                      )
+                    );
+                })}
+
+                {hiddenUsers.length > 0 && (
+                  <Menu
+                    shadow='md'
+                    width={105}
+                    opened={showMore}
+                    onClose={() => setShowMore(false)}
+                  >
+                    <Menu.Target>
+                      <Button
+                        variant='outline'
+                        onClick={() => setShowMore((prev) => !prev)}
+                        className='my-2 ml-3 mr-8 min-w-[105px] text-xs font-medium'
+                        title={
+                          showMore
+                            ? 'Show less'
+                            : `Show ${hiddenUsers.length} more`
+                        }
+                      />
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      {hiddenUsers.map((member) => (
+                        <Menu.Item key={member.id}>
+                          <HoverCard
+                            shadow='md'
+                            withArrow
+                            position='left-start'
+                            offset={20}
+                          >
+                            <HoverCard.Target>
+                              <div className='flex w-full justify-center'>
                                 <UserAvatar
                                   avatarUrl={member.avatarUrl ?? ''}
                                 />
-                              </HoverCard.Target>
-                              <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
-                                <span className='text-[20px] font-semibold'>
-                                  {member.username}
-                                </span>
-                                <span className='text-[15px] font-medium text-gray-500'>
-                                  {member.email}
-                                </span>
-                                {myProfile!.email === creatorEmail &&
-                                  member.id !==
-                                    (form as FormResponse).creatorId && (
-                                    <>
-                                      <Divider className='my-2 w-full' />
-                                      <Box pos='relative'>
-                                        <LoadingOverlay
-                                          visible={isRemoveMemberLoading}
-                                          zIndex={BIG_Z_INDEX}
-                                          overlayProps={{
-                                            radius: 'sm',
-                                            blur: 2,
-                                          }}
-                                          loaderProps={{
-                                            color: 'blue',
-                                            size: 'sm',
-                                          }}
-                                        />
-                                        <Button
-                                          variant='filled'
-                                          title='Delete member'
-                                          size='sm'
-                                          className='w-full'
-                                          onClick={() =>
-                                            handleRemoveMemberToForm(member.id)
-                                          }
-                                        />
-                                      </Box>
-                                    </>
-                                  )}
-                              </HoverCard.Dropdown>
-                            </HoverCard>
-                          )
-                        );
-                    })}
+                              </div>
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
+                              <span className='text-[20px] font-semibold'>
+                                {member.username}
+                              </span>
+                              <span className='text-[15px] font-medium text-gray-500'>
+                                {member.email}
+                              </span>
+                              {myProfile.email === creatorEmail &&
+                                member.id !==
+                                  (form as FormResponse).creatorId && (
+                                  <>
+                                    <Divider className='my-2 w-full' />
+                                    <Box pos='relative'>
+                                      <LoadingOverlay
+                                        visible={isRemoveMemberLoading}
+                                        zIndex={1000}
+                                        overlayProps={{ radius: 'sm', blur: 2 }}
+                                        loaderProps={{
+                                          color: 'blue',
+                                          size: 'sm',
+                                        }}
+                                      />
+                                      <Button
+                                        variant='filled'
+                                        title='Delete member'
+                                        size='sm'
+                                        className='w-full'
+                                        onClick={() =>
+                                          handleRemoveMemberToForm(member.id)
+                                        }
+                                      />
+                                    </Box>
+                                  </>
+                                )}
+                            </HoverCard.Dropdown>
+                          </HoverCard>
+                        </Menu.Item>
+                      ))}
+                    </Menu.Dropdown>
+                  </Menu>
+                )}
               </div>
               {!(form as FormResponse).teamId && (
                 <>

@@ -126,7 +126,7 @@ export const ResponsiveGridLayout = ({
   }, [isScrollToBottom]);
 
   return (
-    <div className='mb-[50px] w-full rounded-md border border-solid border-slate-200 bg-white px-9 py-7'>
+    <div className='mb-[50px] w-full rounded-md border border-solid border-slate-200 bg-white py-7 pl-9 pr-[54px]'>
       <ResponsiveReactGridLayout
         className={cn('min-h-[200px]', {
           'rounded-md border-2 border-dashed border-slate-300 bg-slate-100':
@@ -162,6 +162,10 @@ export const ResponsiveGridLayout = ({
                   element.id === edittingItem?.id,
               },
             )}
+            onClick={(e) => {
+              e.stopPropagation();
+              setToggledRightbar(true);
+            }}
           >
             <FactoryElement
               item={element}

@@ -34,7 +34,7 @@ export const LoginForm = (props: LoginFormProps) => {
     >
       <Form className='h-full w-full'>
         <Field
-          classNameWrapper='mb-3'
+          classNameWrapper='mb-3 min-h-[88px]'
           name='email'
           label='Email'
           classNameError='min-h-0'
@@ -42,17 +42,22 @@ export const LoginForm = (props: LoginFormProps) => {
         />
 
         <Field
+          classNameWrapper='mb-3 min-h-[88px]'
           name='password'
           label='Password'
           classNameError='min-h-0'
           component={PasswordInput}
         />
 
-        <NavLink
-          href='/forgot-password'
-          label={<Text size='xs'>Forgot password?</Text>}
-          classNames={{ body: 'flex justify-end' }}
-        />
+        <div className='flex justify-end'>
+          <NavLink
+            href='/forgot-password'
+            label={<Text size='xs'>Forgot password?</Text>}
+            classNames={{
+              root: 'max-w-[140px] hover:bg-white hover:text-navy-600 duration-300',
+            }}
+          />
+        </div>
 
         <Center className='py-2'>
           <Button title='Login' type='submit' className='w-full' />

@@ -8,6 +8,7 @@ import {
   Divider,
   HoverCard,
   LoadingOverlay,
+  Menu,
   Stack,
 } from '@mantine/core';
 import { jwtDecode } from 'jwt-decode';
@@ -42,6 +43,8 @@ import { toastify } from '@/utils';
 import { LoadingPage } from '../LoadingPage';
 import { NotFoundPage } from '../NotFoundPage';
 
+const MAX_DISPLAYED_MEMBERS = 5;
+
 export const TeamPage = () => {
   const params = useLocation();
 
@@ -49,6 +52,7 @@ export const TeamPage = () => {
   const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
   const [senderName, setSenderName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [showMore, setShowMore] = useState<boolean>(false);
   const viewInvitation = new URLSearchParams(params.search).get(
     'view-invitation',
   );
@@ -131,6 +135,19 @@ export const TeamPage = () => {
     });
   };
 
+  const sortedMembers = membersInTeam.sort((firstVal, secondVal) => {
+    if (firstVal.isOwner && !secondVal.isOwner) {
+      return 1;
+    } else if (!firstVal.isOwner && secondVal.isOwner) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  const displayedMembers = sortedMembers.slice(0, MAX_DISPLAYED_MEMBERS);
+  const hiddenMembers = sortedMembers.slice(MAX_DISPLAYED_MEMBERS);
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -163,18 +180,14 @@ export const TeamPage = () => {
           {!viewInvitation && (
             <Box className='absolute right-10 top-5 flex items-center justify-center gap-4'>
               <Box className='flex items-center justify-center gap-2'>
-                {membersInTeam
-                  .sort((firstVal, secondVal) => {
-                    if (firstVal.isOwner && !secondVal.isOwner) {
-                      return 1;
-                    } else if (!firstVal.isOwner && secondVal.isOwner) {
-                      return -1;
-                    } else {
-                      return 0;
-                    }
-                  })
-                  .map((member) => (
-                    <HoverCard shadow='md' withArrow position='bottom-end'>
+                <Box className='flex items-center justify-center gap-2'>
+                  {displayedMembers.map((member) => (
+                    <HoverCard
+                      shadow='md'
+                      withArrow
+                      position='bottom-end'
+                      key={member.id}
+                    >
                       <HoverCard.Target>
                         <UserAvatar
                           size='30'
@@ -216,6 +229,82 @@ export const TeamPage = () => {
                       </HoverCard.Dropdown>
                     </HoverCard>
                   ))}
+                </Box>
+                {hiddenMembers.length > 0 && (
+                  <Menu opened={showMore} onClose={() => setShowMore(false)}>
+                    <Menu.Target>
+                      <Button
+                        variant='outline'
+                        onClick={() => setShowMore((prev) => !prev)}
+                        className='my-2 ml-3 mr-8 min-w-[105px] text-xs font-medium'
+                        title={
+                          showMore
+                            ? 'Show less'
+                            : `Show ${hiddenMembers.length} more`
+                        }
+                      />
+                    </Menu.Target>
+                    <Menu.Dropdown className='min-w-[105px]'>
+                      {hiddenMembers.map((member) => (
+                        <Menu.Item key={member.id} onClick={() => {}}>
+                          <HoverCard
+                            shadow='md'
+                            withArrow
+                            position='right-start'
+                            offset={20}
+                          >
+                            <HoverCard.Target>
+                              <div className='flex w-full justify-center'>
+                                <UserAvatar
+                                  size='30'
+                                  iconSize='15'
+                                  avatarUrl={member.avatarUrl ?? ''}
+                                />
+                              </div>
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown className='flex flex-col items-start justify-start gap-2'>
+                              <span className='text-[20px] font-semibold'>
+                                {member.username}
+                              </span>
+                              <span className='text-[15px] font-medium text-gray-500'>
+                                {member.email}
+                              </span>
+                              <Chip variant='filled' checked={false}>
+                                {member.isOwner ? 'Team owner' : 'Team member'}
+                              </Chip>
+                              {myProfile!.email === creatorEmail &&
+                                !member.isOwner && (
+                                  <>
+                                    <Divider className='my-2 w-full' />
+                                    <Box pos='relative'>
+                                      <LoadingOverlay
+                                        visible={isRemoveMemberLoading}
+                                        zIndex={1000} // sử dụng zIndex phù hợp
+                                        overlayProps={{ radius: 'sm', blur: 2 }}
+                                        loaderProps={{
+                                          color: 'blue',
+                                          size: 'sm',
+                                        }}
+                                      />
+                                      <Button
+                                        variant='filled'
+                                        title='Delete member'
+                                        size='sm'
+                                        className='w-full'
+                                        onClick={() =>
+                                          handleRemoveMember(member.id)
+                                        }
+                                      />
+                                    </Box>
+                                  </>
+                                )}
+                            </HoverCard.Dropdown>
+                          </HoverCard>
+                        </Menu.Item>
+                      ))}
+                    </Menu.Dropdown>
+                  </Menu>
+                )}
               </Box>
               <Button
                 title='Invite'
