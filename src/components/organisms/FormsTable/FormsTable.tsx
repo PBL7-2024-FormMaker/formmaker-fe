@@ -313,7 +313,10 @@ export const FormsTable = () => {
                   </Text>
                 </Tooltip>
                 {record.folder && (
-                  <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'>
+                  <Box
+                    style={{ background: record.folder.color }}
+                    className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'
+                  >
                     <Badge
                       className='m-0 bg-inherit p-0 text-xs normal-case text-black'
                       leftSection={<FaFolder />}

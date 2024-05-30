@@ -38,6 +38,7 @@ export interface FormResponse {
   folder: {
     id: string;
     name: string;
+    color?: string;
   };
   favouritedByUsers: {
     id: string;

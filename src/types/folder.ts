@@ -7,8 +7,10 @@ export interface FolderResponse {
   deletedAt: string;
   creatorId: string;
   teamId: string;
+  color?: string;
 }
 
 export interface FolderRequest {
   name: string;
+  color?: string;
 }
