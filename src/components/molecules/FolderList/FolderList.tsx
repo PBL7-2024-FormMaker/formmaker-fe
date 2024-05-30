@@ -1,13 +1,15 @@
 import { FaFolder } from 'react-icons/fa';
+import { FaDroplet } from 'react-icons/fa6';
 import { IoIosWarning } from 'react-icons/io';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { Box, Group, Menu, NavLink, Text } from '@mantine/core';
+import { Box, ColorPicker, Group, Menu, NavLink, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PATH } from '@/constants';
+import { BUTTON_COLORS } from '@/constants/buttonStyles';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import {
   useBuildFormContext,
@@ -193,7 +195,7 @@ export const FolderList = ({
                 }}
                 label={folder.name}
                 active={isActiveFolder && !activeAllForms}
-                leftSection={<FaFolder size={16} />}
+                leftSection={<FaFolder size={16} color={folder.color} />}
               />
               <Menu position='bottom-start' withArrow trigger='click'>
                 <Menu.Target>
@@ -225,6 +227,44 @@ export const FolderList = ({
                   >
                     Change name
                   </Menu.Item>
+                  <div className='group rounded hover:bg-navy-400 hover:text-white'>
+                    <Menu.Item
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white group-hover:text-white'
+                      leftSection={<FaDroplet />}
+                      onMouseEnter={() => {
+                        setFolderName(folder.name);
+                        setFolderId(folder.id);
+                      }}
+                    >
+                      Change color
+                    </Menu.Item>
+                    <ColorPicker
+                      value={folder.color}
+                      onChange={(e) => {
+                        updateFolder({
+                          id: folderId,
+                          data: { name: folderName, color: e },
+                        }).then((res) => {
+                          if ('data' in res) {
+                            toastify.displaySuccess(
+                              res.data!.message as string,
+                            );
+                            return;
+                          }
+                          if (res.error as ErrorResponse)
+                            toastify.displayError(
+                              (res.error as ErrorResponse).message as string,
+                            );
+                        });
+                      }}
+                      swatchesPerRow={5}
+                      format='hex'
+                      size='md'
+                      withPicker={false}
+                      className='rounded px-3 py-2 hover:bg-navy-400'
+                      swatches={Object.values(BUTTON_COLORS)}
+                    />
+                  </div>
                   <Menu.Item
                     className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                     leftSection={<MdDelete />}

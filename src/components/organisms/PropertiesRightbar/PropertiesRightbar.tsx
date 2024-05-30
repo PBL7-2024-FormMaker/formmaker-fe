@@ -64,7 +64,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
         { 'top-[50px]': scroll.y > 0 },
       )}
       onClick={(e) => {
-        e.stopPropagation()
+        e.stopPropagation();
       }}
     >
       <IoMdClose

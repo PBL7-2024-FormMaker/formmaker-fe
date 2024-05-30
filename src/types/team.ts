@@ -8,6 +8,7 @@ export interface Member {
 export interface FolderInTeamResponse {
   id: string;
   name: string;
+  color?: string;
 }
 
 export interface TeamResponse {
