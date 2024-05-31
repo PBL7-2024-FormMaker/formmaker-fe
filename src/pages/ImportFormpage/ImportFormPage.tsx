@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Group, Stack, Text } from '@mantine/core';
+import { Box, Group, LoadingOverlay, Stack, Text } from '@mantine/core';
 import { Field, Form, Formik } from 'formik';
 import { gapi } from 'gapi-script';
 import { v4 as uuidv4 } from 'uuid';
@@ -540,13 +540,20 @@ export const ImportFormPage = () => {
               component={TextInput}
             />
             <Group className='justify-end'>
-              <Button
-                className='mt-2'
-                type='submit'
-                color='primary'
-                title='Create form'
-                disabled={disableButton}
-              />
+              <Box pos='relative'>
+                <LoadingOverlay
+                  visible={disableButton}
+                  zIndex={1000}
+                  overlayProps={{ radius: 'sm', blur: 2 }}
+                  loaderProps={{ color: 'blue', size: 'sm' }}
+                />
+                <Button
+                  className='mt-2'
+                  type='submit'
+                  color='primary'
+                  title='Create form'
+                />
+              </Box>
             </Group>
           </Form>
         </Formik>
