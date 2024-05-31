@@ -92,14 +92,24 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         cellsClassName: 'h-10 cursor-pointer text-center',
         title: elementIdAndName.elementName,
         ...columnProps,
-        render: () => {
+        render: (value: { [x: string]: string }) => {
           if (elementIdAndName.elementType.includes('fileUpload')) {
+            if (!value[`ValueElement${elementIdAndName.elementId}`])
+              return <div></div>;
+
+            const fileUrl = value[
+              `ValueElement${elementIdAndName.elementId}`
+            ] as string | null;
+
+            if (!fileUrl) return <div></div>;
+
             return (
               <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-navy-100 px-2 py-0.5'>
                 <Badge className='m-0 cursor-pointer bg-inherit py-2 text-xs font-normal normal-case'>
                   <a
-                    href={elementIdAndName.elementAnswer}
+                    href={fileUrl}
                     target='_blank'
+                    rel='noopener noreferrer'
                     className='text-white no-underline'
                   >
                     View File
@@ -107,7 +117,11 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
                 </Badge>
               </Box>
             );
-          } else return <div>{elementIdAndName.elementAnswer}</div>;
+          } else {
+            return (
+              <div>{value[`ValueElement${elementIdAndName.elementId}`]}</div>
+            );
+          }
         },
       })),
     ],

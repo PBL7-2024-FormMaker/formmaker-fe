@@ -50,7 +50,6 @@ export interface ElementIdAndName {
   elementId: string;
   elementName: string;
   elementType: string;
-  elementAnswer: string;
 }
 
 export interface ReturnGetResponses {
