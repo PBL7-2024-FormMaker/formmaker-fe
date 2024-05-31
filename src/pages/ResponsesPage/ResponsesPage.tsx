@@ -7,7 +7,7 @@ import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { TopBarSubmission } from '@/organisms/ActionToolbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { Header } from '@/templates/Header';
-import { GetResponsesParams } from '@/types';
+import { ElementIdAndName, GetResponsesParams } from '@/types';
 import { formatDate } from '@/utils';
 
 export const ResponsesPage = () => {
@@ -25,10 +25,16 @@ export const ResponsesPage = () => {
     response.formAnswers.map((answer) => ({
       elementId: answer.elementId,
       elementName: answer.elementName,
-      elementAnswer: answer.answers.map((answer) => answer.text).join(' '),
       elementType: answer.answers.map((answer) => answer.fieldName).join(', '),
     })),
   );
+
+  const uniqueResult: { [key: string]: ElementIdAndName } = {};
+  result.forEach((item) => {
+    if (!uniqueResult[item.elementId]) {
+      uniqueResult[item.elementId] = item;
+    }
+  });
 
   const responseRows: ResponseRow[] | undefined = useMemo(
     () =>
@@ -94,7 +100,7 @@ export const ResponsesPage = () => {
           showingResponseRows={responseRows || []}
         />
         <ResponsesTable
-          elementIdAndNameList={result}
+          elementIdAndNameList={Object.values(uniqueResult)}
           totalResponses={response.totalResponses}
           pageSize={response.pageSize}
           isLoading={isFetching}
