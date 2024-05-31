@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaLink } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
-import { IoPerson, IoPersonOutline } from 'react-icons/io5';
+import { IoArrowBackCircle, IoPerson, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Anchor,
+  Badge,
   Box,
   Divider,
   Group,
@@ -31,9 +32,10 @@ import {
   useRemoveFormMemberMutation,
   useUpdateFormMutation,
 } from '@/redux/api/formApi';
+import { useGetTeamDetailsQuery } from '@/redux/api/teamApi';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { ErrorResponse, FormResponse } from '@/types';
-import { cn, formatDate, httpClient, signUpSchema, toastify } from '@/utils';
+import { formatDate, httpClient, signUpSchema, toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
 
 const LOGO_HEIGHT = 60;
@@ -43,6 +45,9 @@ const MAX_VISIBLE_USERS = 5;
 const emailSchema = signUpSchema.pick(['email']);
 
 export const BuildFormHeader = () => {
+  const location = useLocation();
+  const { activeTeam } = location.state || {};
+
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
   const { form, isEditForm, isPublishSection, currentTitle, setCurrentTitle } =
@@ -51,6 +56,11 @@ export const BuildFormHeader = () => {
   const { data: usersInForm } = useGetUsersInFormQuery(
     { id: form.id || '' },
     { skip: !form.id },
+  );
+
+  const { data: team } = useGetTeamDetailsQuery(
+    { id: activeTeam || '' },
+    { skip: !activeTeam },
   );
 
   const creatorEmail = (usersInForm ?? []).find(
@@ -80,21 +90,23 @@ export const BuildFormHeader = () => {
     [form.updatedAt],
   );
 
-  const sortedUsers = [...usersInForm!].sort((firstVal, secondVal) => {
-    if (
-      firstVal.id === (form as FormResponse).creatorId &&
-      secondVal.id !== (form as FormResponse).creatorId
-    ) {
-      return 1;
-    } else if (
-      firstVal.id !== (form as FormResponse).creatorId &&
-      secondVal.id === (form as FormResponse).creatorId
-    ) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
+  const sortedUsers = usersInForm
+    ? [...usersInForm].sort((firstVal, secondVal) => {
+        if (
+          firstVal.id === (form as FormResponse).creatorId &&
+          secondVal.id !== (form as FormResponse).creatorId
+        ) {
+          return 1;
+        } else if (
+          firstVal.id !== (form as FormResponse).creatorId &&
+          secondVal.id === (form as FormResponse).creatorId
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
+      })
+    : [];
 
   const visibleUsers = sortedUsers.slice(0, MAX_VISIBLE_USERS);
   const hiddenUsers = sortedUsers.slice(MAX_VISIBLE_USERS);
@@ -154,14 +166,24 @@ export const BuildFormHeader = () => {
   }, [form.title, setCurrentTitle]);
 
   return (
-    <header
-      className={cn(
-        'relative flex h-[70px] flex-row items-center justify-between px-10',
-      )}
-    >
+    <header className='relative flex h-[70px] flex-row items-center justify-between px-10'>
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>
         <Image src={BlueLogo} h={LOGO_HEIGHT} className='pb-2' />
       </Anchor>
+
+      <div className='absolute bottom-4 left-[15%] z-10 cursor-pointer'>
+        <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-navy-100 py-0.5'>
+          <Badge
+            className='m-0 bg-inherit py-2 text-xs font-normal normal-case text-white'
+            leftSection={<IoArrowBackCircle size='16' />}
+            onClick={() => {
+              window.location.href = team ? `/teams/${team.id}` : '/overview';
+            }}
+          >
+            {team ? 'Team workspace' : 'Back to home'}
+          </Badge>
+        </Box>
+      </div>
 
       <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
         <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>

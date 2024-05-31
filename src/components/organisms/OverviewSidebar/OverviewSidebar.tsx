@@ -88,7 +88,9 @@ export const OverviewSidebar = () => {
 
     return createFormInTeam({ teamId, data: filteredForm }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`, {
+          state: { activeTeam },
+        });
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -103,7 +105,9 @@ export const OverviewSidebar = () => {
       data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`, {
+          state: { activeTeam },
+        });
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
