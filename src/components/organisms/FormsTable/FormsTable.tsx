@@ -7,7 +7,7 @@ import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { PiPauseCircleFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ActionIcon,
   Badge,
@@ -46,6 +46,8 @@ import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
 export const FormsTable = () => {
+  const { id: teamId } = useParams();
+
   const { activeTeam, selectedRecords, setSelectedRecords } =
     useOverviewContext();
 
@@ -318,7 +320,7 @@ export const FormsTable = () => {
                     className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'
                   >
                     <Badge
-                      className='m-0 bg-inherit p-0 text-xs normal-case text-black'
+                      className='m-0 bg-inherit p-0 text-xs normal-case text-white'
                       leftSection={<FaFolder />}
                     >
                       {record.folder.name}
@@ -326,7 +328,7 @@ export const FormsTable = () => {
                     <CloseButton
                       variant='transparent'
                       size={18}
-                      className='hidden text-black group-hover:flex'
+                      className='hidden text-white group-hover:flex'
                       onClick={() => handleRemoveFromFolder(record)}
                     />
                   </Box>
@@ -367,7 +369,9 @@ export const FormsTable = () => {
               }}
               className='h-full w-full font-medium focus:font-bold'
               onClick={() => {
-                navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
+                navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`, {
+                  state: { activeTeam },
+                });
               }}
             />
           ) : (
@@ -473,6 +477,14 @@ export const FormsTable = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setParams((prevState) => ({
+      ...prevState,
+      teamId,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teamId]);
 
   return (
     <>

@@ -150,7 +150,10 @@ export const TeamList = ({
                     <Menu.Item
                       className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                       leftSection={<HiRectangleGroup />}
-                      onClick={() => navigate(`/teams/${team.id}`)}
+                      onClick={() => {
+                        setActiveTeam(team.id);
+                        navigate(`/teams/${team.id}`);
+                      }}
                     >
                       Team workspace
                     </Menu.Item>

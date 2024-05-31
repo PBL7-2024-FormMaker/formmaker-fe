@@ -1,19 +1,8 @@
 import { useState } from 'react';
-import { FaPlusCircle, FaStar } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { FaFolder, FaPlusCircle, FaStar } from 'react-icons/fa';
 import { IoTrash } from 'react-icons/io5';
-import { RiTeamFill } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Collapse,
-  Divider,
-  Group,
-  LoadingOverlay,
-  NavLink,
-  Text,
-} from '@mantine/core';
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Divider, LoadingOverlay, NavLink } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
@@ -53,23 +42,23 @@ export const OverviewTeamSidebar = ({
   modalType,
   setModalType,
 }: OverviewTeamSidebarProps) => {
+  const { id: teamId } = useParams();
+
   const [folderName, setFolderName] = useState<string>('');
   const [folderId, setFolderId] = useState<string>('');
 
   const {
+    activeAllForms,
     activeFolder,
     activeTeam,
     setActiveFolder,
     setActiveAllForms,
-    setActiveTeam,
     setSelectedRecords,
   } = useOverviewContext();
   const { setParams, params } = useFormParams();
   const { form } = useBuildFormContext();
-  const [activeCollapse, setActiveCollapse] = useState<string[]>([]);
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
-  const isActiveTeam = team.id === activeTeam;
 
   const navigate = useNavigate();
 
@@ -87,7 +76,9 @@ export const OverviewTeamSidebar = ({
 
     return createFormInTeam({ teamId, data: filteredForm }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`, {
+          state: { activeTeam },
+        });
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -102,7 +93,9 @@ export const OverviewTeamSidebar = ({
       data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`, {
+          state: { activeTeam },
+        });
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -110,16 +103,9 @@ export const OverviewTeamSidebar = ({
 
   const handleCreateFormBasedOnIds = () => {
     if (activeFolder === '') {
-      return handleCreateFormInTeam(activeTeam);
+      return handleCreateFormInTeam(teamId!);
     }
-    return handleCreateFormInFolderOfTeam(activeFolder, activeTeam);
-  };
-
-  const handleActiveCollapse = (teamId: string) => {
-    setActiveCollapse((prev) => {
-      if (prev.includes(teamId)) return prev.filter((prev) => prev !== teamId);
-      return [...prev, teamId];
-    });
+    return handleCreateFormInFolderOfTeam(activeFolder, teamId!);
   };
 
   const handleCreateFolderInTeam = () => {
@@ -138,13 +124,13 @@ export const OverviewTeamSidebar = ({
 
   return (
     <Box className='relative h-full w-full bg-slate-100 text-slate-600'>
-      <Box className='sticky top-0 z-10 w-full border border-x-0 border-solid border-slate-300 bg-inherit px-5 py-4 text-center'>
+      <Box className='sticky top-0 z-10 w-full border border-x-0 border-solid border-slate-300 bg-inherit px-5 pb-6 pt-4 text-center'>
         <Box pos='relative'>
           <LoadingOverlay
             visible={isCreatingFormInTeam || isCreatingFormInFolderOfTeam}
             zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
-            loaderProps={{ color: 'blue' }}
+            loaderProps={{ color: 'blue', size: 'sm' }}
           />
           <Button
             size='md'
@@ -154,81 +140,40 @@ export const OverviewTeamSidebar = ({
           />
         </Box>
       </Box>
+      <Box className='w-full border border-x-0 border-t-0 border-solid border-slate-300 bg-inherit px-5 py-2 text-center'>
+        <NavLink
+          className={cn('rounded-md text-slate-600 hover:bg-slate-300', {
+            'bg-slate-300': activeAllForms,
+          })}
+          classNames={{
+            label: 'text-sm font-semibold',
+          }}
+          label='All forms'
+          leftSection={<FaFolder className='text-navy-500' />}
+          onClick={() => {
+            setActiveAllForms(true);
+            setActiveFolder('');
+            setSelectedRecords([]);
+            setParams({
+              ...defaultFormsParams,
+              teamId: team.id,
+            });
+          }}
+        />
+      </Box>
       <Box className='flex flex-col gap-5 bg-inherit p-5'>
-        <Group
-          key={uuidv4()}
-          className={cn(
-            'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-200',
-            {
-              'bg-slate-300 hover:bg-slate-300': isActiveTeam,
-            },
-          )}
-        >
-          <NavLink
-            key={team.id}
-            className={cn(
-              'w-[85%] rounded-md text-slate-600 hover:bg-slate-200',
-              {
-                'bg-slate-300 hover:bg-slate-300': isActiveTeam,
-              },
-            )}
-            onClick={() => {
-              setActiveAllForms(false);
-              setActiveFolder('');
-              setActiveTeam(team.id);
-              setSelectedRecords([]);
-              setParams({ ...defaultFormsParams, teamId: team.id });
-            }}
-            label={
-              <Group className='items-center'>
-                <Text className='text-sm font-semibold'>{team.name}</Text>
-                {team.folders.length > 0 &&
-                  (activeCollapse.includes(team.id) ? (
-                    <IoIosArrowUp
-                      onClick={() => {
-                        handleActiveCollapse(team.id);
-                      }}
-                    />
-                  ) : (
-                    <IoIosArrowDown
-                      onClick={() => {
-                        handleActiveCollapse(team.id);
-                      }}
-                    />
-                  ))}
-              </Group>
-            }
-            active={isActiveTeam}
-            leftSection={
-              team.logoUrl ? (
-                <img
-                  className='h-[20px] w-[20px] rounded-full object-cover'
-                  src={team.logoUrl}
-                />
-              ) : (
-                <RiTeamFill size={18} />
-              )
-            }
-          />
-        </Group>
-        {team.folders.length > 0 && activeCollapse.includes(team.id) && (
-          <Collapse in={true}>
-            <Box className='pl-3'>
-              <FolderList
-                folderList={team.folders}
-                isLoading={isLoading}
-                openModal={openModal}
-                setFolderName={setFolderName}
-                setFolderId={setFolderId}
-                modalType={modalType}
-                closeModal={closeModal}
-                folderName={folderName}
-                folderId={folderId}
-                teamId={team.id}
-              />
-            </Box>
-          </Collapse>
-        )}
+        <FolderList
+          folderList={team.folders}
+          isLoading={isLoading}
+          openModal={openModal}
+          setFolderName={setFolderName}
+          setFolderId={setFolderId}
+          modalType={modalType}
+          closeModal={closeModal}
+          folderName={folderName}
+          folderId={folderId}
+          teamId={team.id}
+        />
         <Divider />
         <Button
           className='h-10 rounded-md font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
@@ -253,14 +198,13 @@ export const OverviewTeamSidebar = ({
             label='Favorites'
             leftSection={<FaStar className='text-orange-500' />}
             onClick={() => {
-              // TODO: need to update params to get favourite forms in team
               setParams({
                 ...defaultFormsParams,
+                teamId: team.id,
                 isFavourite: 1,
                 formType: FormType.All,
               });
               setActiveFolder('');
-              setActiveTeam('');
               setActiveAllForms(false);
               setSelectedRecords([]);
             }}
@@ -275,14 +219,14 @@ export const OverviewTeamSidebar = ({
             label='Trash'
             leftSection={<IoTrash className='text-gray-600' />}
             onClick={() => {
-              // TODO: need to update params to get forms deleted in team
               setParams({
                 ...defaultFormsParams,
+                teamId: team.id,
                 isDeleted: 1,
+                formType: FormType.All,
               });
               setActiveAllForms(false);
               setActiveFolder('');
-              setActiveTeam('');
               setSelectedRecords([]);
             }}
           />

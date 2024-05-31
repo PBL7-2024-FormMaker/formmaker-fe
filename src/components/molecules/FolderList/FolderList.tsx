@@ -67,6 +67,7 @@ export const FolderList = ({
     activeFolder,
     setActiveFolder,
     activeAllForms,
+    activeTeam,
     setActiveAllForms,
     setActiveTeam,
     setSelectedRecords,
@@ -136,7 +137,9 @@ export const FolderList = ({
       data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
-        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`, {
+          state: activeTeam,
+        });
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });

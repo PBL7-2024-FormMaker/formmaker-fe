@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { FaCamera, FaCheck } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
+import { IoClose } from 'react-icons/io5';
+import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   BackgroundImage,
   Box,
   Chip,
+  CloseButton,
   Divider,
+  Group,
   HoverCard,
   LoadingOverlay,
   Menu,
@@ -16,7 +21,7 @@ import { jwtDecode } from 'jwt-decode';
 import bgImage from '@/assets/images/team-bg-image.png';
 import { Button } from '@/atoms/Button';
 import { UserAvatar } from '@/atoms/UserAvatar';
-import { BIG_Z_INDEX } from '@/constants';
+import { BIG_Z_INDEX, MESSAGES } from '@/constants';
 import {
   BuildFormContextProvider,
   FormParamsProvider,
@@ -29,11 +34,13 @@ import {
 import { ActionToolbar } from '@/organisms/ActionToolbar';
 import { FormsTable } from '@/organisms/FormsTable';
 import { OverviewTeamSidebar } from '@/organisms/OverviewSidebar';
+import { useUploadImageMutation } from '@/redux/api/imageApi';
 import {
   useAddMemberMutation,
   useGetTeamDetailsQuery,
   useInviteMemberMutation,
   useRemoveMemberMutation,
+  useUpdateTeamMutation,
 } from '@/redux/api/teamApi';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { Header } from '@/templates/Header';
@@ -72,11 +79,18 @@ export const TeamPage = () => {
     }
   }, [decodedToken]);
 
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+
   const [modalType, setModalType] = useState<ModalType | ''>('');
+  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+  const [currentName, setCurrentName] = useState<string>('');
+  const [currentLogo, setCurrentLogo] = useState<string>('');
 
   const { selectedRecords } = useOverviewContext();
   const { id: teamId } = useParams();
   const { data: myProfile } = useGetMyProfileQuery();
+
   const { data: team, isLoading } = useGetTeamDetailsQuery(
     { id: teamId || '' },
     { skip: !teamId },
@@ -93,6 +107,9 @@ export const TeamPage = () => {
   const [removeMember, { isLoading: isRemoveMemberLoading }] =
     useRemoveMemberMutation();
   const [addMember, { isLoading: isAddMemberLoading }] = useAddMemberMutation();
+  const [updateTeam, { isLoading: isUpdatingTeam }] = useUpdateTeamMutation();
+  const [uploadImage, { isLoading: isUploadImage }] = useUploadImageMutation();
+  const isLoadingOverlay = isUpdatingTeam || isUploadImage;
 
   const handleAcceptInvitation = () => {
     if (!teamId) return;
@@ -135,6 +152,82 @@ export const TeamPage = () => {
     });
   };
 
+  const handleUpdateTeam = (teamId: string, teamName: string) => {
+    updateTeam({ id: teamId, data: { name: teamName } }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data!.message as string);
+        return;
+      }
+      if (res.error as ErrorResponse)
+        toastify.displayError((res.error as ErrorResponse).message as string);
+    });
+  };
+
+  const handleUpdateTeamWhenLogoChanged = (
+    teamId: string,
+    currentLogoFile?: File,
+  ) => {
+    if (!teamId || !team) return;
+    if (currentLogoFile) {
+      return uploadImage(currentLogoFile).then((imgRes) => {
+        if ('data' in imgRes) {
+          const logoUrl = imgRes.data!.data.url;
+
+          return updateTeam({
+            id: teamId,
+            data: {
+              name: team.name,
+              logoUrl,
+            },
+          }).then((res) => {
+            if ('data' in res) {
+              toastify.displaySuccess(res.data!.message as string);
+              return;
+            }
+            return toastify.displayError((res.error as ErrorResponse).message);
+          });
+        }
+
+        return toastify.displayError((imgRes.error as ErrorResponse).message);
+      });
+    }
+
+    return updateTeam({
+      id: teamId,
+      data: {
+        name: team.name,
+        logoUrl: '',
+      },
+    }).then((res) => {
+      if ('data' in res) {
+        return;
+      }
+
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const handleLogoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      toastify.displayError(MESSAGES.ONLY_SUPPORT_IMAGE_FILE_TYPES);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64Encoded = reader?.result?.toString() ?? '';
+      setCurrentLogo(base64Encoded);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+      handleUpdateTeamWhenLogoChanged(team!.id, file);
+    }
+    event.target.value = '';
+  };
+
   const sortedMembers = membersInTeam.sort((firstVal, secondVal) => {
     if (firstVal.isOwner && !secondVal.isOwner) {
       return 1;
@@ -144,6 +237,13 @@ export const TeamPage = () => {
       return 0;
     }
   });
+
+  useEffect(() => {
+    if (team) {
+      setCurrentName(team.name);
+      setCurrentLogo(team.logoUrl);
+    }
+  }, [team]);
 
   const displayedMembers = sortedMembers.slice(0, MAX_DISPLAYED_MEMBERS);
   const hiddenMembers = sortedMembers.slice(MAX_DISPLAYED_MEMBERS);
@@ -166,16 +266,107 @@ export const TeamPage = () => {
         >
           <Box className='flex flex-col items-center justify-center gap-4'>
             {
-              //TODO: update this to show and edit team's name and team's logo
+              <Group className='relative w-[70px]'>
+                <input
+                  type='file'
+                  ref={logoInputRef}
+                  onChange={(event) => handleLogoChange(event)}
+                  accept='image/*'
+                  className='hidden'
+                />
+                <div
+                  className='relative cursor-default'
+                  onClick={() => {
+                    logoInputRef.current?.click();
+                  }}
+                >
+                  <Box pos='relative'>
+                    <LoadingOverlay
+                      visible={isLoadingOverlay}
+                      zIndex={1000}
+                      overlayProps={{
+                        blur: 2,
+                      }}
+                      loaderProps={{
+                        color: 'blue',
+                        size: 'sm',
+                      }}
+                      classNames={{
+                        overlay: 'w-[70px] h-[70px] rounded-full',
+                      }}
+                    />
+                    <UserAvatar
+                      size='70'
+                      iconSize='35'
+                      avatarUrl={currentLogo || ''}
+                    />
+                    {!currentLogo && (
+                      <FaCamera
+                        size='14'
+                        color='white'
+                        className='absolute bottom-0 right-0 cursor-pointer'
+                      />
+                    )}
+                  </Box>
+                </div>
+                {currentLogo && (
+                  <CloseButton
+                    radius='lg'
+                    size='xs'
+                    icon={<IoClose size={14} />}
+                    onClick={() => {
+                      setCurrentLogo('');
+                      handleUpdateTeamWhenLogoChanged(team.id, undefined);
+                    }}
+                    className='absolute -right-2 top-1 cursor-pointer bg-slate-200 p-0.5 text-slate-600 opacity-90 hover:bg-slate-300'
+                  />
+                )}
+              </Group>
             }
-            <UserAvatar
-              size='70'
-              iconSize='35'
-              avatarUrl={team.logoUrl ?? ''}
-            />
-            <span className='text-[20px] font-medium text-white'>
-              {team.name}
-            </span>
+            <div className='flex min-h-[40px] items-center gap-0.5 text-white'>
+              <input
+                ref={titleInputRef}
+                value={currentName || team.name}
+                onChange={(event) => {
+                  setCurrentName(event.target.value);
+                  if (currentName.length === 1) {
+                    toastify.displayError('Team name cannot be empty!');
+                    setCurrentName(team.name);
+                  }
+                }}
+                onFocus={() => {
+                  setIsEditingTitle(true);
+                }}
+                onBlur={() => {
+                  setIsEditingTitle(false);
+                  if (currentName === '') {
+                    toastify.displayError('Team name cannot be empty!');
+                    setCurrentName(team.name);
+                  }
+                }}
+                className='overflow-hidden text-ellipsis whitespace-nowrap border-none bg-transparent text-center text-xl font-bold text-white outline-none'
+                style={{ width: `${currentName.length * 25}px` }}
+              />
+              {isEditingTitle && team.name !== currentName ? (
+                <FaCheck
+                  size={24}
+                  onClick={() => {
+                    handleUpdateTeam(team.id, currentName);
+                    setIsEditingTitle(false);
+                  }}
+                  className='min-w-[5%] cursor-pointer font-bold'
+                />
+              ) : (
+                <MdOutlineModeEditOutline
+                  size={24}
+                  onClick={() => {
+                    titleInputRef.current?.focus();
+                    setIsEditingTitle(true);
+                  }}
+                  className='min-w-[5%] cursor-pointer font-bold'
+                />
+              )}
+            </div>
           </Box>
           {!viewInvitation && (
             <Box className='absolute right-10 top-5 flex items-center justify-center gap-4'>
@@ -361,9 +552,6 @@ export const TeamPage = () => {
               <ActionToolbar
                 selectedFormIds={selectedRecords.map(({ id }) => id)}
               />
-              {
-                //TODO: need to update to display only forms in team
-              }
               <FormsTable />
             </Stack>
           </Box>
