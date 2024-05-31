@@ -10,6 +10,7 @@ export const PATH = {
   ACCEPT_TO_FORM: '/sharing-form/:id',
   MY_ACCOUNT_PAGE: '/my-account',
   PUBLIC_PAGE: '/form/:id',
+  ANSWER_PAGE: '/form',
   RESPONSE_PAGE: '/responses/:formId',
   ACCEPT_INVITATION: '/accept-invite',
   MY_TEAM: 'teams/:id',

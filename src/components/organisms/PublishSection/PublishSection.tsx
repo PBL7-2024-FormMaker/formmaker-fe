@@ -9,8 +9,11 @@ import {
   Stack,
   TextInput,
 } from '@mantine/core';
+import QRCode from 'qrcode.react';
 
 import { Button } from '@/atoms/Button';
+import { FRONT_END_URL } from '@/configs';
+import { PATH } from '@/constants';
 import { useBuildFormContext } from '@/contexts';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 
@@ -77,6 +80,20 @@ export const PublishSection = () => {
               disabled={!isEditForm}
             />
           </Group>
+        </Stack>
+        <Stack className='mt-4 gap-4 rounded border border-solid border-blue-50 bg-white px-6 py-8'>
+          <span className='text-base font-semibold text-blue-200'>QR CODE</span>
+          <div className='flex w-full items-center justify-center'>
+            <Box className='h-[250px] w-[250px] bg-black'>
+              <QRCode
+                id='qrcode'
+                value={`${FRONT_END_URL}${PATH.ANSWER_PAGE}/${formId}`}
+                size={250}
+                level={'H'}
+                includeMargin={true}
+              />
+            </Box>
+          </div>
         </Stack>
       </Stack>
     </Box>

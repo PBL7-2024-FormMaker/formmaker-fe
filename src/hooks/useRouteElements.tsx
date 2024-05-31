@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, useLocation, useRoutes } from 'react-router-dom';
+import { useMediaQuery } from '@mantine/hooks';
 
 import { PATH } from '@/constants/routes';
 import {
@@ -17,7 +18,7 @@ import { LoadingPage } from '@/pages/LoadingPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
-import { PublicPage } from '@/pages/PublicPage';
+import { PublicPage, PublicPageForMobile } from '@/pages/PublicPage';
 import { SharingForm } from '@/pages/SharingForm';
 import { SignupPage } from '@/pages/SignupPage';
 import { TeamPage } from '@/pages/TeamPage';
@@ -50,6 +51,7 @@ export function RejectedRoute() {
 
 export function useRouteElements() {
   const params = useLocation();
+  const isMobile = useMediaQuery('(max-width: 425px)');
 
   const token = new URLSearchParams(params.search).get('token');
   const viewInvitation = new URLSearchParams(params.search).get(
@@ -211,7 +213,7 @@ export function useRouteElements() {
       path: PATH.PUBLIC_PAGE,
       element: (
         <ElementLayoutProvider>
-          <PublicPage />
+          {isMobile ? <PublicPageForMobile /> : <PublicPage />}
         </ElementLayoutProvider>
       ),
     },
