@@ -28,7 +28,7 @@ export const SettingsLeftbar = () => {
   };
   return (
     <Box className='absolute left-0 top-0 h-full w-[320px] bg-slate-500'>
-      <Stack className='ml-3 mt-3 '>
+      <Stack className='ml-3'>
         <NavLink
           className={cn(
             'rounded-l-md py-3 text-base text-white hover:bg-slate-500 hover:text-white',

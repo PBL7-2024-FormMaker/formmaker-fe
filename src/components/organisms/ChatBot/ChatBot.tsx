@@ -14,6 +14,7 @@ import { Form, Formik } from 'formik';
 
 import FormHolder from '@/assets/images/formholder.png';
 import { Button } from '@/atoms/Button';
+import { FRONT_END_URL } from '@/configs';
 import { PATH } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { useCreateFormMutation } from '@/redux/api/formApi';
@@ -164,7 +165,7 @@ export const Chatbot = () => {
               setIsCreated(true);
               addLinkSnippet({
                 title: 'Your form link',
-                link: `http://localhost:5173${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`,
+                link: `${FRONT_END_URL}${PATH.BUILD_FORM_PAGE}/${res.data!.data.id}`,
                 target: '_blank',
               });
               toggleMsgLoader();
