@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Badge, Box } from '@mantine/core';
 import orderby from 'lodash.orderby';
 import {
   DataTable,
@@ -91,6 +92,23 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         cellsClassName: 'h-10 cursor-pointer text-center',
         title: elementIdAndName.elementName,
         ...columnProps,
+        render: () => {
+          if (elementIdAndName.elementType.includes('fileUpload')) {
+            return (
+              <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-navy-100 px-2 py-0.5'>
+                <Badge className='m-0 cursor-pointer bg-inherit py-2 text-xs font-normal normal-case'>
+                  <a
+                    href={elementIdAndName.elementAnswer}
+                    target='_blank'
+                    className='text-white no-underline'
+                  >
+                    View File
+                  </a>
+                </Badge>
+              </Box>
+            );
+          } else return <div>{elementIdAndName.elementAnswer}</div>;
+        },
       })),
     ],
     [elementIdAndNameList],

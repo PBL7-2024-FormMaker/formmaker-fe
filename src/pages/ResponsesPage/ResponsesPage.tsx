@@ -21,6 +21,15 @@ export const ResponsesPage = () => {
 
   const rawRecords = response?.responses;
 
+  const result = (rawRecords || []).flatMap((response) =>
+    response.formAnswers.map((answer) => ({
+      elementId: answer.elementId,
+      elementName: answer.elementName,
+      elementAnswer: answer.answers.map((answer) => answer.text).join(' '),
+      elementType: answer.answers.map((answer) => answer.fieldName).join(', '),
+    })),
+  );
+
   const responseRows: ResponseRow[] | undefined = useMemo(
     () =>
       rawRecords?.map((record) => {
@@ -85,7 +94,7 @@ export const ResponsesPage = () => {
           showingResponseRows={responseRows || []}
         />
         <ResponsesTable
-          elementIdAndNameList={response.elementIdAndNameList}
+          elementIdAndNameList={result}
           totalResponses={response.totalResponses}
           pageSize={response.pageSize}
           isLoading={isFetching}
