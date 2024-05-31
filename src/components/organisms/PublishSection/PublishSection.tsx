@@ -31,7 +31,7 @@ export const PublishSection = () => {
 
   return (
     <Box className='relative flex h-mainHeight w-full items-center justify-center bg-navy-10'>
-      <Stack className='absolute right-[48%] top-[40%] w-[660px] -translate-y-[50%] translate-x-[50%]'>
+      <Stack className='absolute right-[48%] top-[45%] w-[660px] -translate-y-[50%] translate-x-[50%]'>
         <Group>
           <Box className='flex h-10 w-10 items-center justify-center rounded bg-navy-400'>
             <FaLink size={20} className='text-white' />

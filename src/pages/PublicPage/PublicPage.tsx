@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { MdKeyboardBackspace } from 'react-icons/md';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Tooltip, UnstyledButton } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
@@ -27,8 +27,6 @@ export const PublicPage = () => {
   );
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const { elements } = useElementLayouts();
 
@@ -65,7 +63,7 @@ export const PublicPage = () => {
       <UnstyledButton
         className='fixed left-10 top-10'
         onClick={() => {
-          navigate(PATH.OVERVIEW_PAGE);
+          window.location.href = PATH.OVERVIEW_PAGE;
         }}
         disabled={isLoadingCreateFormResponse}
       >
