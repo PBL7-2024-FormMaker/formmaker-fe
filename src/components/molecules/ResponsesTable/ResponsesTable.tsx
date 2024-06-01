@@ -127,7 +127,6 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     ],
     [elementIdAndNameList],
   );
-
   return (
     <div className='px-4'>
       <DataTable

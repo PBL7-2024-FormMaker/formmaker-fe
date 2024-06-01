@@ -6,11 +6,10 @@ import { Box } from '@mantine/core';
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { TopBarSubmission } from '@/organisms/ActionToolbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
-import { Header } from '@/templates/Header';
 import { ElementIdAndName, GetResponsesParams } from '@/types';
 import { formatDate } from '@/utils';
 
-export const ResponsesPage = () => {
+export const SubmissionsPage = () => {
   const { formId } = useParams();
   const [selectedRecords, setSelectedRecords] = useState<ResponseRow[]>([]);
   const [params, setParams] = useState<GetResponsesParams>();
@@ -79,7 +78,6 @@ export const ResponsesPage = () => {
   if (responseRows?.length == 0) {
     return (
       <Box className='h-screen'>
-        <Header />
         <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-navy-10 pt-10'>
           <BsDatabaseExclamation size={64} className='text-gray-500' />
           <span className='mb-8 text-lg text-gray-600'>No records found.</span>
@@ -91,7 +89,6 @@ export const ResponsesPage = () => {
   return (
     <div>
       <div className='bg-white'>
-        <Header />
         <TopBarSubmission
           formId={formId!}
           selectedResponseIds={selectedResponseIds}

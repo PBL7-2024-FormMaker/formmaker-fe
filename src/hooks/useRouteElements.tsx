@@ -30,7 +30,9 @@ import { ForgotPasswordPage } from '../pages/FogotPasswordPage';
 import { ImportFormPage } from '../pages/ImportFormpage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 
-const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
+const Reportspage = lazy(() => import('@/pages/ReportsPage'));
+const ResponsePage = lazy(() => import('@/pages/ResponsePage'));
+const SubmissionsPage = lazy(() => import('@/pages/SubmissionsPage'));
 // route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
@@ -121,7 +123,7 @@ export function useRouteElements() {
             },
             {
               path: 'import-form',
-              element: <h1>Import form here</h1>,
+              element: <ImportFormPage />,
             },
             {
               path: 'publish',
@@ -195,9 +197,27 @@ export function useRouteElements() {
           path: PATH.RESPONSE_PAGE,
           element: (
             <Suspense fallback={<LoadingPage />}>
-              <ResponsesPage />
+              <ResponsePage />
             </Suspense>
           ),
+          children: [
+            {
+              path: '',
+              element: (
+                <Suspense fallback={<LoadingPage />}>
+                  <SubmissionsPage />
+                </Suspense>
+              ),
+            },
+            {
+              path: 'reports',
+              element: (
+                <Suspense fallback={<LoadingPage />}>
+                  <Reportspage />
+                </Suspense>
+              ),
+            },
+          ],
         },
         {
           path: PATH.MY_TEAM,
