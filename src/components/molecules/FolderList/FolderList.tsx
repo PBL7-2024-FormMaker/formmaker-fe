@@ -160,7 +160,8 @@ export const FolderList = ({
       ) : (
         folderList?.map((folder) => {
           const isActiveFolder = folder.id === activeFolder;
-          return isCreatingFormInFolder || isCreatingFormInFolderOfTeam ? (
+          return isActiveFolder &&
+            (isCreatingFormInFolder || isCreatingFormInFolderOfTeam) ? (
             <Loader color='blue' />
           ) : (
             <Group
@@ -213,9 +214,10 @@ export const FolderList = ({
                   <Menu.Item
                     className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white'
                     leftSection={<RiAddBoxFill />}
-                    onClick={() =>
-                      handleCreateFormBasedOnIds(folder.id, teamId)
-                    }
+                    onClick={() => {
+                      setActiveFolder(folder.id);
+                      handleCreateFormBasedOnIds(folder.id, teamId);
+                    }}
                   >
                     Add new form
                   </Menu.Item>
@@ -234,10 +236,6 @@ export const FolderList = ({
                     <Menu.Item
                       className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-navy-400 hover:text-white group-hover:text-white'
                       leftSection={<FaDroplet />}
-                      onMouseEnter={() => {
-                        setFolderName(folder.name);
-                        setFolderId(folder.id);
-                      }}
                     >
                       Change color
                     </Menu.Item>
@@ -245,8 +243,8 @@ export const FolderList = ({
                       value={folder.color}
                       onChange={(e) => {
                         updateFolder({
-                          id: folderId,
-                          data: { name: folderName, color: e },
+                          id: folder.id,
+                          data: { name: folder.name, color: e },
                         }).then((res) => {
                           if ('data' in res) {
                             toastify.displaySuccess(
