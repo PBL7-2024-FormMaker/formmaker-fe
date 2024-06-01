@@ -130,8 +130,9 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   };
 
   useEffect(() => {
-    handleUpdateForm(form.id, elements);
-
+    if (elements.length > 0) {
+      handleUpdateForm(form.id, elements);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elements]);
 

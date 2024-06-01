@@ -189,7 +189,7 @@ export const BuildFormHeader = () => {
         <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>
           <input
             ref={titleInputRef}
-            value={currentTitle}
+            defaultValue={currentTitle}
             onChange={(event) => {
               setCurrentTitle(event.target.value);
               setTimeout(() => {
