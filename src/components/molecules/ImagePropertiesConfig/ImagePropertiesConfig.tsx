@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from 'react';
-import { FaLock } from 'react-icons/fa';
+import { FaLock, FaUnlock } from 'react-icons/fa';
 import {
   ActionIcon,
   Avatar,
@@ -32,6 +32,7 @@ export const ImagePropertiesConfig = (
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [editingFieldName, setEdditingFieldName] = useState<string>('');
   const [aspectRatio, setAspecRatio] = useState<number>(1);
+  const [lockWidthHeight, setLockWidthHeight] = useState<boolean>(true);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
@@ -117,23 +118,8 @@ export const ImagePropertiesConfig = (
       value = '1';
     }
     if (key === 'width') {
-      handleConfig({
-        ...edittingItem.config,
-        size: {
-          [key]: value.toString(),
-          height: Math.floor(
-            parseInt(value.toString()) * aspectRatio,
-          ).toString(),
-        },
-      });
-
-      updateItem({
-        ...edittingItem,
-        gridSize: {
-          ...edittingItem?.gridSize,
-          h: Math.ceil((+value + 10) / 40),
-        },
-        config: {
+      if (lockWidthHeight) {
+        handleConfig({
           ...edittingItem.config,
           size: {
             [key]: value.toString(),
@@ -141,26 +127,52 @@ export const ImagePropertiesConfig = (
               parseInt(value.toString()) * aspectRatio,
             ).toString(),
           },
-        },
-      });
+        });
+        updateItem({
+          ...edittingItem,
+          gridSize: {
+            ...edittingItem?.gridSize,
+            h: Math.ceil((+value + 10) / 40),
+          },
+          config: {
+            ...edittingItem.config,
+            size: {
+              [key]: value.toString(),
+              height: Math.floor(
+                parseInt(value.toString()) * aspectRatio,
+              ).toString(),
+            },
+          },
+        });
+      }
+      if (!lockWidthHeight) {
+        handleConfig({
+          ...edittingItem.config,
+          size: {
+            ...edittingItem.config.size,
+            [key]: value.toString(),
+          },
+        });
+        updateItem({
+          ...edittingItem,
+          gridSize: {
+            ...edittingItem?.gridSize,
+            h: Math.ceil((+value + 10) / 40),
+          },
+          config: {
+            ...edittingItem.config,
+            size: {
+              ...edittingItem.config.size,
+              [key]: value.toString(),
+            },
+          },
+        });
+      }
     }
+
     if (key === 'height') {
-      handleConfig({
-        ...edittingItem.config,
-        size: {
-          [key]: value.toString(),
-          width: Math.floor(
-            parseInt(value.toString()) * (1 / aspectRatio),
-          ).toString(),
-        },
-      });
-      updateItem({
-        ...edittingItem,
-        gridSize: {
-          ...edittingItem?.gridSize,
-          h: Math.ceil((+value + 10) / 40),
-        },
-        config: {
+      if (lockWidthHeight) {
+        handleConfig({
           ...edittingItem.config,
           size: {
             [key]: value.toString(),
@@ -168,8 +180,47 @@ export const ImagePropertiesConfig = (
               parseInt(value.toString()) * (1 / aspectRatio),
             ).toString(),
           },
-        },
-      });
+        });
+        updateItem({
+          ...edittingItem,
+          gridSize: {
+            ...edittingItem?.gridSize,
+            h: Math.ceil((+value + 10) / 40),
+          },
+          config: {
+            ...edittingItem.config,
+            size: {
+              [key]: value.toString(),
+              width: Math.floor(
+                parseInt(value.toString()) * (1 / aspectRatio),
+              ).toString(),
+            },
+          },
+        });
+      }
+      if (!lockWidthHeight) {
+        handleConfig({
+          ...edittingItem.config,
+          size: {
+            ...edittingItem.config.size,
+            [key]: value.toString(),
+          },
+        });
+        updateItem({
+          ...edittingItem,
+          gridSize: {
+            ...edittingItem?.gridSize,
+            h: Math.ceil((+value + 10) / 40),
+          },
+          config: {
+            ...edittingItem.config,
+            size: {
+              ...edittingItem.config.size,
+              [key]: value.toString(),
+            },
+          },
+        });
+      }
     }
   };
 
@@ -274,11 +325,17 @@ export const ImagePropertiesConfig = (
             <Text className='bg-white px-1 py-[5px]'>PX</Text>
           </Group>
           <ActionIcon
+            size={38}
             className='bg-navy-100'
             variant='filled'
             aria-label='Lock'
+            onClick={() => setLockWidthHeight(!lockWidthHeight)}
           >
-            <FaLock style={{ width: '70%', height: '70%' }} />
+            {lockWidthHeight ? (
+              <FaLock style={{ width: '70%', height: '70%' }} />
+            ) : (
+              <FaUnlock style={{ width: '70%', height: '70%' }} />
+            )}
           </ActionIcon>
           <Group className='w-2/5 gap-0'>
             <NumberInput
