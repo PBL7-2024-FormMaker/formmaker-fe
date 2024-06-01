@@ -126,8 +126,13 @@ export const ImagePropertiesConfig = (
           ).toString(),
         },
       });
+
       updateItem({
         ...edittingItem,
+        gridSize: {
+          ...edittingItem?.gridSize,
+          h: Math.ceil((+value + 10) / 40),
+        },
         config: {
           ...edittingItem.config,
           size: {
@@ -151,6 +156,10 @@ export const ImagePropertiesConfig = (
       });
       updateItem({
         ...edittingItem,
+        gridSize: {
+          ...edittingItem?.gridSize,
+          h: Math.ceil((+value + 10) / 40),
+        },
         config: {
           ...edittingItem.config,
           size: {
