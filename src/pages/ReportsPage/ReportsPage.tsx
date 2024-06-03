@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BsDatabaseExclamation } from 'react-icons/bs';
 import { FaCircle } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
-import { Box, Group, List, Stack, Text } from '@mantine/core';
+import { Box, Group, List, LoadingOverlay, Stack, Text } from '@mantine/core';
 import {
   Bar,
   BarChart,
@@ -166,6 +166,7 @@ const renderActiveShape = (props: PieSectorDataItem) => {
     </g>
   );
 };
+
 export const ReportsPage = () => {
   const [columns, setcolumns] = useState<ResponseColumns[]>([
     {
@@ -363,7 +364,7 @@ export const ReportsPage = () => {
   if (responseRows?.length == 0) {
     return (
       <Box className='h-screen'>
-        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 pt-10'>
+        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-navy-10 pt-10'>
           <BsDatabaseExclamation size={64} className='text-gray-500' />
           <span className='mb-8 text-lg text-gray-600'>No reports found.</span>
         </Box>
@@ -373,116 +374,147 @@ export const ReportsPage = () => {
 
   return (
     <>
-      <Stack className='mt-8 w-full scroll-m-1 items-center'>
-        <Stack className='w-1/2 gap-8 p-4'>
-          {columns.map((column, pieIndex) => {
-            if (!chartType.includes(column.type)) {
-              return (
-                <Stack
-                  key={column.elementId}
-                  className='gap-0 rounded-md border border-solid border-slate-300 p-4'
-                >
-                  <Text className='font-bold text-navy-500 '>
-                    {column.title}
-                  </Text>
-                  <Text className='mb-3 text-sm text-slate-500'>{`${column.value.length} answers`}</Text>
-                  <List className='max-h-[300px] overflow-auto'>
-                    {column.value.map((item, index) => (
-                      <List.Item key={index} className=''>
-                        {item}
-                      </List.Item>
-                    ))}
-                  </List>
-                </Stack>
-              );
-            }
-            if (pieChartType.includes(column.type) && column.value.length > 0) {
-              return (
-                <Stack className='rounded-md border border-solid border-slate-300'>
-                  <Text className='pl-4 pt-4 font-bold text-navy-500'>
-                    {column.title}
-                  </Text>
-                  <Group className='justify-center'>
-                    <PieChart width={450} height={300}>
-                      <Pie
-                        activeIndex={activeIndices[pieIndex]}
-                        activeShape={renderActiveShape}
-                        label={renderCustomizedLabel}
-                        labelLine={false}
-                        data={processData(column)}
-                        cx={200}
-                        cy={150}
-                        outerRadius={80}
-                        fill='#8884d8'
-                        dataKey='value'
-                        onMouseEnter={(data, index) =>
-                          handlePieEnter(index, pieIndex)
-                        }
-                      >
-                        {processData(column).map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        ))}
-                      </Pie>
-                    </PieChart>
-                    <Stack className='gap-1'>
-                      {processData(column).map((entry, index) => (
-                        <Group key={index}>
-                          <FaCircle color={COLORS[index % COLORS.length]} />
-                          <Text>{entry.name}</Text>
-                        </Group>
-                      ))}
-                    </Stack>
-                  </Group>
-                </Stack>
-              );
-            }
-            if (barChartType.includes(column.type)) {
-              return (
-                <Stack
-                  key={column.elementId}
-                  className='rounded-md border border-solid border-slate-300'
-                >
-                  <Text className='pl-4 pt-4 font-bold text-navy-500'>
-                    {column.title}
-                  </Text>
-                  <Group className='justify-center'>
-                    <BarChart
-                      width={600}
-                      height={300}
-                      data={processItemData(column)}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                      }}
-                      barSize={20}
+      <Box pos='relative'>
+        <LoadingOverlay
+          visible={isFetching}
+          zIndex={1000}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'blue' }}
+        />
+
+        <Stack className='mt-8 w-full scroll-m-1 items-center'>
+          <Stack className='w-1/2 gap-8 p-4'>
+            {columns.map((column, pieIndex) => {
+              if (!chartType.includes(column.type)) {
+                if (column.type === ElementType.FILE_UPLOAD)
+                  return (
+                    <Stack
+                      key={column.elementId}
+                      className='gap-0 rounded-md border border-solid border-slate-300 p-4'
                     >
-                      <XAxis
-                        dataKey='name'
-                        scale='point'
-                        padding={{ left: 10, right: 10 }}
-                      />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <CartesianGrid strokeDasharray='4 4' />
-                      <Bar
-                        dataKey='count'
-                        fill='#3f72af'
-                        background={{ fill: '#eee' }}
-                      />
-                    </BarChart>
-                  </Group>
-                </Stack>
-              );
-            }
-          })}
+                      <Text className='font-bold text-navy-500 '>
+                        {column.title}
+                      </Text>
+                      <Text className='mb-3 text-sm text-slate-500'>{`${column.value.length} answers`}</Text>
+                      <Stack className='max-h-[300px] gap-1 overflow-auto'>
+                        {column.value.map((item, index) => (
+                          <a key={index} href={item}>
+                            {item}
+                          </a>
+                        ))}
+                      </Stack>
+                    </Stack>
+                  );
+                return (
+                  <Stack
+                    key={column.elementId}
+                    className='gap-0 rounded-md border border-solid border-slate-300 p-4'
+                  >
+                    <Text className='font-bold text-navy-500 '>
+                      {column.title}
+                    </Text>
+                    <Text className='mb-3 text-sm text-slate-500'>{`${column.value.length} answers`}</Text>
+                    <List className='max-h-[300px] overflow-auto'>
+                      {column.value.map((item, index) => (
+                        <List.Item key={index} className=''>
+                          {item}
+                        </List.Item>
+                      ))}
+                    </List>
+                  </Stack>
+                );
+              }
+              if (
+                pieChartType.includes(column.type) &&
+                column.value.length > 0
+              ) {
+                return (
+                  <Stack className='rounded-md border border-solid border-slate-300'>
+                    <Text className='pl-4 pt-4 font-bold text-navy-500'>
+                      {column.title}
+                    </Text>
+                    <Group className='justify-center'>
+                      <PieChart width={450} height={300}>
+                        <Pie
+                          activeIndex={activeIndices[pieIndex]}
+                          activeShape={renderActiveShape}
+                          label={renderCustomizedLabel}
+                          labelLine={false}
+                          data={processData(column)}
+                          cx={200}
+                          cy={150}
+                          outerRadius={80}
+                          fill='#8884d8'
+                          dataKey='value'
+                          onMouseEnter={(data, index) =>
+                            handlePieEnter(index, pieIndex)
+                          }
+                        >
+                          {processData(column).map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
+                            />
+                          ))}
+                        </Pie>
+                      </PieChart>
+                      <Stack className='gap-1'>
+                        {processData(column).map((entry, index) => (
+                          <Group key={index}>
+                            <FaCircle color={COLORS[index % COLORS.length]} />
+                            <Text>{entry.name}</Text>
+                          </Group>
+                        ))}
+                      </Stack>
+                    </Group>
+                  </Stack>
+                );
+              }
+              if (barChartType.includes(column.type)) {
+                return (
+                  <Stack
+                    key={column.elementId}
+                    className='rounded-md border border-solid border-slate-300'
+                  >
+                    <Text className='pl-4 pt-4 font-bold text-navy-500'>
+                      {column.title}
+                    </Text>
+                    <Group className='justify-center'>
+                      <BarChart
+                        width={600}
+                        height={300}
+                        data={processItemData(column)}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                        barSize={20}
+                      >
+                        <XAxis
+                          dataKey='name'
+                          scale='point'
+                          padding={{ left: 10, right: 10 }}
+                        />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray='4 4' />
+                        <Bar
+                          dataKey='count'
+                          fill='#3f72af'
+                          background={{ fill: '#eee' }}
+                        />
+                      </BarChart>
+                    </Group>
+                  </Stack>
+                );
+              }
+            })}
+          </Stack>
         </Stack>
-      </Stack>
+      </Box>
     </>
   );
 };
