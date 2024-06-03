@@ -189,7 +189,7 @@ export const BuildFormHeader = () => {
         <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>
           <input
             ref={titleInputRef}
-            defaultValue={currentTitle}
+            value={currentTitle}
             onChange={(event) => {
               setCurrentTitle(event.target.value);
               setTimeout(() => {
@@ -206,7 +206,7 @@ export const BuildFormHeader = () => {
               }
             }}
             className='overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
-            style={{ width: `${currentTitle.length * 25}px` }}
+            style={{ width: `${currentTitle.length * 18}px` }}
           />
           {isPublishSection || isEditingTitle || (
             <MdOutlineModeEditOutline
