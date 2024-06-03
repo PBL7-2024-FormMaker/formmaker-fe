@@ -37,7 +37,7 @@ export const OverviewPage = () => {
           </Stack>
           <Stack className='relative h-full w-[80%] gap-0'>
             {selectedRecords.length !== 0 ||
-              (team && (
+              (team && activeTeam && (
                 <Group className='absolute left-5 top-7'>
                   <UserAvatar
                     size='20'
