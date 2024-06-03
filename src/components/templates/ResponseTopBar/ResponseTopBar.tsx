@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaChartPie } from 'react-icons/fa';
 import { FaTableCells } from 'react-icons/fa6';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -12,9 +12,15 @@ export const ResponseTopBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isReportsTab = pathname.includes('reports');
-  const [selectedTabValue, setSelectedTabValue] = useState<string | null>(
-    tabList[0].value,
-  );
+  const [selectedTabValue, setSelectedTabValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isReportsTab) {
+      setSelectedTabValue('reports');
+    } else {
+      setSelectedTabValue('/');
+    }
+  }, [pathname]);
 
   const handleChangeTab = (value: string | null) => {
     if (value === tabList[0].value && isReportsTab) {
