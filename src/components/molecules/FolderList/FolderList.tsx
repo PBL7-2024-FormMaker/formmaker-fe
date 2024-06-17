@@ -75,7 +75,7 @@ export const FolderList = ({
 
   const navigate = useNavigate();
 
-  const { setParams } = useFormParams();
+  const { setParams, setCurrentPage } = useFormParams();
   const { form } = useBuildFormContext();
 
   const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
@@ -185,9 +185,10 @@ export const FolderList = ({
                 )}
                 onClick={() => {
                   setActiveFolder(folder.id);
-                  setActiveTeam('');
+                  setActiveTeam(folder.teamId);
                   setActiveAllForms(false);
                   setSelectedRecords([]);
+                  setCurrentPage(1);
                   setParams({
                     ...defaultFormsParams,
                     teamId,

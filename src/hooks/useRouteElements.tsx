@@ -141,6 +141,10 @@ export function useRouteElements() {
               path: 'publish/preview',
               element: <PreviewSection />,
             },
+            {
+              path: 'settings/preview',
+              element: <PreviewSection />,
+            },
           ],
         },
         {
@@ -185,6 +189,18 @@ export function useRouteElements() {
             },
             {
               path: 'publish/preview',
+              element: <PreviewSection />,
+            },
+            {
+              path: 'settings/preview',
+              element: <PreviewSection />,
+            },
+            {
+              path: 'settings/general/preview',
+              element: <PreviewSection />,
+            },
+            {
+              path: 'settings/emails/preview',
               element: <PreviewSection />,
             },
           ],

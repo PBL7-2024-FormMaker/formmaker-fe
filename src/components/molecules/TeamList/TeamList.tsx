@@ -62,7 +62,7 @@ export const TeamList = ({
   const openModal = (type: ModalType) => setModalType(type);
 
   const closeModal = () => setModalType('');
-  const { setParams } = useFormParams();
+  const { setParams, setCurrentPage } = useFormParams();
   const [activeCollapse, setActiveCollapse] = useState<string[]>([]);
 
   const handleActiveCollapse = (teamId: string) => {
@@ -104,6 +104,7 @@ export const TeamList = ({
                     setActiveAllForms(false);
                     setActiveFolder('');
                     setSelectedRecords([]);
+                    setCurrentPage(1);
                     setParams({ ...defaultFormsParams, teamId: team.id });
                   }}
                   label={
@@ -112,13 +113,15 @@ export const TeamList = ({
                       {team.folders.length > 0 &&
                         (activeCollapse.includes(team.id) ? (
                           <IoIosArrowUp
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               handleActiveCollapse(team.id);
                             }}
                           />
                         ) : (
                           <IoIosArrowDown
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               handleActiveCollapse(team.id);
                             }}
                           />

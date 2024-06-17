@@ -49,7 +49,7 @@ export const CreateFormModal = ({
             >
               <FiPlus style={{ width: '40%', height: '70%' }} />
             </ActionIcon>
-            <Text className='font-medium'>Start from scrach</Text>
+            <Text className='font-medium'>Start from scratch</Text>
             <Text className='text-sm'>A blank slate is all you need</Text>
           </Stack>
           <Stack className='items-center'>
