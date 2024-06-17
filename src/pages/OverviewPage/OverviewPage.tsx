@@ -1,6 +1,7 @@
 import { IoChevronForwardCircle } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Box, Group, Stack } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 import { UserAvatar } from '@/atoms/UserAvatar';
 import {
@@ -24,6 +25,10 @@ export const OverviewPage = () => {
     { id: activeTeam || '' },
     { skip: !activeTeam },
   );
+  const [
+    openedModalCreateForm,
+    { open: openModalCreateForm, close: closeModalCreateForm },
+  ] = useDisclosure(false);
 
   return (
     <FormParamsProvider>
@@ -32,7 +37,11 @@ export const OverviewPage = () => {
         <Box className='flex h-full w-full items-start justify-between gap-0'>
           <Stack className='h-full w-[20%] border-y-0 border-l-0 border-r border-solid border-slate-300'>
             <BuildFormContextProvider>
-              <OverviewSidebar />
+              <OverviewSidebar
+                openModalCreateForm={openModalCreateForm}
+                openedModalCreateForm={openedModalCreateForm}
+                closeModalCreateForm={closeModalCreateForm}
+              />
             </BuildFormContextProvider>
           </Stack>
           <Stack className='relative h-full w-[80%] gap-0'>
@@ -70,7 +79,7 @@ export const OverviewPage = () => {
             <FormsTable />
             <BuildFormContextProvider>
               <ElementLayoutProvider>
-                <Chatbot />
+                <Chatbot closeModalCreateForm={closeModalCreateForm} />
               </ElementLayoutProvider>
             </BuildFormContextProvider>
           </Stack>

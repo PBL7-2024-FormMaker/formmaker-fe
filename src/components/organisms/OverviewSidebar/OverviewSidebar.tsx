@@ -3,7 +3,6 @@ import { FaStar } from 'react-icons/fa';
 import { IoTrash } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { Box, Divider, LoadingOverlay, NavLink } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
@@ -28,13 +27,19 @@ import { separateFields } from '@/utils/seperates';
 
 import { CreateFormModal } from '../../molecules/CreateFormModal/CreateFormModal';
 
-export const OverviewSidebar = () => {
+interface OverviewSidebarProps {
+  openedModalCreateForm: boolean;
+  openModalCreateForm: () => void;
+  closeModalCreateForm: () => void;
+}
+
+export const OverviewSidebar = ({
+  openedModalCreateForm,
+  openModalCreateForm,
+  closeModalCreateForm,
+}: OverviewSidebarProps) => {
   const [folderName, setFolderName] = useState<string>('');
   const [folderId, setFolderId] = useState<string>('');
-  const [
-    openedModalCreateForm,
-    { open: openModalCreateForm, close: closeModalCreateForm },
-  ] = useDisclosure(false);
   const {
     activeFolder,
     activeTeam,
@@ -43,7 +48,7 @@ export const OverviewSidebar = () => {
     setActiveTeam,
     setSelectedRecords,
   } = useOverviewContext();
-  const { setParams, params } = useFormParams();
+  const { setParams, params, setCurrentPage } = useFormParams();
   const { form } = useBuildFormContext();
 
   const navigate = useNavigate();
@@ -186,6 +191,7 @@ export const OverviewSidebar = () => {
             setActiveTeam('');
             setActiveAllForms(false);
             setSelectedRecords([]);
+            setCurrentPage(1);
           }}
         />
         <Divider />
@@ -210,6 +216,7 @@ export const OverviewSidebar = () => {
               setActiveTeam('');
               setActiveAllForms(false);
               setSelectedRecords([]);
+              setCurrentPage(1);
             }}
           />
           <NavLink

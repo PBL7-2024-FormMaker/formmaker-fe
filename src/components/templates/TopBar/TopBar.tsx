@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IoIosWarning } from 'react-icons/io';
 import { LuExternalLink } from 'react-icons/lu';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -52,9 +52,17 @@ export const TopBar = () => {
   const [opened, { open: openConfirmModal, close: closeConfirmModal }] =
     useDisclosure(false);
 
-  const [selectedTabValue, setSelectedTabValue] = useState<string | null>(
-    tabList[0].value,
-  );
+  const [selectedTabValue, setSelectedTabValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isPublishSection) {
+      setSelectedTabValue('publish');
+    } else if (isSettingsSection) {
+      setSelectedTabValue('settings');
+    } else {
+      setSelectedTabValue('/');
+    }
+  }, [isPublishSection, isSettingsSection]);
 
   const navigate = useNavigate();
 

@@ -446,11 +446,11 @@ export const ReportsPage = () => {
                           outerRadius={80}
                           fill='#8884d8'
                           dataKey='value'
-                          onMouseEnter={(data, index) =>
+                          onMouseEnter={(_data, index) =>
                             handlePieEnter(index, pieIndex)
                           }
                         >
-                          {processData(column).map((entry, index) => (
+                          {processData(column).map((_entry, index) => (
                             <Cell
                               key={`cell-${index}`}
                               fill={COLORS[index % COLORS.length]}

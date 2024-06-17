@@ -43,7 +43,7 @@ export const FolderGroup = ({
     setActiveTeam,
     setSelectedRecords,
   } = useOverviewContext();
-  const { setParams } = useFormParams();
+  const { setParams, setCurrentPage } = useFormParams();
 
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
@@ -80,6 +80,7 @@ export const FolderGroup = ({
           setActiveFolder('');
           setActiveTeam('');
           setSelectedRecords([]);
+          setCurrentPage(1);
           setParams({ ...defaultFormsParams, formType: FormType.Owned });
         }}
       />

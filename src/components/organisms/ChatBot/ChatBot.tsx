@@ -31,6 +31,10 @@ interface PreviewFormProps {
   form: FormResponse;
 }
 
+interface ChatbotProps {
+  closeModalCreateForm: () => void;
+}
+
 const buttons = [
   { label: 'Create form', value: 'create-form' },
   { label: 'Re-generate', value: 're-generate' },
@@ -77,7 +81,7 @@ const PreviewForm = ({ form }: PreviewFormProps) => {
   );
 };
 
-export const Chatbot = () => {
+export const Chatbot = ({ closeModalCreateForm }: ChatbotProps) => {
   const { elements } = useElementLayouts();
   const [filteredForm, setFilteredForm] = useState<FormResponse>(
     {} as FormResponse,
@@ -92,6 +96,7 @@ export const Chatbot = () => {
 
   const handleToggle = () => {
     setChatWindowOpen((prev) => !prev);
+    closeModalCreateForm();
   };
 
   useEffect(() => {

@@ -4,8 +4,6 @@ import { FaTableCells } from 'react-icons/fa6';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Tabs } from '@mantine/core';
 
-import { cn } from '@/utils';
-
 export const ResponseTopBar = () => {
   const tabList = [
     { title: 'Submissions', value: '/', icon: <FaTableCells /> },
@@ -32,24 +30,22 @@ export const ResponseTopBar = () => {
   };
 
   return (
-    <Box className='relative flex h-[50px] items-center justify-start gap-0 bg-white'>
+    <Box className='relative flex h-[50px] items-center justify-center gap-0 bg-navy-10 pl-10'>
       <Tabs
-        color='#3F72AF'
+        color='#3a6aa4'
         variant='pills'
         value={selectedTabValue}
         classNames={{ tabLabel: 'uppercase' }}
         onChange={(value: string | null) => handleChangeTab(value)}
         className='relative'
       >
-        <Tabs.List className='ml-4 mt-4 h-[50px] justify-center gap-2'>
+        <Tabs.List className='h-[50px] justify-center gap-0'>
           {tabList.map((tab, index) => (
             <Tabs.Tab
               key={index}
               value={tab.value}
               leftSection={tab.icon}
-              className={cn(
-                'h-full min-w-40 rounded-md border-[1px] border-solid border-slate-500 to-navy-600 px-8 text-lg duration-150 hover:bg-activeTabBackground hover:text-white',
-              )}
+              className={`h-full min-w-40 rounded-[0] px-8 text-lg ${tab.value === selectedTabValue ? 'text-white' : 'text-black'} duration-150 hover:bg-activeTabBackground hover:text-white`}
             >
               {tab.title}
             </Tabs.Tab>

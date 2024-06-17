@@ -204,12 +204,9 @@ export const DisableOnSpecificDate = () => {
               <DatePickerInput
                 placeholder='Pick date'
                 value={disableDateValue}
-                onChange={() => {
-                  setDisableDateValue;
-                  handleSetDisableSpecificDate(
-                    disableDateValue,
-                    disableTimeValue,
-                  );
+                onChange={(e) => {
+                  setDisableDateValue(e as Date);
+                  handleSetDisableSpecificDate(e as Date, disableTimeValue);
                 }}
                 leftSection={<LuCalendarCheck2 />}
                 className='w-2/5'
