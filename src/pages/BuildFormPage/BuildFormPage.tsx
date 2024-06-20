@@ -3,9 +3,11 @@ import { Box, LoadingOverlay, Stack } from '@mantine/core';
 
 import { useBuildFormContext } from '@/contexts';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
+import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { BuildFormHeader } from '@/templates/Header';
 import { TopBar } from '@/templates/TopBar';
 import { cn } from '@/utils';
+import { canView } from '@/utils/checkPermissions';
 
 import { NotFoundPage } from '../NotFoundPage';
 
@@ -16,8 +18,16 @@ export const BuildFormPage = () => {
     { id: formId || '' },
     { skip: !formId },
   );
+  const { data: myProfile, isLoading: isProfileLoading } =
+    useGetMyProfileQuery();
 
   if (!isLoading && formId && !formData) {
+    return <NotFoundPage />;
+  }
+
+  if (!myProfile || !formData) return;
+
+  if (!canView(myProfile.id, formData.permissions)) {
     return <NotFoundPage />;
   }
 
@@ -30,7 +40,10 @@ export const BuildFormPage = () => {
         },
       )}
     >
-      <BuildFormHeader />
+      <BuildFormHeader
+        myProfile={myProfile}
+        isProfileLoading={isProfileLoading}
+      />
       <Stack className='justify-start gap-0'>
         <Box className='sticky right-0 top-0 z-[100]'>
           <TopBar />
