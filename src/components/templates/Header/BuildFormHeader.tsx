@@ -17,10 +17,12 @@ import {
   Stack,
 } from '@mantine/core';
 import { Field, Form, Formik } from 'formik';
+import io from 'socket.io-client';
 
 import BlueLogo from '@/assets/images/bluelogo.png';
 import { Button } from '@/atoms/Button';
 import { UserAvatar } from '@/atoms/UserAvatar';
+import { BACK_END_URL } from '@/configs';
 import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
@@ -33,10 +35,14 @@ import {
   useUpdateFormMutation,
 } from '@/redux/api/formApi';
 import { useGetTeamDetailsQuery } from '@/redux/api/teamApi';
-import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { ErrorResponse, FormResponse } from '@/types';
+import { ErrorResponse, FormResponse, UserProfileResponse } from '@/types';
 import { formatDate, httpClient, signUpSchema, toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
+
+interface BuildFormHeaderProps {
+  myProfile: UserProfileResponse | undefined;
+  isProfileLoading: boolean;
+}
 
 const LOGO_HEIGHT = 60;
 
@@ -44,19 +50,36 @@ const MAX_VISIBLE_USERS = 5;
 
 const emailSchema = signUpSchema.pick(['email']);
 
-export const BuildFormHeader = () => {
+const socket = io(BACK_END_URL);
+
+export const BuildFormHeader = ({
+  myProfile,
+  isProfileLoading,
+}: BuildFormHeaderProps) => {
   const location = useLocation();
   const { activeTeam } = location.state || {};
-
-  const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
   const { form, isEditForm, isPublishSection, currentTitle, setCurrentTitle } =
     useBuildFormContext();
 
-  const { data: usersInForm } = useGetUsersInFormQuery(
+  const { data: usersInForm, refetch } = useGetUsersInFormQuery(
     { id: form.id || '' },
     { skip: !form.id },
   );
+
+  // Socket listener to re-fetch team data when 'formMemberUpdate' event is received
+  useEffect(() => {
+    if (!form) return;
+
+    socket.on(form.id!, () => {
+      // Fetch the form data again
+      refetch();
+    });
+
+    return () => {
+      socket.off(form.id);
+    };
+  }, [form, refetch]);
 
   const { data: team } = useGetTeamDetailsQuery(
     { id: activeTeam || '' },
@@ -227,7 +250,7 @@ export const BuildFormHeader = () => {
         </div>
       </div>
 
-      {!myProfile || isLoading ? (
+      {!myProfile || isProfileLoading ? (
         <Loader color='blue' />
       ) : (
         <div className='flex flex-row items-center gap-6'>

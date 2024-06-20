@@ -200,7 +200,13 @@ export const FolderList = ({
                 }}
                 label={folder.name}
                 active={isActiveFolder && !activeAllForms}
-                leftSection={<FaFolder size={16} color={folder.color} />}
+                leftSection={
+                  <FaFolder
+                    size={16}
+                    color={folder.color}
+                    className='text-yellow-500'
+                  />
+                }
               />
               <Menu position='bottom-start' withArrow trigger='click'>
                 <Menu.Target>

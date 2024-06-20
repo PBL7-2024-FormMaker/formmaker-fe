@@ -7,6 +7,7 @@ export * from './folder';
 export * from './forms';
 export * from './jwtPayload';
 export * from './modalType';
+export * from './permissions';
 export * from './responses';
 export * from './team';
 export * from './uploadImage';
