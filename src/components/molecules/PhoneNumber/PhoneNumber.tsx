@@ -47,7 +47,7 @@ export const NumberPhone = (props: NumberPhoneProps) => {
           <Field
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
-            classNameWrapper='w-1/2 min-h-[45px]'
+            classNameWrapper='w-full min-h-[45px]'
             allowLeadingZeros={true}
             size='xs'
             elementFieldId={item.fields[0].id}

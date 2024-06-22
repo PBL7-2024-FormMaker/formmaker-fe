@@ -41,7 +41,7 @@ export const TimeInput = (props: TimeInputProps) => {
           <Field
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
-            className='min-h-[60px] w-1/2'
+            className='min-h-[60px] w-full'
             validate={
               !isReadOnly && item.config.required ? validateFieldValue : null
             }

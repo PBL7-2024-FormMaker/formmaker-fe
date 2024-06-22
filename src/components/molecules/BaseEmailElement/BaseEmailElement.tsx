@@ -44,7 +44,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           elementFieldId={item.fields[0].id}
           elementId={item.id}
           component={TextInput}
-          classNameWrapper='w-1/2 min-h-[60px]'
+          classNameWrapper='w-full min-h-[60px]'
         />
         <Field
           name={`${item.id}.sublabel`}
