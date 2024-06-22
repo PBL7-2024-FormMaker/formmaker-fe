@@ -27,6 +27,7 @@ export const BaseImageElement = (props: BaseElementProps<ImageElement>) => {
   return (
     <Group className={`py-2 ${alignment}`}>
       <Image
+        className='max-w-[100%]'
         src={item.config.image ? item.config.image : ImagePlaceHolder}
         h={item.config.size.height}
         w={item.config.size.width}
