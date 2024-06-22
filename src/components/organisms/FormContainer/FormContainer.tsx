@@ -154,7 +154,7 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
             />
             <Image
               src={currentLogo}
-              className='h-36 w-72 flex-1 cursor-pointer object-cover'
+              className='h-36 w-72 flex-1 cursor-pointer rounded object-cover'
               onClick={handleClickAddLogo}
             />
             {currentLogo && (

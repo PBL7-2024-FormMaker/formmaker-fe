@@ -185,13 +185,13 @@ export const FolderList = ({
                 )}
                 onClick={() => {
                   setActiveFolder(folder.id);
-                  setActiveTeam(folder.teamId);
+                  setActiveTeam(teamId ?? folder.teamId ?? '');
                   setActiveAllForms(false);
                   setSelectedRecords([]);
                   setCurrentPage(1);
                   setParams({
                     ...defaultFormsParams,
-                    teamId,
+                    teamId: teamId ?? folder.teamId ?? '',
                     folderId: folder.id,
                   });
                 }}

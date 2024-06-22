@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   Box,
   Divider,
+  Group,
   Image,
   LoadingOverlay,
   Stack,
@@ -77,10 +78,14 @@ export const FormRenderComponent = ({
   return (
     <div className='flex w-full flex-col items-center'>
       {form?.logoUrl && (
-        <Image
-          src={form.logoUrl}
-          className='mb-8 h-[140px] w-[360px] object-cover'
-        />
+        <Group
+          className={cn('relative mx-auto w-full', width ? width : 'w-[45%]')}
+        >
+          <Image
+            src={form.logoUrl}
+            className='mb-8 h-36 w-72 flex-1 rounded object-cover'
+          />
+        </Group>
       )}
       <Stack className={cn('justify-between gap-7', width ? width : 'w-[45%]')}>
         <Box pos='relative'>
