@@ -157,6 +157,7 @@ export const Chatbot = ({ closeModalCreateForm }: ChatbotProps) => {
   const handleNewUserMessage = async (newMessage: string) => {
     toggleMsgLoader();
     // Now send the message throught the backend API
+    setQuickButtons([]);
     await handleSendMessageToAPI(newMessage);
   };
 
