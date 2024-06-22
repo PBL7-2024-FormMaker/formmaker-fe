@@ -87,6 +87,8 @@ export const ImagePropertiesConfig = (
   };
 
   const handleChangeAligment = (value: string) => {
+    console.log('editingItem', edittingItem);
+
     handleConfig({
       ...edittingItem?.config,
       imageAlignment: value,
@@ -96,6 +98,14 @@ export const ImagePropertiesConfig = (
       config: {
         ...edittingItem.config,
         imageAlignment: value,
+      },
+      gridSize: {
+        ...edittingItem?.gridSize,
+        h: Math.ceil(
+          (Math.floor(parseInt(edittingItem.config.size.height) * aspectRatio) +
+            12) /
+            40,
+        ),
       },
     });
   };
@@ -132,7 +142,9 @@ export const ImagePropertiesConfig = (
           ...edittingItem,
           gridSize: {
             ...edittingItem?.gridSize,
-            h: Math.ceil((+value + 10) / 40),
+            h: Math.ceil(
+              (Math.floor(parseInt(value.toString()) * aspectRatio) + 12) / 40,
+            ),
           },
           config: {
             ...edittingItem.config,
@@ -157,7 +169,7 @@ export const ImagePropertiesConfig = (
           ...edittingItem,
           gridSize: {
             ...edittingItem?.gridSize,
-            h: Math.ceil((+value + 10) / 40),
+            h: Math.ceil((+value + 12) / 40),
           },
           config: {
             ...edittingItem.config,
