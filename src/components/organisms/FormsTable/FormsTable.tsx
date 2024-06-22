@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BsFileText } from 'react-icons/bs';
 import { FaFolder, FaStar } from 'react-icons/fa';
-import { FaPlayCircle } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
-import { PiPauseCircleFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -217,28 +215,6 @@ export const FormsTable = () => {
             return;
           }
           openModal(ModalTypes.REMOVE_FROM_TEAM);
-        },
-      },
-      {
-        text: 'Disable',
-        icon: <PiPauseCircleFill size={18} />,
-        handleClick: (
-          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-          record: FormResponse,
-        ) => {
-          e.stopPropagation();
-          handleUpdateFormStatus(record, 'disable');
-        },
-      },
-      {
-        text: 'Enable',
-        icon: <FaPlayCircle size={18} />,
-        handleClick: (
-          e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-          record: FormResponse,
-        ) => {
-          e.stopPropagation();
-          handleUpdateFormStatus(record, 'enable');
         },
       },
       {
