@@ -13,7 +13,7 @@ export const SubmissionsPage = () => {
   const { formId } = useParams();
   const [selectedRecords, setSelectedRecords] = useState<ResponseRow[]>([]);
   const [params, setParams] = useState<GetResponsesParams>();
-  const { data: response, isFetching } = useGetResponsesByFormIdQuery({
+  const { data: response, isLoading } = useGetResponsesByFormIdQuery({
     formId: formId!,
     ...params,
   });
@@ -100,7 +100,7 @@ export const SubmissionsPage = () => {
           elementIdAndNameList={Object.values(uniqueResult)}
           totalResponses={response.totalResponses}
           pageSize={response.pageSize}
-          isLoading={isFetching}
+          isLoading={isLoading}
           responseRows={responseRows || []}
           selectedRecords={selectedRecords}
           setSelectedRecords={setSelectedRecords}

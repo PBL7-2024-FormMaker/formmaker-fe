@@ -193,6 +193,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
           size='md'
           key={index}
           variant='outline'
+          disabled={isDeletingForm}
           color={
             action.title === 'Delete' || action.title === 'Purge'
               ? 'error'

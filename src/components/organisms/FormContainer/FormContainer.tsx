@@ -2,11 +2,16 @@ import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
+import io from 'socket.io-client';
 
 import { Button } from '@/atoms/Button';
+import { BACK_END_URL } from '@/configs';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
-import { useUpdateFormMutation } from '@/redux/api/formApi';
+import {
+  useGetFormDetailsQuery,
+  useUpdateFormMutation,
+} from '@/redux/api/formApi';
 import { useUploadImageMutation } from '@/redux/api/imageApi';
 import { ElementItem, ElementType, ErrorResponse } from '@/types';
 import { toastify } from '@/utils';
@@ -19,6 +24,8 @@ interface FormContainerProps {
   currentElementType?: ElementType;
 }
 
+const socket = io(BACK_END_URL);
+
 export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   const { form, initLogo, currentLogo, setCurrentLogo } = useBuildFormContext();
 
@@ -30,6 +37,11 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   const [updateForm] = useUpdateFormMutation();
 
   const [uploadImage] = useUploadImageMutation();
+
+  const { refetch } = useGetFormDetailsQuery(
+    { id: form.id || '' },
+    { skip: !form.id },
+  );
 
   const handleUpdateFormWhenLogoChanged = (
     formId?: string,
@@ -119,6 +131,19 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   useEffect(() => {
     setCurrentLogo(initLogo);
   }, [initLogo, setCurrentLogo]);
+
+  useEffect(() => {
+    if (!form) return;
+
+    socket.on(form.id!, () => {
+      // Fetch the form data again
+      refetch();
+    });
+
+    return () => {
+      socket.off(form.id);
+    };
+  }, [form, refetch]);
 
   const updateItem = (item: ElementItem) => {
     setElements(
