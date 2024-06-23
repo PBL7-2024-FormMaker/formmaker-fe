@@ -21,7 +21,6 @@ import {
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
-import { MESSAGES } from '@/constants';
 import {
   DEFAULT_PAGE_SIZE,
   defaultFormsParams,
@@ -38,7 +37,6 @@ import {
   useRemoveFromFolderMutation,
   useRemoveFromTeamMutation,
   useRestoreFormMutation,
-  useUpdateDisabledStatusMutation,
 } from '@/redux/api/formApi';
 import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
@@ -76,9 +74,6 @@ export const FormsTable = () => {
 
   const [removeFromTeam, { isLoading: isRemovingFromTeam }] =
     useRemoveFromTeamMutation();
-
-  const [updateDisabledStatus, { isLoading: isUpdatingFormStatus }] =
-    useUpdateDisabledStatusMutation();
 
   const handleDeleteForm = (record: FormResponse) => {
     deleteForm({ id: record.id }).then((res) => {
@@ -143,38 +138,13 @@ export const FormsTable = () => {
     });
   };
 
-  const handleUpdateFormStatus = (
-    record: FormResponse,
-    action: 'enable' | 'disable',
-  ) => {
-    updateDisabledStatus({
-      formId: record.id,
-      disabled: action === 'disable',
-    })
-      .then(() => {
-        toastify.displaySuccess(
-          action === 'enable'
-            ? MESSAGES.ENABLE_FORM_SUCCESS
-            : MESSAGES.DISABLE_FORM_SUCCESS,
-        );
-        setSelectedRecords([]);
-        return;
-      })
-      .catch(() => {
-        toastify.displayError(MESSAGES.UPDATE_FORM_STATUS_FAILED);
-        setSelectedRecords([]);
-        return;
-      });
-  };
-
   const isFetching =
     isFormFetching ||
     isAddingToFavourites ||
     isDeletingForm ||
     isRestoringForm ||
     isRemovingFromFolder ||
-    isRemovingFromTeam ||
-    isUpdatingFormStatus;
+    isRemovingFromTeam;
 
   const moreOptions = useMemo(
     () => [

@@ -1,1 +1,3 @@
-export * from './BuildFormPage';
+import { BuildFormPage } from './BuildFormPage';
+
+export default BuildFormPage;

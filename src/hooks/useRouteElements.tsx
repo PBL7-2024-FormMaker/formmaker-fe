@@ -13,7 +13,6 @@ import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
 import { SettingsSection } from '@/organisms/SettingsSection';
 import { AccountPage } from '@/pages/AccountPage';
-import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoadingPage } from '@/pages/LoadingPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -33,6 +32,8 @@ import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 const Reportspage = lazy(() => import('@/pages/ReportsPage'));
 const ResponsePage = lazy(() => import('@/pages/ResponsePage'));
 const SubmissionsPage = lazy(() => import('@/pages/SubmissionsPage'));
+const BuildFormPage = lazy(() => import('@/pages/BuildFormPage'));
+
 // route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
@@ -150,11 +151,13 @@ export function useRouteElements() {
         {
           path: PATH.EDIT_FORM_PAGE,
           element: (
-            <BuildFormContextProvider>
-              <ElementLayoutProvider>
-                <BuildFormPage />
-              </ElementLayoutProvider>
-            </BuildFormContextProvider>
+            <Suspense fallback={<LoadingPage />}>
+              <BuildFormContextProvider>
+                <ElementLayoutProvider>
+                  <BuildFormPage />
+                </ElementLayoutProvider>
+              </BuildFormContextProvider>
+            </Suspense>
           ),
           children: [
             {

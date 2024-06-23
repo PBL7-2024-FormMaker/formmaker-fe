@@ -9,6 +9,7 @@ import { TopBar } from '@/templates/TopBar';
 import { cn } from '@/utils';
 import { canView } from '@/utils/checkPermissions';
 
+import { LoadingPage } from '../LoadingPage';
 import { NotFoundPage } from '../NotFoundPage';
 
 export const BuildFormPage = () => {
@@ -20,6 +21,8 @@ export const BuildFormPage = () => {
   );
   const { data: myProfile, isLoading: isProfileLoading } =
     useGetMyProfileQuery();
+
+  if (isLoading) return <LoadingPage />;
 
   if (!isLoading && formId && !formData) {
     return <NotFoundPage />;
