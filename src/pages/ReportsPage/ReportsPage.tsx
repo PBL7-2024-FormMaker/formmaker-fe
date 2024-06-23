@@ -161,7 +161,7 @@ const renderActiveShape = (props: PieSectorDataItem) => {
         textAnchor={textAnchor}
         fill='#999'
       >
-        {`(Rate ${(percent! * 100).toFixed(0)}%)`}
+        {`${(percent! * 100).toFixed(0)}%`}
       </text>
     </g>
   );
@@ -376,7 +376,7 @@ export const ReportsPage = () => {
     <>
       <Box pos='relative'>
         <LoadingOverlay
-          visible={isFetching}
+          visible={isLoading}
           zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}
           loaderProps={{ color: 'blue' }}
