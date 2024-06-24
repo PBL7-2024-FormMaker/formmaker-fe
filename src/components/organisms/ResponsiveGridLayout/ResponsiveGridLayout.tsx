@@ -39,6 +39,7 @@ export const ResponsiveGridLayout = ({
     setIsScrollToBottom,
   } = useElementLayouts();
   const [mounted, setMounted] = useState(false);
+  const [time, setTime] = useState<number>(0);
   const [layouts, setLayouts] = useState<{
     lg: Layout[];
     md: Layout[];
@@ -47,7 +48,8 @@ export const ResponsiveGridLayout = ({
     xxs: Layout[];
   }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
   const elmsInForm = useRef<null | HTMLDivElement>(null);
-  const { isEditForm, setToggledRightbar } = useBuildFormContext();
+  const { isEditForm, setToggledRightbar, setCanUpdateForm } =
+    useBuildFormContext();
   const { id: formId } = useParams();
   const { data: form } = useGetFormDetailsQuery(
     { id: formId || '' },
@@ -75,6 +77,7 @@ export const ResponsiveGridLayout = ({
     setElements(elements.filter((element) => element.id !== id));
     setEdittingItem(undefined);
     setToggledRightbar(false);
+    setCanUpdateForm(true);
   };
 
   const onDrop = (layout: Layout[]) => {
@@ -92,23 +95,33 @@ export const ResponsiveGridLayout = ({
     const createdItem = createItem(currentElementType, currentItem!)!;
     setElements([...updatedElements, createdItem]);
     setEdittingItem(createdItem);
+    setCanUpdateForm(true);
   };
 
   const handleDragStart = (_layout: Layout[], currentItem: Layout) => {
+    setTime(Date.now());
     setEdittingItem(elements.find((element) => element.id === currentItem.i));
+    setCanUpdateForm(false);
   };
 
   const handleDragStop = (layout: Layout[], currentItem: Layout) => {
-    setElements(getElement(elements, layout));
-    setEdittingItem(
-      getElement(elements, layout).find(
-        (element) => element.id === currentItem.i,
-      ),
-    );
+    const canUpdateElements = (Date.now() - time) / 1000 > 0.5;
+    if (canUpdateElements) {
+      setElements(getElement(elements, layout));
+      setEdittingItem(
+        getElement(elements, layout).find(
+          (element) => element.id === currentItem.i,
+        ),
+      );
+      setCanUpdateForm(true);
+    } else {
+      setCanUpdateForm(false);
+    }
   };
   useEffect(() => {
     if (form) {
       setElements(form.elements as ElementItem[]);
+      setCanUpdateForm(false);
     }
   }, [isEditForm, form, setElements]);
 

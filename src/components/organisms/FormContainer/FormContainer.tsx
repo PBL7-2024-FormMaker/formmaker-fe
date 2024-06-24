@@ -27,7 +27,14 @@ interface FormContainerProps {
 const socket = io(BACK_END_URL);
 
 export const FormContainer = ({ currentElementType }: FormContainerProps) => {
-  const { form, initLogo, currentLogo, setCurrentLogo } = useBuildFormContext();
+  const {
+    form,
+    initLogo,
+    currentLogo,
+    setCurrentLogo,
+    canUpdateForm,
+    setCanUpdateForm,
+  } = useBuildFormContext();
 
   const logoInputRef = useRef<HTMLInputElement>(null);
 
@@ -152,10 +159,11 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
         return item;
       }),
     );
+    setCanUpdateForm(true);
   };
 
   useEffect(() => {
-    if (elements.length > 0) {
+    if (elements.length > 0 && canUpdateForm) {
       handleUpdateForm(form.id, elements);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

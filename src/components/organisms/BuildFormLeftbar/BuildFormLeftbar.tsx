@@ -30,7 +30,7 @@ export const BuildFormLeftbar = ({
   setCurrentElementType,
 }: BuildFormLeftbarProps) => {
   const { elements, setElements, setIsScrollToBottom } = useElementLayouts();
-  const { form } = useBuildFormContext();
+  const { form, setCanUpdateForm } = useBuildFormContext();
   const [searchValue, setSearchValue] = useState('');
   const hasSubmitButton = elements.some(
     (element) => element.type === ElementType.SUBMIT,
@@ -92,6 +92,7 @@ export const BuildFormLeftbar = ({
 
     setElements((prev) => [...prev, newElement]);
     setIsScrollToBottom(true);
+    setCanUpdateForm(true);
   };
 
   return (
