@@ -255,13 +255,16 @@ export const TeamPage = () => {
   useEffect(() => {
     if (!team) return;
 
-    socket.on(team.id, () => {
+    socket.emit('joinRoom', team.id);
+
+    socket.on('teamMemberUpdate', () => {
       // Fetch the team data again
       refetch();
     });
 
     return () => {
-      socket.off(team.id);
+      socket.emit('leaveRoom', team.id);
+      socket.off('teamMemberUpdate');
     };
   }, [team, refetch]);
 

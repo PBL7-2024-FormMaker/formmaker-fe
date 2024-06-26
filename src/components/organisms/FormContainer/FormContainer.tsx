@@ -141,14 +141,16 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
 
   useEffect(() => {
     if (!form) return;
+    socket.emit('joinRoom', form.id);
 
-    socket.on(form.id!, () => {
+    socket.on('formUpdate', () => {
       // Fetch the form data again
       refetch();
     });
 
     return () => {
-      socket.off(form.id);
+      socket.emit('leaveRoom', form.id);
+      socket.off('formUpdate');
     };
   }, [form, refetch]);
 

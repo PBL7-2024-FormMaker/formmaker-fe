@@ -71,13 +71,16 @@ export const BuildFormHeader = ({
   useEffect(() => {
     if (!form) return;
 
-    socket.on(form.id!, () => {
+    socket.emit('joinRoom', form.id);
+
+    socket.on('formMemberUpdate', () => {
       // Fetch the form data again
       refetch();
     });
 
     return () => {
-      socket.off(form.id);
+      socket.emit('leaveRoom', form.id);
+      socket.off('formMemberUpdate');
     };
   }, [form, refetch]);
 
