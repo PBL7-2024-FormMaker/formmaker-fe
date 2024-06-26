@@ -19,6 +19,7 @@ export const SubmissionsPage = () => {
   });
 
   const rawRecords = response?.responses;
+  const elementIdAndNameList = response?.elementIdAndNameList || [];
 
   const result = (rawRecords || []).flatMap((response) =>
     response.formAnswers.map((answer) => ({
@@ -29,11 +30,21 @@ export const SubmissionsPage = () => {
   );
 
   const uniqueResult: { [key: string]: ElementIdAndName } = {};
-  result.forEach((item) => {
-    if (!uniqueResult[item.elementId]) {
-      uniqueResult[item.elementId] = item;
-    }
-  });
+  result
+    .sort((firstAnswer, secondAnswer) => {
+      const firstIndex = elementIdAndNameList.findIndex(
+        (item) => item.elementId === firstAnswer.elementId,
+      );
+      const secondIndex = elementIdAndNameList.findIndex(
+        (item) => item.elementId === secondAnswer.elementId,
+      );
+      return firstIndex - secondIndex;
+    })
+    .forEach((item) => {
+      if (!uniqueResult[item.elementId]) {
+        uniqueResult[item.elementId] = item;
+      }
+    });
 
   const responseRows: ResponseRow[] | undefined = useMemo(
     () =>
