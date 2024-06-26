@@ -426,113 +426,6 @@ export const AccountPage = () => {
           <Text>{myProfile?.email}</Text>
         ),
       hasEditButton: true,
-      isLastItem: false,
-    },
-    {
-      fieldName: UserProfileFields.ORGANIZATION_NAME,
-      content:
-        editingFieldName === UserProfileFields.ORGANIZATION_NAME ? (
-          <form onSubmit={handleSubmit} className='flex w-1/2 flex-col gap-3'>
-            <Input
-              placeholder='Organization name'
-              {...getFieldProps(UserProfileFields.ORGANIZATION_NAME)}
-              autoFocus
-            />
-            {errors.organizationName && touched.organizationName && (
-              <Text className='text-xs text-red-500'>
-                {errors.organizationName}
-              </Text>
-            )}
-            <Button title='Save' type='submit' />
-          </form>
-        ) : (
-          <Text>{myProfile?.organizationName}</Text>
-        ),
-      hasEditButton: true,
-      isLastItem: false,
-    },
-    {
-      fieldName: UserProfileFields.ORGANIZATION_LOGO,
-      content:
-        editingFieldName === UserProfileFields.ORGANIZATION_LOGO ? (
-          <Group align='center'>
-            <Box className='rounded-md bg-gray-100 p-1.5'>
-              <Avatar
-                size='md'
-                variant='filled'
-                radius='sm'
-                src={currentImages.organizationLogo}
-              />
-            </Box>
-            <input
-              type='file'
-              ref={logoInputRef}
-              onChange={(event) => handleImageChange(event, UploadImage.LOGO)}
-              className='hidden'
-              accept='image/*'
-            />
-            <Button
-              title='Save'
-              onClick={(
-                event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-              ) => handleUpdateImage(event, UploadImage.LOGO)}
-              disabled={isUploadingImage}
-            />
-            <Button
-              title='Cancel'
-              color='gray'
-              onClick={() => {
-                setCurrentImages((prev) => ({
-                  ...prev,
-                  organizationLogo: myProfile?.organizationLogo ?? '',
-                }));
-                handleCancelEdit();
-              }}
-              disabled={isUploadingImage}
-            />
-          </Group>
-        ) : (
-          <Group>
-            {myProfile?.organizationLogo ? (
-              <Box className='rounded-md bg-gray-100 p-1.5'>
-                <Avatar
-                  size='md'
-                  variant='filled'
-                  radius='sm'
-                  src={currentImages.organizationLogo}
-                />
-              </Box>
-            ) : null}
-            <input
-              type='file'
-              ref={logoInputRef}
-              onChange={(event) => handleImageChange(event, UploadImage.LOGO)}
-              className='hidden'
-              accept='image/*'
-            />
-            {myProfile?.organizationLogo ? (
-              <>
-                <Button
-                  title='Change logo'
-                  onClick={() => handleChooseImage(UploadImage.LOGO)}
-                />
-                <Button
-                  title='Remove'
-                  variant='outline'
-                  onClick={(event) => {
-                    handleRemoveImage(event, UploadImage.LOGO);
-                  }}
-                />
-              </>
-            ) : (
-              <Button
-                title='Add organization logo'
-                onClick={() => handleChooseImage(UploadImage.LOGO)}
-              />
-            )}
-          </Group>
-        ),
-      hasEditButton: false,
       isLastItem: true,
     },
   ];
@@ -566,7 +459,7 @@ export const AccountPage = () => {
   return (
     <Stack className='h-max min-h-screen w-full gap-0 bg-navy-500'>
       <Header />
-      <Stack className='px-40 pb-8 pt-5'>
+      <Stack className='mx-auto w-[80%] translate-y-20 px-40 pb-8 pt-5'>
         <Stack className='items-center justify-center gap-12 rounded-xl bg-white px-14 py-7'>
           <Text className='text-center text-[26px] font-semibold'>
             Update Account and General Information
