@@ -3,7 +3,7 @@ import { FaCamera, FaCheck } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   BackgroundImage,
   Box,
@@ -60,7 +60,6 @@ const socket = io(BACK_END_URL);
 export const TeamPage = () => {
   const params = useLocation();
 
-  const navigate = useNavigate();
   const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
   const [senderName, setSenderName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -124,7 +123,7 @@ export const TeamPage = () => {
       if ('data' in res) {
         toastify.displaySuccess('You have joined this team successfully!');
         localStorage.removeItem('acceptUrl');
-        navigate(`/teams/${teamId}`);
+        window.location.href = `/teams/${teamId}`;
         return;
       }
       if (res.error as ErrorResponse)
@@ -541,52 +540,24 @@ export const TeamPage = () => {
               </Box>
             )}
           </BackgroundImage>
-          {viewInvitation ? (
-            <Box className='relative flex h-full w-full justify-center bg-navy-10'>
-              <Box className='absolute top-[20%] flex flex-col items-center justify-center gap-10'>
-                <span className='text-[24px]'>
-                  <span className='font-semibold text-blue-700'>
-                    {senderName}
-                  </span>{' '}
-                  invited you to collaborate
-                </span>
-                <Box pos='relative'>
-                  <LoadingOverlay
-                    visible={isAddMemberLoading}
-                    zIndex={BIG_Z_INDEX}
-                    overlayProps={{ radius: 'sm', blur: 2 }}
-                    loaderProps={{ color: 'blue', size: 'sm' }}
-                  />
-
-                  <Button
-                    title='Accept invitation'
-                    size='lg'
-                    className='w-[200px]'
-                    onClick={() => handleAcceptInvitation()}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          ) : (
-            <Box className='flex h-full w-full items-start justify-between gap-0'>
-              <Stack className='h-full w-[20%] border-y-0 border-l-0 border-r border-solid border-slate-300'>
-                <BuildFormContextProvider>
-                  <OverviewTeamSidebar
-                    isLoading={isLoading}
-                    team={team}
-                    modalType={modalType}
-                    setModalType={setModalType}
-                  />
-                </BuildFormContextProvider>
-              </Stack>
-              <Stack className='h-full w-[80%] gap-0'>
-                <ActionToolbar
-                  selectedFormIds={selectedRecords.map(({ id }) => id)}
+          <Box className='flex h-full w-full items-start justify-between gap-0'>
+            <Stack className='h-full w-[20%] border-y-0 border-l-0 border-r border-solid border-slate-300'>
+              <BuildFormContextProvider>
+                <OverviewTeamSidebar
+                  isLoading={isLoading}
+                  team={team}
+                  modalType={modalType}
+                  setModalType={setModalType}
                 />
-                <FormsTable />
-              </Stack>
-            </Box>
-          )}
+              </BuildFormContextProvider>
+            </Stack>
+            <Stack className='h-full w-[80%] gap-0'>
+              <ActionToolbar
+                selectedFormIds={selectedRecords.map(({ id }) => id)}
+              />
+              <FormsTable />
+            </Stack>
+          </Box>
         </Box>
         <ManageMemberModal
           teamList={[team!]}
@@ -662,28 +633,54 @@ export const TeamPage = () => {
           </Box>
         </BackgroundImage>
         <Box className='relative flex h-full w-full justify-center bg-navy-10'>
-          <Box className='absolute top-[20%] flex flex-col items-center justify-center gap-10'>
-            <span className='text-[24px]'>
-              You do not have the right to access this team!
-            </span>
-            <Box pos='relative'>
-              <LoadingOverlay
-                visible={isAddMemberLoading}
-                zIndex={BIG_Z_INDEX}
-                overlayProps={{ radius: 'sm', blur: 2 }}
-                loaderProps={{ color: 'blue', size: 'sm' }}
-              />
+          {viewInvitation ? (
+            <Box className='absolute top-[20%] flex flex-col items-center justify-center gap-10'>
+              <span className='text-[24px]'>
+                <span className='font-semibold text-blue-700'>
+                  {senderName}
+                </span>{' '}
+                invited you to collaborate
+              </span>
+              <Box pos='relative'>
+                <LoadingOverlay
+                  visible={isAddMemberLoading}
+                  zIndex={BIG_Z_INDEX}
+                  overlayProps={{ radius: 'sm', blur: 2 }}
+                  loaderProps={{ color: 'blue', size: 'sm' }}
+                />
 
-              <Button
-                title='Back to home'
-                size='lg'
-                className='w-[200px]'
-                onClick={() => {
-                  window.location.href = PATH.OVERVIEW_PAGE;
-                }}
-              />
+                <Button
+                  title='Accept invitation'
+                  size='lg'
+                  className='w-[200px]'
+                  onClick={() => handleAcceptInvitation()}
+                />
+              </Box>
             </Box>
-          </Box>
+          ) : (
+            <Box className='absolute top-[20%] flex flex-col items-center justify-center gap-10'>
+              <span className='text-[24px]'>
+                You do not have the right to access this team!
+              </span>
+              <Box pos='relative'>
+                <LoadingOverlay
+                  visible={isAddMemberLoading}
+                  zIndex={BIG_Z_INDEX}
+                  overlayProps={{ radius: 'sm', blur: 2 }}
+                  loaderProps={{ color: 'blue', size: 'sm' }}
+                />
+
+                <Button
+                  title='Back to home'
+                  size='lg'
+                  className='w-[200px]'
+                  onClick={() => {
+                    window.location.href = PATH.OVERVIEW_PAGE;
+                  }}
+                />
+              </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </FormParamsProvider>
